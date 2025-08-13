@@ -23,3 +23,11 @@
 
 * Enumと定数：SCREAMING_SNAKE_CASE
 * private const int SAMPLE_VARIABLE
+
+* 関数コメント書き方
+/// <summary>
+/// (ここに関数の説明)
+/// </summary>
+/// <param name="param">ここに引数の説明</param>
+/// <returns>ここに返り値の説明</returns>
+private int SampleFunction(int param) {}
