@@ -23,11 +23,8 @@ namespace Workspace.koto_thing
                 input.x += 1.0f;
             if (Input.GetKey(KeyCode.A)) 
                 input.x -= 1.0f;
-
-            if (input != Vector2.zero)
-                model.Move(input);
             
-            model.ApplyGravity();
+            model.Move(input);
         }
     }
 }

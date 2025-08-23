@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
+using Test;
 
 [CustomEditor(typeof(VoxelMapGenerator))]
 public class VoxelMapGeneratorEditor : Editor
