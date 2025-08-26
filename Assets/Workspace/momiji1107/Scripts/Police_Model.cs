@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Police_Model : MonoBehaviour
 {
-    [SerializeField] float PoliceMoveSpeed = 3.0f; //警官の移動速度
+    [SerializeField] float PoliceMoveSpeed = 1.0f; //警官の移動速度
     [SerializeField] GameObject player;
     //Vector3 policePos;
     //Vector3 playerPos;
@@ -25,7 +25,10 @@ public class Police_Model : MonoBehaviour
         {
             //プレイヤーに向かって進み続ける
             //transform.position = Vector3.MoveTowards(policePos, target, PoliceMoveSpeed * Time.deltaTime);
-            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, PoliceMoveSpeed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, player.transform.position, PoliceMoveSpeed * Time.deltaTime);
+
+            transform.LookAt(player.transform);
+            transform.position += transform.forward * PoliceMoveSpeed * Time.deltaTime;
         }
     }
 

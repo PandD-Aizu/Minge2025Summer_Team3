@@ -20,9 +20,10 @@ public class Police_Presenter : MonoBehaviour
         
     }
 
-    //プレイヤーが範囲内に入っている時
-    public void BattleDetect()
+    //プレイヤーが範囲内に入った時
+    public void BattleStart()
     {
+        Debug.Log("in");
         modelScript.switchBattleflag();
     }
 

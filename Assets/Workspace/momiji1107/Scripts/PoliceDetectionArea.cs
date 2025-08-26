@@ -18,9 +18,9 @@ public class PoliceDetectionArea : MonoBehaviour
     }
 
     //プレイヤーが範囲内に入ったことを通知する
-    public void OnTriggerStay(Collider collision)
+    public void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player")) presenterScript.BattleDetect();
+        if (other.gameObject.CompareTag("Player")) presenterScript.BattleStart();
     }
 
     //プレイヤーが範囲外に出たことを通知する
