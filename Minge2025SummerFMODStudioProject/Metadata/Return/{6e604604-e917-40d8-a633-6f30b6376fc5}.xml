@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerReturn" id="{6e604604-e917-40d8-a633-6f30b6376fc5}">
+		<property name="name">
+			<value>Wood</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{f99a9cd2-776e-4759-9d8f-548992a16e09}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{1619e25d-7046-4761-8115-d437ad85b1b2}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{c77f3ce4-44d7-4461-80ca-bc1e06b7cd82}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{f99a9cd2-776e-4759-9d8f-548992a16e09}">
+		<relationship name="effects">
+			<destination>{3c3cadf1-efe4-48e5-8fc5-971b01fbf529}</destination>
+			<destination>{90cfed41-b8ad-4b61-88a3-3af9d161c29a}</destination>
+			<destination>{6d321fbf-eb53-4ba4-9de0-0d1cc6157d08}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{1619e25d-7046-4761-8115-d437ad85b1b2}" />
+	<object class="ConvolutionReverbEffect" id="{3c3cadf1-efe4-48e5-8fc5-971b01fbf529}">
+		<property name="endFrame">
+			<value>95999</value>
+		</property>
+		<relationship name="referenceableData">
+			<destination>{d1ee3290-8ee9-40d9-8c2f-76d243bc148b}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusFader" id="{90cfed41-b8ad-4b61-88a3-3af9d161c29a}" />
+	<object class="LimiterEffect" id="{6d321fbf-eb53-4ba4-9de0-0d1cc6157d08}" />
+</objects>
