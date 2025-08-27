@@ -48,6 +48,19 @@ namespace Workspace.koto_thing
             ammoInventory[ammoType] -= bulletsToReload;
             currentEquippedGun.Reload(bulletsToReload);
         }
+        
+        /// <summary>
+        /// 弾丸を追加する
+        /// </summary>
+        /// <param name="type">追加する弾の種類</param>
+        /// <param name="count">追加する弾数</param>
+        public void AddAmmo(AmmoType type, int count)
+        {
+            if (ammoInventory.ContainsKey(type))
+                ammoInventory[type] += count;
+            else
+                ammoInventory[type] = count;
+        }
 
         /* ---以下ヘルパー関数--- */
         
