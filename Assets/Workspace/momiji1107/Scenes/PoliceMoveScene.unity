@@ -604,7 +604,7 @@ Transform:
   m_GameObject: {fileID: 180465060}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 2.31, y: 0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1153,7 +1153,7 @@ Transform:
   m_GameObject: {fileID: 362679091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.8033, z: 0.0872}
+  m_LocalPosition: {x: 2.31, y: 1.7533, z: 0.0872}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2748,7 +2748,7 @@ Transform:
   m_GameObject: {fileID: 1407246191}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.8033, z: 0.0872}
+  m_LocalPosition: {x: 2.31, y: 1.7533, z: 0.0872}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3400,6 +3400,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PoliceDetectionArea: {fileID: 266327585}
   player: {fileID: 180465060}
+  battleDistance: 3
 --- !u!114 &1618903760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3424,9 +3425,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2528c8837ab04359882aa5000aeab0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoliceMoveSpeed: 3
+  PoliceMoveSpeed: 0.01
   player: {fileID: 180465060}
-  OnBattleflag: 0
+  Battleflag: 0
 --- !u!65 &1618903762
 BoxCollider:
   m_ObjectHideFlags: 0
