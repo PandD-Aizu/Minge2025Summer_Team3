@@ -1,26 +1,29 @@
 using UnityEngine;
+using Workspace.momiji1107;
 
 public class Police_Presenter : MonoBehaviour
 {
     [SerializeField] GameObject PoliceDetectionArea;
     public GameObject player;
-    Police_Model modelScript;
-    Police_View viewScript;
-
-    Ray ray;                                      //警官からプレイヤーまでの距離を測るray
-    RaycastHit hit;                               //rayが衝突したオブジェクト
-    [SerializeField] float battleDistance = 3.0f; //警官が攻撃をするプレイヤーまでの距離
+    
+    private Police_Model modelScript;
+    private Police_View viewScript;
+    private PoliceEmitter emitterScript;
     
     void Start()
     {
         modelScript = this.GetComponent<Police_Model>();
         viewScript = this.GetComponent<Police_View>();
-        ray = new Ray(transform.position, transform.forward);　//警官から前方にrayを飛ばす
+        emitterScript = this.GetComponent<PoliceEmitter>();
+        
     }
     
     void Update()
     {
+        emitterScript.PlayFootStep(modelScript.GetCharacterController.velocity.magnitude);
+        modelScript.Move();
         modelScript.AttackPlayer();
+        emitterScript.UpdateMoanTimer();
     }
 
     //プレイヤーが範囲内に入った時
@@ -28,6 +31,7 @@ public class Police_Presenter : MonoBehaviour
     {
         Debug.Log("in");
         modelScript.OnBattleflag();
+        emitterScript.StartMoaning();
     }
 
     //プレイヤーが範囲外に出た時
@@ -35,5 +39,6 @@ public class Police_Presenter : MonoBehaviour
     {
         Debug.Log("exit");
         modelScript.OffBattleflag();
+        emitterScript.StopMoaning();
     }
 }
