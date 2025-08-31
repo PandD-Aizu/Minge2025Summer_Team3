@@ -44,6 +44,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: HUDUI
+    uniqueID: 443671063
+    locked: 0
+  - name: Subliminal
+    uniqueID: 3219403931
+    locked: 0
   m_RenderingLayers:
   - Default
   - Light Layer 1

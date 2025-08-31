@@ -12,7 +12,7 @@ namespace Workspace.koto_thing
         [SerializeField] private GunView view;
         [SerializeField] private GunEmitter emitter;
 
-        private CompositeDisposable disposables;
+        private CompositeDisposable disposables = new ();
 
         private void Start()
         {
