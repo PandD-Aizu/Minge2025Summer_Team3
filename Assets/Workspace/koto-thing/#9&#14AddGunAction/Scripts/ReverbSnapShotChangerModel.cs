@@ -11,7 +11,6 @@ namespace Acoustics
         [Header("RayCastの設定")]
         [SerializeField] private Transform playerTransform;
         [SerializeField] private float rayDistance = 50.0f;
-        [SerializeField] private float checkInterval = 1.0f;
 
         [Header("Reverbの設定")]
         [SerializeField] private ReverbMaterialType currentReverbMaterialType;
@@ -19,58 +18,13 @@ namespace Acoustics
         
         [Header("SnapShotの設定")]
         [SerializeField] private List<StudioEventEmitter> reverbSnapShots = new ();
-
-        private float checkTimer = 0.0f;
-        private ReverbMaterialType previousReverbMaterialType = ReverbMaterialType.NONE;
-
-        /// <summary>
-        /// 環境をチェックし、変更があった場合のみSnapShotを切り替える
-        /// </summary>
-        public void UpdateReverbEnvironment()
-        {
-            checkTimer += Time.deltaTime;
-
-            if (checkTimer >= checkInterval)
-            {
-                CheckEnvironment();
-                
-                if (currentReverbMaterialType != previousReverbMaterialType)
-                {
-                    ChangeSnapShot();
-                    previousReverbMaterialType = currentReverbMaterialType;
-                    Debug.Log($"Reverb changed to: {currentReverbMaterialType}");
-                }
-                
-                checkTimer = 0.0f;
-            }
-        }
-
-        /// <summary>
-        /// DEBUG用: Rayの可視化と現在のReverbMaterialの表示
-        /// </summary>
-        public void DebugRayCast()
-        {
-            Debug.DrawRay(playerTransform.position, playerTransform.forward * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, -playerTransform.forward * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, playerTransform.up * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, -playerTransform.up * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, playerTransform.right * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, -playerTransform.right * rayDistance, Color.red);
-            Debug.Log($"Current Reverb Material: {currentReverbMaterialType}");
-        }
         
-        /* ---ヘルパー関数--- */
-        private ReverbMaterialType GetMaterialTypeFromHit(RaycastHit hit)
-        {
-            return hit.collider?.GetComponent<ReverbMaterial>()?.GetReverbMaterialType ?? ReverbMaterialType.NONE;
-        }
-        
-                /// <summary>
+        /// <summary>
         /// 現在の環境をチェックし、最も多く存在するReverbMaterialをcurrentReverbMaterialTypeに設定する
         /// </summary>
-        private void CheckEnvironment()
+        public void CheckEnvironment()
         {
-            reverbMaterialTypes.Clear();
+            currentReverbMaterialType = ReverbMaterialType.NONE;
             
             // プレイヤーの前後左右上下にRayを飛ばして、当たったオブジェクトのReverbMaterialを取得する
             Physics.Raycast(playerTransform.position, playerTransform.forward, out RaycastHit hitForward, rayDistance);
@@ -99,7 +53,7 @@ namespace Acoustics
         /// <summary>
         /// 現在のReverbMaterialに応じたSnapShotに切り替える
         /// </summary>
-        private void ChangeSnapShot()
+        public void ChangeSnapShot()
         {
             switch (currentReverbMaterialType)
             {
@@ -123,6 +77,26 @@ namespace Acoustics
                     reverbSnapShots.Find(element => String.Compare("Reverb_TUNNEL_TYPE1", element.name) == 0)?.Play();
                     break;
             }
+        }
+
+        /// <summary>
+        /// DEBUG用: Rayの可視化と現在のReverbMaterialの表示
+        /// </summary>
+        public void DebugRayCast()
+        {
+            Debug.DrawRay(playerTransform.position, playerTransform.forward * rayDistance, Color.red);
+            Debug.DrawRay(playerTransform.position, -playerTransform.forward * rayDistance, Color.red);
+            Debug.DrawRay(playerTransform.position, playerTransform.up * rayDistance, Color.red);
+            Debug.DrawRay(playerTransform.position, -playerTransform.up * rayDistance, Color.red);
+            Debug.DrawRay(playerTransform.position, playerTransform.right * rayDistance, Color.red);
+            Debug.DrawRay(playerTransform.position, -playerTransform.right * rayDistance, Color.red);
+            Debug.Log($"Current Reverb Material: {currentReverbMaterialType}");
+        }
+        
+        /* ---ヘルパー関数--- */
+        private ReverbMaterialType GetMaterialTypeFromHit(RaycastHit hit)
+        {
+            return hit.collider?.GetComponent<ReverbMaterial>()?.GetReverbMaterialType ?? ReverbMaterialType.NONE;
         }
     }
 }

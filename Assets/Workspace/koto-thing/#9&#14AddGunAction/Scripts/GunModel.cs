@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UniRx;
 using UnityEngine;
 
 namespace Workspace.koto_thing
@@ -10,15 +9,9 @@ namespace Workspace.koto_thing
         private IGun currentEquippedGun;
         
         private Dictionary<AmmoType, int> ammoInventory = new ();
-        
-        // リロード残留情報
-        private bool hasPendingReload;
-        private int pendingReloadCount;
-        private AmmoType pendingAmmoType;
 
-        /* プロパティ */
-        public Subject<bool> OnReload { get; } = new ();
         public IGun GetCurrentEquippedGun => currentEquippedGun;
+        
         public Dictionary<AmmoType, int> GetAmmoInventory => ammoInventory;
         
         // TODO: テスト用
@@ -31,11 +24,11 @@ namespace Workspace.koto_thing
         }
 
         /// <summary>
-        /// リロードのための下準備をする
+        /// 銃のリロードを行う
         /// </summary>
-        public void PreReload()
+        public void Reload()
         {
-            if (currentEquippedGun == null || hasPendingReload)
+            if (currentEquippedGun == null)
                 return;
 
             // リロードに必要な弾薬を計算する
@@ -47,33 +40,13 @@ namespace Workspace.koto_thing
             var ammoType = currentEquippedGun.GetAmmoType();
             int bulletsAvailable = ammoInventory.GetValueOrDefault(ammoType);
             int bulletsToReload = Mathf.Min(bulletsNeeded, bulletsAvailable);
+
             if (bulletsToReload <= 0)
                 return;
 
-            bool isEmptyReload = currentEquippedGun.GetAmmoInMag() == 0;
-
-            hasPendingReload = true;
-            pendingReloadCount = bulletsToReload;
-            pendingAmmoType = ammoType;
-            
-            // OnReloadイベントを発行
-            OnReload.OnNext(isEmptyReload);
-        }
-
-        /// <summary>
-        /// 銃に弾薬をリロードする
-        /// </summary>
-        public void Reload()
-        {
-            if (!hasPendingReload || currentEquippedGun == null)
-                return;
-            
-            // 所持弾薬を更新して、銃に弾薬を補充する
-            ammoInventory[pendingAmmoType] -= pendingReloadCount;
-            currentEquippedGun.Reload(pendingReloadCount);
-
-            hasPendingReload = false;
-            pendingReloadCount = 0;
+            // 所持弾薬を更新し、銃に弾薬を補充する
+            ammoInventory[ammoType] -= bulletsToReload;
+            currentEquippedGun.Reload(bulletsToReload);
         }
         
         /// <summary>
