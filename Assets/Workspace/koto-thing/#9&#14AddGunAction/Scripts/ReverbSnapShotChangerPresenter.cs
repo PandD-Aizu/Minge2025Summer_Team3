@@ -15,7 +15,8 @@ namespace Acoustics
 
         private void Update()
         {
-            model.UpdateReverbEnvironment();
+            model.CheckEnvironment();
+            model.ChangeSnapShot();
             model.DebugRayCast();
         }
 
