@@ -26,6 +26,7 @@ namespace Utility
             }
 
             instance = this as TYpe;
+            DontDestroyOnLoad(this.gameObject);
             OnAwakeProcess();
         }
 
