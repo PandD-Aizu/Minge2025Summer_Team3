@@ -7,29 +7,20 @@ public class Police_Presenter : MonoBehaviour
     Police_Model modelScript;
     Police_View viewScript;
 
-    Ray ray; //警官からプレイヤーまでの距離を測るray
-    RaycastHit hit; //rayが衝突したオブジェクト
+    Ray ray;                                      //警官からプレイヤーまでの距離を測るray
+    RaycastHit hit;                               //rayが衝突したオブジェクト
     [SerializeField] float battleDistance = 3.0f; //警官が攻撃をするプレイヤーまでの距離
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         modelScript = this.GetComponent<Police_Model>();
         viewScript = this.GetComponent<Police_View>();
         ray = new Ray(transform.position, transform.forward);　//警官から前方にrayを飛ばす
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        //警官がプレイヤーに一定距離まで近づいたら攻撃する
-        if(Physics.Raycast(ray, out hit, battleDistance))
-        {
-            if (hit.collider.CompareTag("Player"))
-            {
-                Debug.Log("Attack!!");
-            }
-        }
+        modelScript.AttackPlayer();
     }
 
     //プレイヤーが範囲内に入った時
