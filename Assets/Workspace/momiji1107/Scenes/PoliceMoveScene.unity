@@ -3354,7 +3354,7 @@ GameObject:
   - component: {fileID: 1618903758}
   m_Layer: 0
   m_Name: Police
-  m_TagString: Untagged
+  m_TagString: EnemyShootable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3428,6 +3428,7 @@ MonoBehaviour:
   PoliceMoveSpeed: 0.01
   player: {fileID: 180465060}
   Battleflag: 0
+  PoliceHP: 50
 --- !u!65 &1618903762
 BoxCollider:
   m_ObjectHideFlags: 0
