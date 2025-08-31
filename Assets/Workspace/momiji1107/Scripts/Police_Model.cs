@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Police_Model : MonoBehaviour
 {
-    [SerializeField] float PoliceMoveSpeed = 1.0f; //警官の移動速度
+    [SerializeField] float PoliceMoveSpeed = 0.01f; //警官の移動速度
     [SerializeField] GameObject player;
-    public bool OnBattleflag = false; //プレイヤーが範囲内にいるかどうか
+    public bool Battleflag = false; //プレイヤーが範囲内にいるかどうか
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,7 +14,7 @@ public class Police_Model : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(OnBattleflag == true)
+        if(Battleflag == true)
         {
             //プレイヤーに向かって進み続ける
             transform.LookAt(player.transform);
@@ -23,9 +23,13 @@ public class Police_Model : MonoBehaviour
     }
 
     //フラグの切り替え
-    public void switchBattleflag()
+    public void OnBattleflag()
     {
-        if (OnBattleflag == false) OnBattleflag = true;
-        else OnBattleflag = false;
+        Battleflag = true;
+    }
+
+    public void OffBattleflag()
+    {
+        Battleflag = false;
     }
 }
