@@ -40,10 +40,11 @@ namespace Workspace.koto_thing
                 }
                 else if (Input.GetMouseButtonDown(0) && model.GetCurrentAmmoInMag() == 0)
                 {
-                    emitter.PlayEmptyFireSound();   
+                    emitter.PlayEmptyFireSound();
                 }
             }
             
+            model.CheckReload();
             view.UpdateAmmoText(model.GetCurrentAmmoInMag(), model.GetCurrentAmmo(), model.GetCurrentMagCapacity());
         }
 

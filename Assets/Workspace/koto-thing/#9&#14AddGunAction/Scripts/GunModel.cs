@@ -18,6 +18,7 @@ namespace Workspace.koto_thing
 
         /* プロパティ */
         public Subject<bool> OnReload { get; } = new ();
+        public Subject<Unit> NotifyReload { get; } = new ();
         public IGun GetCurrentEquippedGun => currentEquippedGun;
         public Dictionary<AmmoType, int> GetAmmoInventory => ammoInventory;
         
@@ -116,6 +117,14 @@ namespace Workspace.koto_thing
         public int GetCurrentAmmoInMag()
         {
             return currentEquippedGun.GetAmmoInMag();
+        }
+
+        public void CheckReload()
+        {
+            if (currentEquippedGun.GetAmmoInMag() == 0 && GetCurrentAmmo() > 0)
+            {
+                NotifyReload.OnNext(Unit.Default);
+            }
         }
     }
 }
