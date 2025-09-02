@@ -3,12 +3,11 @@ using UnityEngine;
 public class PoliceDetectionArea : MonoBehaviour
 {
     [SerializeField] GameObject Police;
-    Police_Presenter presenterScript;
     Police_Model modelScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        presenterScript = Police.GetComponent<Police_Presenter>();
+        modelScript = Police.GetComponent<Police_Model>();
     }
 
     // Update is called once per frame
@@ -20,12 +19,12 @@ public class PoliceDetectionArea : MonoBehaviour
     //プレイヤーが範囲内に入ったことを通知する
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")) presenterScript.BattleStart();
+        if (other.gameObject.CompareTag("Player")) modelScript.OnBattleflag();
     }
 
     //プレイヤーが範囲外に出たことを通知する
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")) presenterScript.BattleEnd();
+        if (other.gameObject.CompareTag("Player")) modelScript.OffBattleflag();
     }
 }

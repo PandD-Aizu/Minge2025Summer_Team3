@@ -2,47 +2,42 @@ using UnityEngine;
 
 public class Police_Presenter : MonoBehaviour
 {
-    [SerializeField] GameObject PoliceDetectionArea;
-    public GameObject player;
     Police_Model modelScript;
     Police_View viewScript;
-
-    Ray ray; //警官からプレイヤーまでの距離を測るray
-    RaycastHit hit; //rayが衝突したオブジェクト
-    [SerializeField] float battleDistance = 3.0f; //警官が攻撃をするプレイヤーまでの距離
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         modelScript = this.GetComponent<Police_Model>();
         viewScript = this.GetComponent<Police_View>();
-        ray = new Ray(transform.position, transform.forward);　//警官から前方にrayを飛ばす
+        modelScript.ray = new Ray(transform.position, transform.forward);　//警官から前方にrayを飛ばす
     }
 
     // Update is called once per frame
     void Update()
     {
         //警官がプレイヤーに一定距離まで近づいたら攻撃する
-        if(Physics.Raycast(ray, out hit, battleDistance))
+        if(Physics.Raycast(modelScript.ray, out modelScript.hit, modelScript.battleDistance))
         {
-            if (hit.collider.CompareTag("Player"))
+            if (modelScript.hit.collider.CompareTag("Player"))
             {
                 Debug.Log("Attack!!");
             }
         }
+
+        if (modelScript.Battleflag == true)
+        {
+            //プレイヤーに向かって進み続ける
+            transform.LookAt(modelScript.player.transform);
+            transform.position += transform.forward * modelScript.PoliceMoveSpeed * Time.deltaTime;
+        }
+
+        //警官がやられた時の処理
+        if (modelScript.PoliceHP <= 0)
+        {
+            Debug.Log("PoliceDead");
+            Destroy(this.gameObject);
+        }
     }
 
-    //プレイヤーが範囲内に入った時
-    public void BattleStart()
-    {
-        Debug.Log("in");
-        modelScript.OnBattleflag();
-    }
-
-    //プレイヤーが範囲外に出た時
-    public void BattleEnd()
-    {
-        Debug.Log("exit");
-        modelScript.OffBattleflag();
-    }
 }
