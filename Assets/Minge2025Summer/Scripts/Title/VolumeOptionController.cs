@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Title
 {
-    public class VolumeController : MonoBehaviour
+    public class VolumeOptionController : MonoBehaviour
     {
         [SerializeField] private Slider masterSlider;
         [SerializeField] private Slider bgmSlider;

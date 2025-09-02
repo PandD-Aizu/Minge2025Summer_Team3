@@ -16,7 +16,7 @@ namespace GameSetting
         /// </summary>
         // CONTROLS
         public bool mouseCursorLock;    // マウスカーソルロック
-        public bool mouseInvertY;       // マウスY軸反転
+        public bool mouseInvert;        // マウス操作反転
         public bool mouseWheelInvert;   // マウスホイール反転
         public KeyCode keyMoveForward;  // 移動キー
         public KeyCode keyMoveBackward; // 移動キー
@@ -91,7 +91,7 @@ namespace GameSetting
             difficulty = 0;
             
             mouseCursorLock = false;
-            mouseInvertY = false;
+            mouseInvert = false;
             mouseWheelInvert = false;
             keyMoveForward = KeyCode.W;
             keyMoveBackward = KeyCode.S;
