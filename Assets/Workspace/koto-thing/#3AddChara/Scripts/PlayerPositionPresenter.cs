@@ -5,6 +5,8 @@ namespace Workspace.koto_thing
     public class PlayerPositionPresenter : MonoBehaviour
     {
         [SerializeField] private PlayerPositionModel model;
+        [SerializeField] private PlayerPositionView view;
+        [SerializeField] private PlayerPositionEmitter emitter;
 
         private void Start()
         {
@@ -24,7 +26,12 @@ namespace Workspace.koto_thing
             if (Input.GetKey(KeyCode.A)) 
                 input.x -= 1.0f;
             
+            model.IsRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            
             model.Move(input);
+            
+            float speed = model.GetCharacterController.velocity.magnitude;
+            emitter.PlayFootStep(speed);
         }
     }
 }

@@ -9,10 +9,16 @@ namespace Workspace.koto_thing
         
         [Header("キャラクターの速度関係")]
         [SerializeField] private float moveSpeed = 5.0f;
+        [SerializeField] private float runSpeedMultiplier = 2.0f;
         [SerializeField] private Vector3 currentVelocity;
         [SerializeField] private float speedChangeRate = 10.0f;
         
         private float horizontalSpeed;
+        private bool isRunning;
+        
+        /* プロパティ */
+        public CharacterController GetCharacterController => characterController;
+        public bool IsRunning { get => isRunning; set => isRunning = value; }
 
         /// <summary>
         /// 水平方向の移動を行う
@@ -23,6 +29,8 @@ namespace Workspace.koto_thing
         {
             // 目標速度を計算
             float targetSpeed = input == Vector2.zero ? 0.0f : moveSpeed;
+            if (isRunning && input != Vector2.zero)
+                targetSpeed *= runSpeedMultiplier;
 
             // 現在の水平速度を取得
             float currentHorizontalSpeed =
