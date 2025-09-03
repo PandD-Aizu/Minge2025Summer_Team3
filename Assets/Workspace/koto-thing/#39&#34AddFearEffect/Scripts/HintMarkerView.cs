@@ -51,8 +51,6 @@ namespace Workspace.koto_thing
             // 距離を0から1の範囲に正規化する
             // minDistanceで0、maxDistanceで1
             float normalizedDistance = Mathf.Clamp01((distance - minDistance) / (maxDistance - minDistance));
-            
-            Debug.Log("Distance: " + distance + ", Normalized: " + normalizedDistance);
         
             // 距離が遠いほど透明度を下げるため、正規化された値を1から引く
             float newAlpha = 1.0f - normalizedDistance;

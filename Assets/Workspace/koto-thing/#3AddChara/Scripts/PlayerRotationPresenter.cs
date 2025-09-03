@@ -7,11 +7,6 @@ namespace Workspace.koto_thing
         [SerializeField] private PlayerRotationModel model;
         [SerializeField] private PlayerRotationView view;
 
-        public void Start()
-        {
-            
-        }
-
         public void Update()
         {
             model.AlignYRotationWithCamera();

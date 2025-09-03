@@ -1,20 +1,27 @@
+using UniRx;
+using UnityEditor.AddressableAssets.Build.BuildPipelineTasks;
 using UnityEngine;
+using Workspace.koto_thing;
 using Workspace.momiji1107;
 
 public class Police_Presenter : MonoBehaviour
 {
-    [SerializeField] GameObject PoliceDetectionArea;
-    public GameObject player;
+    [SerializeField] private FlashLightFlickerModel flickerModel;
+    [SerializeField] private FlashLightFlickerView flickerView;
     
     private Police_Model modelScript;
     private Police_View viewScript;
     private PoliceEmitter emitterScript;
+    
+    private CompositeDisposable disposables = new CompositeDisposable();
     
     void Start()
     {
         modelScript = this.GetComponent<Police_Model>();
         viewScript = this.GetComponent<Police_View>();
         emitterScript = this.GetComponent<PoliceEmitter>();
+        
+        SubscribeEvents();
     }
     
     void Update()
@@ -25,20 +32,16 @@ public class Police_Presenter : MonoBehaviour
         emitterScript.UpdateMoanTimer();
     }
 
-    //プレイヤーが範囲内に入った時
-    public void BattleStart()
+    private void SubscribeEvents()
     {
-        Debug.Log("in");
-        modelScript.OnBattleflag();
-        emitterScript.StartMoaning();
+        modelScript.Battleflag
+            .Subscribe(isBattle =>
+            {
+                if (isBattle)
+                    flickerModel.SetFlickerState(FlickerState.NORMALFLICKER, flickerView.GetFlashLight);
+                else
+                    flickerModel.SetFlickerState(FlickerState.STABLE, flickerView.GetFlashLight);
+            })
+            .AddTo(disposables);
     }
-
-    //プレイヤーが範囲外に出た時
-    public void BattleEnd()
-    {
-        Debug.Log("exit");
-        modelScript.OffBattleflag();
-        emitterScript.StopMoaning();
-    }
-
 }
