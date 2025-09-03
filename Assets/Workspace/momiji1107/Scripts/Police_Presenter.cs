@@ -1,43 +1,44 @@
 using UnityEngine;
+using Workspace.momiji1107;
 
 public class Police_Presenter : MonoBehaviour
 {
-    Police_Model modelScript;
-    Police_View viewScript;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] GameObject PoliceDetectionArea;
+    public GameObject player;
+    
+    private Police_Model modelScript;
+    private Police_View viewScript;
+    private PoliceEmitter emitterScript;
+    
     void Start()
     {
         modelScript = this.GetComponent<Police_Model>();
         viewScript = this.GetComponent<Police_View>();
-        modelScript.ray = new Ray(transform.position, transform.forward);　//警官から前方にrayを飛ばす
+        emitterScript = this.GetComponent<PoliceEmitter>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        //警官がプレイヤーに一定距離まで近づいたら攻撃する
-        if(Physics.Raycast(modelScript.ray, out modelScript.hit, modelScript.battleDistance))
-        {
-            if (modelScript.hit.collider.CompareTag("Player"))
-            {
-                Debug.Log("Attack!!");
-            }
-        }
+        emitterScript.PlayFootStep(modelScript.GetCharacterController.velocity.magnitude);
+        modelScript.Move();
+        modelScript.AttackPlayer();
+        emitterScript.UpdateMoanTimer();
+    }
 
-        if (modelScript.Battleflag == true)
-        {
-            //プレイヤーに向かって進み続ける
-            transform.LookAt(modelScript.player.transform);
-            transform.position += transform.forward * modelScript.PoliceMoveSpeed * Time.deltaTime;
-        }
+    //プレイヤーが範囲内に入った時
+    public void BattleStart()
+    {
+        Debug.Log("in");
+        modelScript.OnBattleflag();
+        emitterScript.StartMoaning();
+    }
 
-        //警官がやられた時の処理
-        if (modelScript.PoliceHP <= 0)
-        {
-            Debug.Log("PoliceDead");
-            Destroy(this.gameObject);
-        }
+    //プレイヤーが範囲外に出た時
+    public void BattleEnd()
+    {
+        Debug.Log("exit");
+        modelScript.OffBattleflag();
+        emitterScript.StopMoaning();
     }
 
 }

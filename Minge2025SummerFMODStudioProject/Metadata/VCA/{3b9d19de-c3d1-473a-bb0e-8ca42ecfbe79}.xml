@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="MixerVCA" id="{3b9d19de-c3d1-473a-bb0e-8ca42ecfbe79}">
 		<property name="name">
-			<value>CharacterVoice</value>
+			<value>Voice</value>
 		</property>
 		<relationship name="masters">
 			<destination>{557dbc54-babb-471d-a534-31262edfa163}</destination>

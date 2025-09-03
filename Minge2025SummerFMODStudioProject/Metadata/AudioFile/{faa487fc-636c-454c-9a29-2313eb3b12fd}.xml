@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{faa487fc-636c-454c-9a29-2313eb3b12fd}">
+		<property name="assetPath">
+			<value>lights-flicker-on-and-some-electrical-noises-33079.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>29.783999999999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{01266723-8439-451f-9705-0194d15eb5a4}</destination>
+		</relationship>
+	</object>
+</objects>
