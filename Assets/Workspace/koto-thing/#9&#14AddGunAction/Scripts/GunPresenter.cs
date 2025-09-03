@@ -21,31 +21,31 @@ namespace Workspace.koto_thing
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.R) && model.GetCurrentMagCapacity() != model.GetCurrentAmmoInMag())
-            {
+            if (model.GetCurrentEquippedGun == null)
+                return;
+            
+            if (Input.GetKeyDown(KeyCode.R) && model.GetCurrentMagCapacity() != model.GetCurrentAmmoInMag())
                 model.PreReload();
-            }
             
             if (Input.GetMouseButtonDown(1))
-            {
                 emitter.PlayAimSound();
-            }
 
             if (Input.GetMouseButton(1))
+                model.GetCurrentEquippedGun.Aim();
+            else
+                model.GetCurrentEquippedGun.ResetAccuracy();
+
+            if (Input.GetMouseButtonDown(0))
             {
-                if (Input.GetMouseButtonDown(0) && model.GetCurrentAmmoInMag() > 0)
-                {
+                if (model.GetCurrentAmmoInMag() > 0)
                     model.GetCurrentEquippedGun.Fire();
-                    emitter.PlayFireSound();
-                }
-                else if (Input.GetMouseButtonDown(0) && model.GetCurrentAmmoInMag() == 0)
-                {
+                else
                     emitter.PlayEmptyFireSound();
-                }
             }
             
             model.CheckReload();
             view.UpdateAmmoText(model.GetCurrentAmmoInMag(), model.GetCurrentAmmo(), model.GetCurrentMagCapacity());
+            view.UpdateReticle(model.GetCurrentEquippedGun, Input.GetMouseButton(1));
         }
 
         private void SubscribeEvents()
@@ -54,6 +54,14 @@ namespace Workspace.koto_thing
             model.OnReload
                 .SelectMany(isEmptyReload => emitter.PlayReloadAndWait(isEmptyReload))
                 .Subscribe(_ => model.Reload())
+                .AddTo(disposables);
+
+            model.GetCurrentEquippedGun.OnFire
+                .Subscribe(_ =>
+                {
+                    view.PlayMuzzleFlash();
+                    emitter.PlayFireSound();
+                })
                 .AddTo(disposables);
         }
 
@@ -64,7 +72,7 @@ namespace Workspace.koto_thing
 
         public void Dispose()
         {
-            
+            disposables.Dispose();
         }
     }
 }
