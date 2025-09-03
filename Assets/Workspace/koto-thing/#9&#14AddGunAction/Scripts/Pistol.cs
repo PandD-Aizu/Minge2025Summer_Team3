@@ -36,6 +36,7 @@ namespace Workspace.koto_thing
                 if (hit.collider.CompareTag("EnemyShootable"))
                 {
                     Debug.Log($"Hit {hit.collider.name}");
+                    hit.collider.GetComponent<Police_Model>().Damage(damage);
                 }
             }
             

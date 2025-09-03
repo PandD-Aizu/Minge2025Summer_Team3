@@ -15,7 +15,6 @@ public class Police_Presenter : MonoBehaviour
         modelScript = this.GetComponent<Police_Model>();
         viewScript = this.GetComponent<Police_View>();
         emitterScript = this.GetComponent<PoliceEmitter>();
-        
     }
     
     void Update()
@@ -41,4 +40,5 @@ public class Police_Presenter : MonoBehaviour
         modelScript.OffBattleflag();
         emitterScript.StopMoaning();
     }
+
 }

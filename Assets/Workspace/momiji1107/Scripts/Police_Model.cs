@@ -74,16 +74,29 @@ public class Police_Model : MonoBehaviour
         }
     }
 
-    //フラグの切り替え
+    public Ray ray; //警官からプレイヤーまでの距離を測るray
+    public RaycastHit hit; //rayが衝突したオブジェクト
+    [SerializeField] public float battleDistance = 3.0f; //警官が攻撃をするプレイヤーまでの距離
+   
+    //範囲内に入った時
     public void OnBattleflag()
     {
+        Debug.Log("police in");
         Battleflag = true;
         currentSpeed = 0.0f;
     }
 
+    //範囲外に出た時
     public void OffBattleflag()
     {
+        Debug.Log("police exit");
         Battleflag = false;
         currentSpeed = 0.0f;
+    }
+
+    //ダメージを受けた時
+    public void Damage(float damage)
+    {
+        PoliceHP -= damage;
     }
 }
