@@ -77,8 +77,6 @@ namespace Workspace.koto_thing
                             if (hit.distance <= pointBlankDistance)
                                 finalDamage *= pointBlankMultiplier;
                             
-                            Debug.Log("Final Damage: " + finalDamage);
-                            
                             enemy.ReceiveDamage(finalDamage);
                             damagedEnemies.Add(enemy);
                             penetratedEnemyCount++;
