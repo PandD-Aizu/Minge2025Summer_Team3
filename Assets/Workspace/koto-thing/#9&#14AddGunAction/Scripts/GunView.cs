@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System.Collections;
+using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.VFX;
 
@@ -17,6 +19,7 @@ namespace Workspace.koto_thing
 
         [Header("マズルフラッシュ")] 
         [SerializeField] private VisualEffect muzzleFlashVFX;
+        [SerializeField] private Light muzzleFlashLight;
         
         /// <summary>
         /// 現在の弾薬数を表示する
@@ -81,9 +84,23 @@ namespace Workspace.koto_thing
             }
         }
         
+        /// <summary>
+        /// マズルフラッシュのVFXを再生する
+        /// </summary>
         public void PlayMuzzleFlash()
         {
             muzzleFlashVFX.SendEvent("OnPlay");
+        }
+
+        /// <summary>
+        /// マズルフラッシュのライトを一瞬だけ点灯させる
+        /// </summary>
+        /// <returns></returns>
+        public async UniTask PlayMuzzleFlashLight()
+        {
+            muzzleFlashLight.enabled = true;
+            await UniTask.Delay(50);
+            muzzleFlashLight.enabled = false;
         }
     }
 }

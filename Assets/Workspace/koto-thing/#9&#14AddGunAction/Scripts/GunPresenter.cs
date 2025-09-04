@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
@@ -56,11 +57,14 @@ namespace Workspace.koto_thing
                 .Subscribe(_ => model.Reload())
                 .AddTo(disposables);
 
+            // 射撃時
             model.GetCurrentEquippedGun.OnFire
                 .Subscribe(_ =>
                 {
                     view.PlayMuzzleFlash();
                     emitter.PlayFireSound();
+                    view.PlayMuzzleFlashLight()
+                        .Forget();
                 })
                 .AddTo(disposables);
         }

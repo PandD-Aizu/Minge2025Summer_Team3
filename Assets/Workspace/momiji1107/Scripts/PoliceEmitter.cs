@@ -8,6 +8,7 @@ namespace Workspace.momiji1107
         [Header("依存関係")]
         [SerializeField] private StudioEventEmitter enemyMoanEmitter;
         [SerializeField] private StudioEventEmitter footStepEmitter;
+        [SerializeField] private StudioEventEmitter closeEnemyEmitter;
 
         [Header("うめき声設定")]
         [SerializeField] private float minMoanInterval = 2.0f;
@@ -25,6 +26,7 @@ namespace Workspace.momiji1107
         private bool sholdPlayMoan = false;
         
         public void PlayEnemyMoan() => enemyMoanEmitter.Play();
+        public void PlayCloseEnemySound() => closeEnemyEmitter.Play();
 
         public void UpdateMoanTimer()
         {
