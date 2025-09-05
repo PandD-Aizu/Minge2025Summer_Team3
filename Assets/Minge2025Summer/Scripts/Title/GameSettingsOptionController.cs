@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Title
 {
-    public class GameSettingsOption : MonoBehaviour
+    public class GameSettingsOptionController : MonoBehaviour
     {
         [SerializeField] private Button aimAssistButton;
         [SerializeField] private Button tutorialEnabledButton;
