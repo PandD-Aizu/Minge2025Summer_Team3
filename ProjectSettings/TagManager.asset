@@ -7,14 +7,15 @@ TagManager:
   - Interactable
   - EnemyShootable
   - ObjectShootable
+  - CinemachineTarget
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - 3DWithoutCulling
   - Water
   - UI
-  - 
+  - Shootable
   - 
   - 
   - 

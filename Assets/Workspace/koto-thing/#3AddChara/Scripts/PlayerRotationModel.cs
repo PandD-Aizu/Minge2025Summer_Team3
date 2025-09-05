@@ -1,4 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 namespace Workspace.koto_thing
@@ -18,5 +17,4 @@ namespace Workspace.koto_thing
             playerTransform.rotation = Quaternion.Euler(0.0f, cameraYAngle, 0.0f);
         }
     }
-
 }

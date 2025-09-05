@@ -1,8 +1,10 @@
+using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
 using Workspace.koto_thing;
+using Workspace.momiji1107;
 
-public class Police_Model : MonoBehaviour
+public class Police_Model : MonoBehaviour, IEnemy
 {
     [Header("Playerオブジェクト")]
     [SerializeField] private GameObject player; // プレイヤーオブジェクト
@@ -14,8 +16,9 @@ public class Police_Model : MonoBehaviour
     [SerializeField] float policeMoveSpeed = 3.0f; // 警官の移動速度
     [SerializeField] float acceleration = 10.0f;   // 加速度
     [SerializeField] float deceleration = 15.0f;   // 減速度
-    
-    [Header("警官のステータス")]
+
+    [Header("警官のステータス")] 
+    [SerializeField] private float policeHp = 1000.0f;
     [SerializeField] private float policeAttack = 10.0f;  // 警官の攻撃力
     [SerializeField] private float attackCoolDown = 3.0f; // 攻撃のクールダウン時間
     [SerializeField] private float battleDistance = 1.0f; // 戦闘距離
@@ -25,7 +28,7 @@ public class Police_Model : MonoBehaviour
     private Vector3 moveDirection = Vector3.zero; // 移動方向
 
     private bool isMoving = false;
-    public bool Battleflag = false; //プレイヤーが範囲内にいるかどうか
+    public ReactiveProperty<bool> Battleflag = new ReactiveProperty<bool>(false); //プレイヤーが範囲内にいるかどうか
     
     /* プロパティ */
     public CharacterController GetCharacterController => characterController;
@@ -35,7 +38,7 @@ public class Police_Model : MonoBehaviour
     /// </summary>
     public void Move()
     {
-        if (player != null && Battleflag)
+        if (player != null && Battleflag.Value)
         {
             // 方向と速度を決定
             Vector3 direction = (player.transform.position - transform.position).normalized;
@@ -73,17 +76,31 @@ public class Police_Model : MonoBehaviour
             currentCoolDown = 0.0f;
         }
     }
-
-    //フラグの切り替え
+   
+    //範囲内に入った時
     public void OnBattleflag()
     {
-        Battleflag = true;
+        Debug.Log("police in");
+        Battleflag.Value = true;
         currentSpeed = 0.0f;
     }
 
+    //範囲外に出た時
     public void OffBattleflag()
     {
-        Battleflag = false;
+        Debug.Log("police exit");
+        Battleflag.Value = false;
         currentSpeed = 0.0f;
+    }
+
+    //ダメージを受けた時
+    public void ReceiveDamage(float damage)
+    {
+        policeHp -= damage;
+        if (policeHp <= 0)
+        {
+            OffBattleflag();
+            Destroy(gameObject);
+        }
     }
 }
