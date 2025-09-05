@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UniRx;
 
 namespace Workspace.koto_thing
 {
@@ -10,15 +12,27 @@ namespace Workspace.koto_thing
         [Header("キャラクターの速度関係")]
         [SerializeField] private float moveSpeed = 5.0f;
         [SerializeField] private float runSpeedMultiplier = 2.0f;
+        [SerializeField] private float crouchSpeedMultiplier = 0.5f;
         [SerializeField] private Vector3 currentVelocity;
         [SerializeField] private float speedChangeRate = 10.0f;
         
+        [Header("しゃがみ関係")]
+        [SerializeField] private float standingHeight = 2.0f;
+        [SerializeField] private float crouchingHeight = 1.0f;
+        [SerializeField] private float heightChangeSpeed = 5.0f;
+
+        public ReactiveProperty<bool> isCrouching = new ();
+        public IObservable<bool> IsCrouchingObservable => isCrouching.AsObservable();
+        
         private float horizontalSpeed;
         private bool isRunning;
+        private float currentHeight;
+        private float targetHeight;
         
         /* プロパティ */
         public CharacterController GetCharacterController => characterController;
         public bool IsRunning { get => isRunning; set => isRunning = value; }
+        public bool IsCrouching { get => isCrouching.Value; set => isCrouching.Value = value; }
 
         /// <summary>
         /// 水平方向の移動を行う
@@ -29,7 +43,10 @@ namespace Workspace.koto_thing
         {
             // 目標速度を計算
             float targetSpeed = input == Vector2.zero ? 0.0f : moveSpeed;
-            if (isRunning && input != Vector2.zero)
+
+            if (IsCrouching)
+                targetSpeed *= crouchSpeedMultiplier;
+            else if (isRunning && input != Vector2.zero)
                 targetSpeed *= runSpeedMultiplier;
 
             // 現在の水平速度を取得
@@ -69,7 +86,7 @@ namespace Workspace.koto_thing
         /// <summary>
         /// 重力を適用する
         /// </summary>
-        public void ApplyGravity()
+        private void ApplyGravity()
         {
             if (!IsGrounded())
                 currentVelocity.y += Physics.gravity.y * Time.deltaTime;
