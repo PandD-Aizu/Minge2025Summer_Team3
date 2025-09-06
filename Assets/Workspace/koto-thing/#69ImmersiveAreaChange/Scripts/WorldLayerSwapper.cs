@@ -7,67 +7,82 @@ namespace Workspace.koto_thing
     {
         [SerializeField, Tooltip("入れ替え対象となるレイヤー名A")]
         private string layerNameA = "MainWorld";
-        
+
         [SerializeField, Tooltip("入れ替え対象となるレイヤー名B")]
         private string layerNameB = "PortalWorld";
 
-        private int layerA;
-        private int layerB;
+        private static readonly int StencilID = Shader.PropertyToID("_StencilComp");
 
-        private static readonly int StencilComp = Shader.PropertyToID("StencilComp");
+        private int layerA = -1;
+        private int layerB = -1;
+        private bool valid;
 
-        private void Start()
+        private void Awake()
         {
             layerA = LayerMask.NameToLayer(layerNameA);
             layerB = LayerMask.NameToLayer(layerNameB);
-        }
 
-        /// <summary>
-        /// すべての子オブジェクトのレイヤーを入れ替える
-        /// </summary>
-        public void SwapAllChildLayers()
-        {
-            foreach (Transform child in transform)
+            valid = layerA >= 0 && layerB >= 0 && layerA != layerB;
+            if (!valid)
             {
-                RecursiveSwapLayer(child);
+                Debug.LogError($"[WorldLayerSwapper] レイヤー名が不正です: A='{layerNameA}'({layerA}), B='{layerNameB}'({layerB})", this);
+                enabled = false;
             }
         }
 
-        /// <summary>
-        /// 再帰的に子オブジェクトのレイヤーを入れ替える
-        /// </summary>
-        /// <param name="target">入れ替える対象</param>
+        // 直下の子から再帰的に入れ替える（ルート自身は含めない）
+        public void SwapAllChildLayers()
+        {
+            if (!valid) return;
+
+            foreach (Transform child in transform)
+                RecursiveSwapLayer(child);
+        }
+
+        // ルート自身も含めて入れ替える
+        public void SwapSelfAndChildren()
+        {
+            if (!valid) return;
+            RecursiveSwapLayer(transform);
+        }
+
         private void RecursiveSwapLayer(Transform target)
         {
-            int currentLayer = target.gameObject.layer;
+            var go = target.gameObject;
+            int currentLayer = go.layer;
 
             if (currentLayer == layerA)
             {
-                target.gameObject.layer = layerB;
-                SetMaterialStencil(target, CompareFunction.Equal);
+                go.layer = layerB;
+                SetStencilCompare(target, CompareFunction.Equal);
             }
             else if (currentLayer == layerB)
             {
-                target.gameObject.layer = layerA;
-                SetMaterialStencil(target, CompareFunction.Always);
+                go.layer = layerA;
+                SetStencilCompare(target, CompareFunction.Always);
             }
-            
+
             foreach (Transform child in target)
-            {
                 RecursiveSwapLayer(child);
-            }
         }
 
-        /// <summary>
-        /// ステンシルバッファの比較関数を設定する
-        /// </summary>
-        /// <param name="target">入れ替える対象</param>
-        /// <param name="func">入れ替える比較関数</param>
-        private void SetMaterialStencil(Transform target, CompareFunction func)
+        private static void SetStencilCompare(Transform t, CompareFunction func)
         {
-            var renderers = target.GetComponent<Renderer>();
-            if (renderers != null)
-                renderers.material.SetInt(StencilComp, (int)func);
+            var renderer = t.GetComponent<Renderer>();
+            if (renderer == null) return;
+
+            var mats = renderer.sharedMaterials;
+            if (mats == null) return;
+
+            int value = (int)func;
+            for (int i = 0; i < mats.Length; i++)
+            {
+                var mat = mats[i];
+                if (mat != null && mat.HasProperty(StencilID))
+                {
+                    mat.SetInt(StencilID, value);
+                }
+            }
         }
     }
 }
