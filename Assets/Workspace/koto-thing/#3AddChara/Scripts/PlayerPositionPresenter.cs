@@ -10,12 +10,15 @@ namespace Workspace.koto_thing
 
         private void Start()
         {
-            
+            SubscribeEvents();
         }
 
         private void Update()
         {
+            // 入力処理
             Vector2 input = Vector2.zero;
+            
+            model.IsCrouching = Input.GetKey(KeyCode.Space);
 
             if (Input.GetKey(KeyCode.W)) 
                 input.y += 1.0f;
@@ -32,6 +35,11 @@ namespace Workspace.koto_thing
             
             float speed = model.GetCharacterController.velocity.magnitude;
             emitter.PlayFootStep(speed);
+        }
+
+        private void SubscribeEvents()
+        {
+            
         }
     }
 }
