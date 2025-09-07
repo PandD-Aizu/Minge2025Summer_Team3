@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UniRx;
 
 namespace Workspace.koto_thing
 {
@@ -9,33 +11,74 @@ namespace Workspace.koto_thing
         
         [Header("キャラクターの速度関係")]
         [SerializeField] private float moveSpeed = 5.0f;
-        [SerializeField] private float acceleration = 10.0f;
-        [SerializeField] private float deceleration = 20.0f;
+        [SerializeField] private float runSpeedMultiplier = 2.0f;
+        [SerializeField] private float crouchSpeedMultiplier = 0.5f;
+        [SerializeField] private Vector3 currentVelocity;
+        [SerializeField] private float speedChangeRate = 10.0f;
+        
+        [Header("しゃがみ関係")]
+        [SerializeField] private float standingHeight = 2.0f;
+        [SerializeField] private float crouchingHeight = 1.0f;
+        [SerializeField] private float heightChangeSpeed = 5.0f;
 
-        private Vector3 currentVelocity;
+        public ReactiveProperty<bool> isCrouching = new ();
+        public IObservable<bool> IsCrouchingObservable => isCrouching.AsObservable();
+        
+        private float horizontalSpeed;
+        private bool isRunning;
+        private float currentHeight;
+        private float targetHeight;
+        
+        /* プロパティ */
+        public CharacterController GetCharacterController => characterController;
+        public bool IsRunning { get => isRunning; set => isRunning = value; }
+        public bool IsCrouching { get => isCrouching.Value; set => isCrouching.Value = value; }
 
         /// <summary>
         /// 水平方向の移動を行う
+        /// characterController.Move()をラッピング
         /// </summary>
         /// <param name="input">xz平面の向き</param>
         public void Move(Vector2 input)
         {
-            // 現在の水平方向の速度を取得
-            Vector3 horizontalVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
+            // 目標速度を計算
+            float targetSpeed = input == Vector2.zero ? 0.0f : moveSpeed;
 
-            // 目標とする移動方向と速度を計算
-            Vector3 moveDirection = (transform.forward * input.y + transform.right * input.x).normalized;
-            Vector3 targetVelocity = moveDirection * moveSpeed;
+            if (IsCrouching)
+                targetSpeed *= crouchSpeedMultiplier;
+            else if (isRunning && input != Vector2.zero)
+                targetSpeed *= runSpeedMultiplier;
 
-            // 使用する加速度を決定
-            float accel = input.magnitude > 0 ? acceleration : deceleration;
+            // 現在の水平速度を取得
+            float currentHorizontalSpeed =
+                new Vector3(characterController.velocity.x, 0.0f, characterController.velocity.z).magnitude;
 
-            // 水平方向の速度を目標速度に向かって滑らかに変化させる
-            horizontalVelocity = Vector3.MoveTowards(horizontalVelocity, targetVelocity, accel * Time.deltaTime);
+            // Lerpを使って目標速度までスムーズに変化させる
+            horizontalSpeed = 
+                Mathf.Lerp(currentHorizontalSpeed, targetSpeed, Time.deltaTime * speedChangeRate); 
 
-            // 計算した水平速度を現在の速度に反映
-            currentVelocity.x = horizontalVelocity.x;
-            currentVelocity.z = horizontalVelocity.z;
+            if (input != Vector2.zero)
+            {
+                // 入力方向を正規化
+                Vector3 inputDirection = new Vector3(input.x, 0.0f, input.y).normalized;
+                // カメラの向きを基準とした移動方向を計算
+                Vector3 targetDirection = (transform.right * inputDirection.x + transform.forward * inputDirection.z).normalized;
+                
+                // 水平方向の移動ベクトルを設定
+                Vector3 horizontalMovement = targetDirection * horizontalSpeed;
+                currentVelocity.x = horizontalMovement.x;
+                currentVelocity.z = horizontalMovement.z;
+            }
+            else
+            {
+                // 入力がない場合（減速時）は、現在の進行方向を維持したまま減速する
+                Vector3 horizontalDir = new Vector3(currentVelocity.x, 0.0f, currentVelocity.z).normalized;
+                Vector3 horizontalMovement = horizontalDir * horizontalSpeed;
+                currentVelocity.x = horizontalMovement.x;
+                currentVelocity.z = horizontalMovement.z;
+            }
+            
+            ApplyGravity();
             
             characterController.Move(currentVelocity * Time.deltaTime);
         }
@@ -43,7 +86,7 @@ namespace Workspace.koto_thing
         /// <summary>
         /// 重力を適用する
         /// </summary>
-        public void ApplyGravity()
+        private void ApplyGravity()
         {
             if (!IsGrounded())
                 currentVelocity.y += Physics.gravity.y * Time.deltaTime;

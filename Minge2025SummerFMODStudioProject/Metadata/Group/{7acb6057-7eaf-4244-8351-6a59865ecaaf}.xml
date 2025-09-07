@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{7acb6057-7eaf-4244-8351-6a59865ecaaf}">
+		<property name="name">
+			<value>BGM</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{155ad4b1-84ed-41a3-ac10-63793ec42a48}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{2282d7bd-3617-4200-a210-6d0137bb14a3}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{c77f3ce4-44d7-4461-80ca-bc1e06b7cd82}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{155ad4b1-84ed-41a3-ac10-63793ec42a48}">
+		<relationship name="effects">
+			<destination>{d9738448-ab6d-4085-b4e3-d95d33ccd05b}</destination>
+			<destination>{0bef3a2f-b6c1-493f-b118-c332c479735b}</destination>
+			<destination>{89a7bf19-83fc-43e1-86ae-f51cd2eaecf5}</destination>
+			<destination>{70057085-72c1-4436-b1e3-8232a3a2eb74}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{2282d7bd-3617-4200-a210-6d0137bb14a3}" />
+	<object class="MixerBusFader" id="{d9738448-ab6d-4085-b4e3-d95d33ccd05b}" />
+	<object class="MixerSend" id="{0bef3a2f-b6c1-493f-b118-c332c479735b}">
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{6e604604-e917-40d8-a633-6f30b6376fc5}</destination>
+		</relationship>
+	</object>
+	<object class="MixerSend" id="{89a7bf19-83fc-43e1-86ae-f51cd2eaecf5}">
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{6f0e6926-263e-47a0-840b-288c468b32ea}</destination>
+		</relationship>
+	</object>
+	<object class="MixerSend" id="{70057085-72c1-4436-b1e3-8232a3a2eb74}">
+		<property name="inputFormat">
+			<value>2</value>
+		</property>
+		<relationship name="mixerReturn">
+			<destination>{4eb0e724-b5b9-4ea7-aabe-d5da18ffbae9}</destination>
+		</relationship>
+	</object>
+</objects>

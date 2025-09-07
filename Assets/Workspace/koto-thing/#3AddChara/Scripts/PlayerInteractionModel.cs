@@ -23,12 +23,6 @@ namespace Workspace.koto_thing
                 Camera.main.transform.forward, 
                 out RaycastHit hitInfo, 
                 interactDistance);
-            
-            // レイキャストでヒットしたオブジェクトがインタラクト可能なタグを持っているか確認
-            if (hitInfo.collider.CompareTag("Interactable"))
-            {
-                Debug.Log("Interacted with: " + hitInfo.collider.name);
-            }
         }
     }
 }
