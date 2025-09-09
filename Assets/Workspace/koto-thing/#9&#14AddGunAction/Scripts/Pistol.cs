@@ -57,7 +57,7 @@ namespace Workspace.koto_thing
                 hits = hits.OrderBy(hit => hit.distance).ToArray();
 
                 int penetratedEnemyCount = 0;
-                HashSet<IEnemy> damagedEnemies = new HashSet<IEnemy>();
+                HashSet<IEnemyStatus> damagedEnemies = new HashSet<IEnemyStatus>();
 
                 foreach (RaycastHit hit in hits)
                 {
@@ -68,17 +68,17 @@ namespace Workspace.koto_thing
                     // 敵にヒットした場合
                     if (hit.collider.CompareTag("EnemyShootable"))
                     {
-                        IEnemy enemy = hit.collider.GetComponent<IEnemy>();
+                        IEnemyStatus enemyStatus = hit.collider.GetComponentInChildren<IEnemyStatus>();
 
                         // まだダメージを与えていない敵にのみダメージを与える
-                        if (enemy != null && !damagedEnemies.Contains(enemy))
+                        if (enemyStatus != null && !damagedEnemies.Contains(enemyStatus))
                         {
                             float finalDamage = attackPower;
                             if (hit.distance <= pointBlankDistance)
                                 finalDamage *= pointBlankMultiplier;
                             
-                            enemy.ReceiveDamage(finalDamage);
-                            damagedEnemies.Add(enemy);
+                            enemyStatus.ReceiveDamage(finalDamage);
+                            damagedEnemies.Add(enemyStatus);
                             penetratedEnemyCount++;
                         }
                     }
