@@ -4,7 +4,7 @@ using UnityEngine;
 using Workspace.koto_thing;
 using Workspace.momiji1107;
 
-public class Police_Model : MonoBehaviour, IEnemy
+public class Police_Model : MonoBehaviour, IEnemyStatus
 {
     [Header("Playerオブジェクト")]
     [SerializeField] private GameObject player; // プレイヤーオブジェクト
