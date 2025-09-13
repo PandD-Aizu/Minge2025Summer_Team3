@@ -1,10 +1,13 @@
 ﻿using UniRx;
+using UnityEngine;
 
 namespace Workspace.koto_thing
 {
     public interface IGun
     {
         public Subject<Unit> OnFire { get; }
+        public void Tick(float deltaTime);
+        
         public void Equip();
         public void Reload(int bulletsToReload);
         public void Fire();
@@ -14,6 +17,7 @@ namespace Workspace.koto_thing
         public int GetAmmoInMag();
         public float CurrentAccuracy();
         public float GetCurrentSpreadAngleDeg();
+        public float GetFinalSpreadAngleDeg();
         public float GetHipFireSpreadAngleDeg();
         public void ResetAccuracy();
     }

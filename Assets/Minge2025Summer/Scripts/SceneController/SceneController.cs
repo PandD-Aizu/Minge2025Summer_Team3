@@ -25,15 +25,6 @@ public static class SceneController
     }
     
     /// <summary>
-    /// 同期的にシーンをアンロード
-    /// </summary>
-    /// <param name="sceneName">アンロードするシーンの名前</param>
-    public static void UnLoadScene(string sceneName)
-    {
-        SceneManager.UnloadScene(sceneName);
-    }
-    
-    /// <summary>
     /// 非同期でシーンをアンロード
     /// </summary>
     /// <param name="sceneName">アンロードするシーンの名前</param>
