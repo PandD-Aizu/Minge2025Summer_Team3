@@ -20,13 +20,14 @@ namespace Workspace.koto_thing
         private float verticalVelocity;
 
         public NavMeshAgent GetAgent => agent;
+        public float GetSpeed => speed;
         
         /// <summary>
         /// 速度を更新する
         /// </summary>
         public void UpdatePlanarVelocity()
         {
-            Vector3 desiredVelocity = agent.desiredVelocity;
+            Vector3 desiredVelocity = agent != null ? agent.desiredVelocity : Vector3.zero;
             desiredVelocity.y = 0.0f;
 
             Vector3 targetPlanarVelocity = desiredVelocity.sqrMagnitude > 0.01f
@@ -56,21 +57,32 @@ namespace Workspace.koto_thing
         /// </summary>
         public void ApplyGravity()
         {
-            if (!characterController.isGrounded)
+            if (characterController != null && !characterController.isGrounded)
                 verticalVelocity += Physics.gravity.y * Time.deltaTime;
             else
                 verticalVelocity = -1.0f;
         }
 
         /// <summary>
-        /// アニメーターの動きに上書きして移動を適用する
+        /// 移動を適用する（CharacterControllerを使用）
+        /// </summary>
+        public void ApplyMovement()
+        {
+            if (characterController == null) return;
+            Vector3 displacement = (planarVelocity + Vector3.up * verticalVelocity) * Time.deltaTime;
+            characterController.Move(displacement);
+            if (agent != null) agent.nextPosition = agent.transform.position;
+        }
+
+        /// <summary>
+        /// アニメーターの動きに上書きして移動を適用する（root motion使用時のみ）
         /// </summary>
         private void OnAnimatorMove()
         {
-            Vector3 displacement = (planarVelocity + Vector3.up * verticalVelocity) * Time.deltaTime;
-
-            characterController.Move(displacement);
-            agent.nextPosition = policeTransform.position;
+            if (animator != null && animator.applyRootMotion)
+            {
+                ApplyMovement();
+            }
         }
         
         /* 以下ヘルパー関数 */
@@ -81,7 +93,10 @@ namespace Workspace.koto_thing
         /// <param name="worldPosition">ワールド座標</param>
         public void SetDestination(Vector3 worldPosition)
         {
-            agent.SetDestination(worldPosition);
+            if (agent != null && agent.isOnNavMesh)
+            {
+                agent.SetDestination(worldPosition);
+            }
         }
 
         /// <summary>
@@ -89,7 +104,7 @@ namespace Workspace.koto_thing
         /// </summary>
         public void StopMovement()
         {
-            if (agent.isOnNavMesh)
+            if (agent != null && agent.isOnNavMesh)
             {
                 agent.SetDestination(policeTransform.position);
             }

@@ -57,31 +57,30 @@ namespace Workspace.koto_thing
                 return;
             }
             
-            // 精度が99%以上ならドット、そうでなければサークルを表示
-            float accuracy = gun.CurrentAccuracy();
-            if (isAiming && accuracy >= 0.99f)
+            // 反動込みの実効拡散角
+            float finalSpreadDeg = gun.GetFinalSpreadAngleDeg();
+            const float dotMaxSpreadDeg = 0.2f; // これ以下ならドット表示
+
+            // ドット/サークルの切替
+            bool showDot = isAiming && finalSpreadDeg <= dotMaxSpreadDeg;
+            dotReticle.SetActive(showDot);
+            circleReticle.SetActive(!showDot);
+
+            if (showDot)
             {
-                dotReticle.SetActive(true);
-                circleReticle.SetActive(false);
-                
                 if (dotReticle)
                     dotReticle.GetComponent<RectTransform>().sizeDelta = new Vector2(dotSizePx, dotSizePx);
+                return;
             }
-            else
-            {
-                dotReticle.SetActive(false);
-                circleReticle.SetActive(true);
 
-                float spreadDegree = isAiming ? gun.GetCurrentSpreadAngleDeg() : gun.GetHipFireSpreadAngleDeg();
-                
-                float spreadRad = spreadDegree * Mathf.Deg2Rad;
-                float fovRad = Camera.main.fieldOfView * Mathf.Deg2Rad;
-                float radiusPx = Mathf.Tan(spreadRad) / Mathf.Tan(fovRad * 0.5f) * (Screen.height * 0.5f);
-                float diameterPx = Mathf.Max(minCirclePx, radiusPx * 2.0f);
-                
-                if (circleReticle)
-                    circleReticle.GetComponent<RectTransform>().sizeDelta = new Vector2(diameterPx, diameterPx);
-            }
+            // サークルのサイズ計算（最終拡散角）
+            float spreadRad = finalSpreadDeg * Mathf.Deg2Rad;
+            float fovRad = Camera.main != null ? Camera.main.fieldOfView * Mathf.Deg2Rad : (60f * Mathf.Deg2Rad);
+            float radiusPx = Mathf.Tan(spreadRad) / Mathf.Tan(fovRad * 0.5f) * (Screen.height * 0.5f);
+            float diameterPx = Mathf.Max(minCirclePx, radiusPx * 2.0f);
+            
+            if (circleReticle)
+                circleReticle.GetComponent<RectTransform>().sizeDelta = new Vector2(diameterPx, diameterPx);
         }
         
         /// <summary>

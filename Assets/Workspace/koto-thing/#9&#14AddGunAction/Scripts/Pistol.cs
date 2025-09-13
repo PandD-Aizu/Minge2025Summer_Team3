@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UniRx;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -27,15 +26,37 @@ namespace Workspace.koto_thing
         
         [Header("反動設定")]
         [SerializeField] private CinemachineImpulseSource impulseSource;
+
+        [Header("精度・反動回復")]
+        [SerializeField, Tooltip("発砲時に追加される拡散(腰撃ち)")] private float fireSpreadKickHip = 3.0f;
+        [SerializeField, Tooltip("発砲時に追加される拡散(構え)")] private float fireSpreadKickAim = 1.0f;
+        [SerializeField, Tooltip("拡散の回復速度(度/秒)")] private float spreadRecoverSpeed = 10.0f;
+        [SerializeField, Tooltip("拡散ペナルティの上限(度)")] private float maxSpreadPenalty = 10.0f;
+
+        [Header("射撃カメラ/ヒットバッファ")]
+        [SerializeField, Tooltip("RaycastNonAlloc用のバッファサイズ")] 
+        private int bufferSize = 32;
+        [SerializeField, Tooltip("RaycastNonAlloc用のヒット配列サイズ")] private int raycastBufferSize = 32;
+        private RaycastHit[] raycastBuffer;
+
+        private float spreadPenalty;
         
         public Subject<Unit> OnFire { get; } = new ();
 
         private float aimTimer;
         private float nextFireTime;
 
+        // Presenterから毎フレーム呼び出す
+        public void Tick(float deltaTime)
+        {
+            if (spreadPenalty > 0f)
+                spreadPenalty = Mathf.Max(0f, spreadPenalty - spreadRecoverSpeed * deltaTime);
+        }
+
         public void Equip()
         {
-            // 装備時の処理
+            raycastBufferSize = Mathf.Max(8, bufferSize);
+            raycastBuffer = new RaycastHit[raycastBufferSize];
         }
 
         public void Reload(int bulletsToReload)
@@ -49,34 +70,59 @@ namespace Workspace.koto_thing
                 return;
 
             nextFireTime = Time.time + 1.0f / fireRate;
+
+            // 発砲時に現在の状態(腰撃ち〜構え)に応じて拡散ペナルティを加算
+            float aimT = CurrentAccuracy();
+            float kick = Mathf.Lerp(fireSpreadKickHip, fireSpreadKickAim, aimT);
+            spreadPenalty = Mathf.Min(maxSpreadPenalty, spreadPenalty + kick);
             
             Vector3 shootDirection = GetShootDirection();
-            RaycastHit[] hits = Physics.RaycastAll(Camera.main.transform.position, shootDirection, range);
-            if (hits.Length > 0)
+            Vector3 origin = Camera.main.transform.position;
+
+            int hitCount = Physics.RaycastNonAlloc(origin, shootDirection, raycastBuffer, range);
+            if (hitCount > 0)
             {
-                hits = hits.OrderBy(hit => hit.distance).ToArray();
+                // 近距離順に単純選択法で並べ替え（低コスト・小配列前提）
+                for (int i = 0; i < hitCount - 1; i++)
+                {
+                    int minIndex = i;
+                    float minDist = raycastBuffer[minIndex].distance;
+                    for (int j = i + 1; j < hitCount; j++)
+                    {
+                        float d = raycastBuffer[j].distance;
+                        if (d < minDist)
+                        {
+                            minDist = d;
+                            minIndex = j;
+                        }
+                    }
+                    if (minIndex != i)
+                    {
+                        var tmp = raycastBuffer[i];
+                        raycastBuffer[i] = raycastBuffer[minIndex];
+                        raycastBuffer[minIndex] = tmp;
+                    }
+                }
 
                 int penetratedEnemyCount = 0;
                 HashSet<IEnemyStatus> damagedEnemies = new HashSet<IEnemyStatus>();
 
-                foreach (RaycastHit hit in hits)
+                for (int i = 0; i < hitCount; i++)
                 {
-                    // 貫通可能な敵の数に達したら終了
                     if (penetratedEnemyCount >= penetrationCount)
                         break;
 
-                    // 敵にヒットした場合
-                    if (hit.collider.CompareTag("EnemyShootable"))
+                    var hit = raycastBuffer[i];
+                    var col = hit.collider;
+                    if (col != null && col.CompareTag("EnemyShootable"))
                     {
-                        IEnemyStatus enemyStatus = hit.collider.GetComponentInChildren<IEnemyStatus>();
-
-                        // まだダメージを与えていない敵にのみダメージを与える
+                        IEnemyStatus enemyStatus = col.GetComponentInChildren<IEnemyStatus>();
                         if (enemyStatus != null && !damagedEnemies.Contains(enemyStatus))
                         {
                             float finalDamage = attackPower;
                             if (hit.distance <= pointBlankDistance)
                                 finalDamage *= pointBlankMultiplier;
-                            
+
                             enemyStatus.ReceiveDamage(finalDamage);
                             damagedEnemies.Add(enemyStatus);
                             penetratedEnemyCount++;
@@ -85,10 +131,10 @@ namespace Workspace.koto_thing
                 }
             }
             
-            Debug.DrawRay(Camera.main.transform.position, shootDirection.normalized * range, Color.red, 2.0f);
+            Debug.DrawRay(origin, shootDirection.normalized * range, Color.red, 2.0f);
             
             ammoInMag--;
-            impulseSource.GenerateImpulse();
+            if (impulseSource != null) impulseSource.GenerateImpulse();
             OnFire.OnNext(Unit.Default);
         }
         
@@ -107,11 +153,9 @@ namespace Workspace.koto_thing
         private Vector3 GetShootDirection()
         {
             Vector3 forward = Camera.main.transform.forward;
-            float currentSpread = GetCurrentSpreadAngleDeg();
-            Vector2 randomPointInCircle = Random.insideUnitCircle * currentSpread;
-            
+            float finalSpread = GetFinalSpreadAngleDeg();
+            Vector2 randomPointInCircle = Random.insideUnitCircle * finalSpread;
             Quaternion randomRotation = Quaternion.Euler(randomPointInCircle.y, randomPointInCircle.x, 0.0f);
-            
             return randomRotation * forward;
         }
         
@@ -127,6 +171,11 @@ namespace Workspace.koto_thing
         public float GetCurrentSpreadAngleDeg()
         {
             return Mathf.Lerp(maxSpreadAngle, 0.0f, CurrentAccuracy());
+        }
+
+        public float GetFinalSpreadAngleDeg()
+        {
+            return GetCurrentSpreadAngleDeg() + spreadPenalty;
         }
 
         public float GetHipFireSpreadAngleDeg()

@@ -1,10 +1,8 @@
-﻿using System;
-using UniRx;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Workspace.koto_thing
 {
-    public class EnemyCollisionDetectionModel : MonoBehaviour
+    public class PoliceCollisionDetectionModel : MonoBehaviour
     {
         [Header("警官のTransform")]
         [SerializeField] 
@@ -24,7 +22,28 @@ namespace Workspace.koto_thing
         [SerializeField, Tooltip("障害物のレイヤーマスク")]
         private LayerMask obstacleLayerMask;
 
+        [Header("内部: オーバーラップ検出バッファ")]
+        [SerializeField, Tooltip("視界チェック用の一時バッファサイズ")]
+        private int overlapBufferSize = 32;
+        private Collider[] overlapBuffer;
+
+        // 最終目撃情報
+        private bool hasLastKnownPosition;
+        private Vector3 lastKnownPosition;
+        public bool HasLastKnownPosition => hasLastKnownPosition;
+        public Vector3 LastKnownPosition => lastKnownPosition;
+        public void ClearLastKnownPosition() { hasLastKnownPosition = false; }
         public Transform PlayerTransform { get; set; }
+
+        /// <summary>
+        /// 最後に目撃した位置を設定する
+        /// </summary>
+        /// <param name="position">最後に目撃した位置</param>
+        public void SetLastKnownPosition(Vector3 position)
+        {
+            lastKnownPosition = position;
+            hasLastKnownPosition = true;
+        }
 
         /// <summary>
         /// 視界内のプレイヤーを検出する
@@ -32,40 +51,33 @@ namespace Workspace.koto_thing
         public void FindPlayerInVision()
         {
             PlayerTransform = null;
+            if (policeTransform == null) return;
 
-            // 識別可能な範囲内のすべてのコライダーを取得(警官の足元から半径farDistanceの球体範囲)
-            Collider[] collidersInRange = Physics.OverlapSphere(policeTransform.position, farDistance);
-
+            int hitCount = Physics.OverlapSphereNonAlloc(policeTransform.position, farDistance, overlapBuffer);
             Transform targetPlayer = null;
-
-            // プレイヤーのコライダーを探す
-            foreach (var collider in collidersInRange)
+            for (int i = 0; i < hitCount; i++)
             {
-                if (collider.CompareTag("Player"))
+                var col = overlapBuffer[i];
+                if (col != null && col.CompareTag("Player"))
                 {
-                    targetPlayer = collider.transform;
+                    targetPlayer = col.transform;
                     break;
                 }
             }
 
-            // プレイヤーが見つからなかった場合は終了
-            if (targetPlayer == null)
-                return;
+            if (targetPlayer == null) return;
 
-            // プレイヤーが視野内にいるかどうかを確認
             Vector3 directionToPlayer = (targetPlayer.position - policeTransform.position).normalized;
             if (Vector3.Angle(policeTransform.forward, directionToPlayer) < visionAngle / 2)
             {
                 float distanceToPlayer = Vector3.Distance(policeTransform.position, targetPlayer.position);
-                Vector3 eyePosition = policeTransform.position + Vector3.up * 1.6f; // 警官の目の位置を調整
-                
-                // 障害物がないかどうかを確認
+                Vector3 eyePosition = policeTransform.position + Vector3.up * 1.6f;
                 if (!Physics.Raycast(eyePosition, directionToPlayer, distanceToPlayer, obstacleLayerMask))
                 {
-                    if (distanceToPlayer <= closeDistance)
-                        PlayerTransform = targetPlayer.transform;
-                    else if (distanceToPlayer <= farDistance)
-                        PlayerTransform = targetPlayer.transform;
+                    PlayerTransform = targetPlayer.transform;
+                    // 最終目撃地点を更新
+                    hasLastKnownPosition = true;
+                    lastKnownPosition = targetPlayer.position;
                 }
             }
         }
@@ -75,6 +87,7 @@ namespace Workspace.koto_thing
         /// </summary>
         private void OnDrawGizmosSelected()
         {
+            if (policeTransform == null) return;
             Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(policeTransform.position, farDistance);
             

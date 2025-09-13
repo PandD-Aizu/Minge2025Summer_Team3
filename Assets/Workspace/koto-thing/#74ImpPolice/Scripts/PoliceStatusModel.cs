@@ -3,7 +3,7 @@ using Workspace.momiji1107;
 
 namespace Workspace.koto_thing
 {
-    public class EnemyStatusModel : MonoBehaviour, IEnemyStatus
+    public class PoliceStatusModel : MonoBehaviour, IEnemyStatus
     {
         [Header("依存関係")] 
         [SerializeField, Tooltip("警官の親GameObject")]
@@ -12,7 +12,7 @@ namespace Workspace.koto_thing
         [Header("ステータス")] 
         [SerializeField, Tooltip("体力")]
         private float hp = 1000.0f;
-        
+
         public void ReceiveDamage(float damage)
         {
             hp -= damage;

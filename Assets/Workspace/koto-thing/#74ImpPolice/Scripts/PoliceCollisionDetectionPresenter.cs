@@ -2,9 +2,9 @@
 
 namespace Workspace.koto_thing
 {
-    public class EnemyCollisionDetectionPresenter : MonoBehaviour
+    public class PoliceCollisionDetectionPresenter : MonoBehaviour
     {
-        [SerializeField] private EnemyCollisionDetectionModel model;
+        [SerializeField] private PoliceCollisionDetectionModel model;
         
         private void Update()
         {
