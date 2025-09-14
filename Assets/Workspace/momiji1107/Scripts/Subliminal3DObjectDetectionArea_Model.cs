@@ -7,19 +7,19 @@ public class Subliminal3DObjectDetectionArea_Model : MonoBehaviour
 
     public void HideThisObject()
     {
-        Debug.Log("HideObject");
-        this3DObject.gameObject.SetActive(false);
+        if (this3DObject != null)
+            this3DObject.gameObject.SetActive(false);
     }
 
     public void AppearThisObject()
     {
-        Debug.Log("appearObject");
-        this3DObject.gameObject.SetActive(true);
+        if (this3DObject != null)
+            this3DObject.gameObject.SetActive(true);
     }
 
     public void DestroyThisObject()
     {
-        Debug.Log("destroyObject");
-        Destroy(this3DObject.gameObject);
+        if (this3DObject != null)
+            Destroy(this3DObject.gameObject);
     }
 }
