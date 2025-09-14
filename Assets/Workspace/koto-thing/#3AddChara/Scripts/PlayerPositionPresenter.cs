@@ -7,6 +7,7 @@ namespace Workspace.koto_thing
         [SerializeField] private PlayerPositionModel model;
         [SerializeField] private PlayerPositionView view;
         [SerializeField] private PlayerPositionEmitter emitter;
+        [SerializeField] private PlayerItemView itemView;
 
         private void Start()
         {
@@ -20,6 +21,8 @@ namespace Workspace.koto_thing
             
             model.IsCrouching = Input.GetKey(KeyCode.Space);
 
+            if (itemView.IsOpen) return;
+            
             if (Input.GetKey(KeyCode.W)) 
                 input.y += 1.0f;
             if (Input.GetKey(KeyCode.S)) 

@@ -21,11 +21,8 @@ namespace Workspace.koto_thing
         [Header("レイヤーマスク")]
         [SerializeField, Tooltip("障害物のレイヤーマスク")]
         private LayerMask obstacleLayerMask;
-
-        [Header("内部: オーバーラップ検出バッファ")]
-        [SerializeField, Tooltip("視界チェック用の一時バッファサイズ")]
-        private int overlapBufferSize = 32;
-        private Collider[] overlapBuffer;
+        
+        private Collider[] overlapBuffer = new Collider[32];
 
         // 最終目撃情報
         private bool hasLastKnownPosition;
@@ -51,7 +48,8 @@ namespace Workspace.koto_thing
         public void FindPlayerInVision()
         {
             PlayerTransform = null;
-            if (policeTransform == null) return;
+            if (policeTransform == null) 
+                return;
 
             int hitCount = Physics.OverlapSphereNonAlloc(policeTransform.position, farDistance, overlapBuffer);
             Transform targetPlayer = null;
@@ -65,7 +63,8 @@ namespace Workspace.koto_thing
                 }
             }
 
-            if (targetPlayer == null) return;
+            if (targetPlayer == null) 
+                return;
 
             Vector3 directionToPlayer = (targetPlayer.position - policeTransform.position).normalized;
             if (Vector3.Angle(policeTransform.forward, directionToPlayer) < visionAngle / 2)
@@ -75,8 +74,7 @@ namespace Workspace.koto_thing
                 if (!Physics.Raycast(eyePosition, directionToPlayer, distanceToPlayer, obstacleLayerMask))
                 {
                     PlayerTransform = targetPlayer.transform;
-                    // 最終目撃地点を更新
-                    hasLastKnownPosition = true;
+                    hasLastKnownPosition = true; // 最終目撃地点を更新
                     lastKnownPosition = targetPlayer.position;
                 }
             }
@@ -87,7 +85,9 @@ namespace Workspace.koto_thing
         /// </summary>
         private void OnDrawGizmosSelected()
         {
-            if (policeTransform == null) return;
+            if (policeTransform == null) 
+                return;
+            
             Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(policeTransform.position, farDistance);
             

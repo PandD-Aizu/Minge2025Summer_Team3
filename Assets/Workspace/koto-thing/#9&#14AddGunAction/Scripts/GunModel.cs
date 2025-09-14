@@ -27,9 +27,6 @@ namespace Workspace.koto_thing
         {
             currentEquippedGun = GetComponent<Pistol>();
             currentEquippedGun.Equip();
-            
-            if (!ammoInventory.ContainsKey(AmmoType.Pistol))
-                ammoInventory.Add(AmmoType.Pistol, 60);
         }
 
         /// <summary>

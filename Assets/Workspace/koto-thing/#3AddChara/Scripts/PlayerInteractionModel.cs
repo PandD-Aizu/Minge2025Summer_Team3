@@ -23,6 +23,12 @@ namespace Workspace.koto_thing
                 Camera.main.transform.forward, 
                 out RaycastHit hitInfo, 
                 interactDistance);
+
+            if (hitInfo.collider != null &&
+                hitInfo.collider.CompareTag("Interactable"))
+            {
+                
+            }
         }
     }
 }
