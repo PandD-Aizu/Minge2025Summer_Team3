@@ -14,6 +14,8 @@ namespace Workspace.koto_thing
 
         private void Start()
         {
+            gunModel = FindFirstObjectByType<GunModel>();
+            
             SubscribeEvents();
         }
 
@@ -27,7 +29,7 @@ namespace Workspace.koto_thing
             model.OnApplied
                 .Subscribe(_ =>
                 {
-                    gunModel.AddAmmo(model.GetAmmoType, model.GetAmmoCount);
+                    gunModel.AddAmmo(model.GetAmmoType, model.GetAmount);
                     view.Hide();
                 })
                 .AddTo(disposable);
