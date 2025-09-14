@@ -26,6 +26,7 @@ namespace Workspace.koto_thing
         private void Awake()
         {
             currentEquippedGun = GetComponent<Pistol>();
+            currentEquippedGun.Equip();
             
             if (!ammoInventory.ContainsKey(AmmoType.Pistol))
                 ammoInventory.Add(AmmoType.Pistol, 60);

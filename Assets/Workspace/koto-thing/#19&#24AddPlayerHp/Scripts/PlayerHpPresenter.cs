@@ -8,6 +8,7 @@ namespace Workspace.koto_thing
     {
         [SerializeField] private PlayerHpModel model;
         [SerializeField] private PlayerHpView view;
+        [SerializeField] private BattleBGMController battleBGMController;
 
         private CompositeDisposable disposables = new ();
 
@@ -25,7 +26,11 @@ namespace Workspace.koto_thing
         private void SubscribeEvents()
         {
             model.CurrentHpObservable
-                .Subscribe(hp => view.UpdateHpText(hp, model.GetMaxHp))
+                .Subscribe(hp =>
+                {
+                    view.UpdateHpText(hp, model.GetMaxHp);
+                    battleBGMController.ChangeBGM(hp, model.GetMaxHp);
+                })
                 .AddTo(disposables);
         }
 
