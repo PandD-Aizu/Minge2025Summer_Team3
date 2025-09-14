@@ -29,7 +29,7 @@ namespace Workspace.koto_thing
                 Cursor.visible = true;
             }
             
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.L))
             {
                 model.IsLocked = !model.IsLocked;
             }
