@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -12,6 +11,10 @@ namespace Workspace.koto_thing
         [SerializeField] private GunModel model;
         [SerializeField] private GunView view;
         [SerializeField] private GunEmitter emitter;
+        [SerializeField, Tooltip("射撃レイを飛ばす参照カメラ。未設定ならCamera.main")] private Camera fireCamera;
+
+        [Header("聴覚(銃声)設定")] 
+        [SerializeField, Tooltip("敵が銃声を聞き取れる半径(メートル)")] private float gunshotHearRadius = 35f;
 
         private CompositeDisposable disposables = new ();
 
@@ -22,8 +25,12 @@ namespace Workspace.koto_thing
 
         private void Update()
         {
-            if (model.GetCurrentEquippedGun == null)
+            var gun = model.GetCurrentEquippedGun;
+            if (gun == null)
                 return;
+
+            // 毎フレーム更新（精度回復など）
+            gun.Tick(Time.deltaTime);
             
             if (Input.GetKeyDown(KeyCode.R) && model.GetCurrentMagCapacity() != model.GetCurrentAmmoInMag())
                 model.PreReload();
@@ -32,21 +39,21 @@ namespace Workspace.koto_thing
                 emitter.PlayAimSound();
 
             if (Input.GetMouseButton(1))
-                model.GetCurrentEquippedGun.Aim();
+                gun.Aim();
             else
-                model.GetCurrentEquippedGun.ResetAccuracy();
+                gun.ResetAccuracy();
 
             if (Input.GetMouseButtonDown(0))
             {
                 if (model.GetCurrentAmmoInMag() > 0)
-                    model.GetCurrentEquippedGun.Fire();
+                    gun.Fire();
                 else
                     emitter.PlayEmptyFireSound();
             }
             
             model.CheckReload();
             view.UpdateAmmoText(model.GetCurrentAmmoInMag(), model.GetCurrentAmmo(), model.GetCurrentMagCapacity());
-            view.UpdateReticle(model.GetCurrentEquippedGun, Input.GetMouseButton(1));
+            view.UpdateReticle(gun, Input.GetMouseButton(1));
         }
 
         private void SubscribeEvents()
@@ -63,8 +70,12 @@ namespace Workspace.koto_thing
                 {
                     view.PlayMuzzleFlash();
                     emitter.PlayFireSound();
-                    view.PlayMuzzleFlashLight()
-                        .Forget();
+                    view.PlayMuzzleFlashLight().Forget();
+
+                    // 銃声を世界へPublish（敵の聴覚が購読）
+                    var cam = fireCamera != null ? fireCamera : Camera.main;
+                    Vector3 pos = cam != null ? cam.transform.position : view.transform.position;
+                    MessageBroker.Default.Publish(new SoundEvent(pos, gunshotHearRadius, SoundType.Gunshot, gameObject));
                 })
                 .AddTo(disposables);
         }

@@ -56,7 +56,6 @@ namespace Acoustics
             Debug.DrawRay(playerTransform.position, -playerTransform.up * rayDistance, Color.red);
             Debug.DrawRay(playerTransform.position, playerTransform.right * rayDistance, Color.red);
             Debug.DrawRay(playerTransform.position, -playerTransform.right * rayDistance, Color.red);
-            Debug.Log($"Current Reverb Material: {currentReverbMaterialType}");
         }
         
         /* ---ヘルパー関数--- */
