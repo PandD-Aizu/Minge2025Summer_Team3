@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UniRx;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ namespace Workspace.koto_thing
         
         private Dictionary<IItem, int> itemList = new ();
         private IItem currentItem;
+        
+        public Subject<InventoryItemEvent> OnItemChanged = new ();
 
         /// <summary>
         /// アイテムを取得する
@@ -23,8 +26,9 @@ namespace Workspace.koto_thing
             {
                 if (hit.collider.TryGetComponent<IItem>(out var item))
                 {
-                    item.SetIsGet(true);
+                    item.SetIsGet = true;
                     AddItem(item);
+                    OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
                 }
             }
         }
@@ -41,7 +45,7 @@ namespace Workspace.koto_thing
             foreach (var pair in itemList)
             {
                 IItem item = pair.Key;
-                if (item.GetIsApplied())
+                if (item.GetIsApplied)
                 {
                     int newCount = pair.Value - 1;
                     if (newCount > 0)
@@ -69,7 +73,7 @@ namespace Workspace.koto_thing
         /// </summary>
         public void ApplyItem()
         {
-            currentItem.ApplyItem();
+            currentItem?.ApplyItem();
         }
         
         /* ---以下ヘルパー関数--- */
@@ -78,12 +82,14 @@ namespace Workspace.koto_thing
         /// アイテムを追加する
         /// </summary>
         /// <param name="item">追加するアイテム</param>
-        public void AddItem(IItem item)
+        private int AddItem(IItem item)
         {
             if (itemList.ContainsKey(item))
                 itemList[item]++;
             else
                 itemList[item] = 1;
+
+            return itemList[item];
         }
     }
 }

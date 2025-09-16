@@ -8,6 +8,7 @@ TagManager:
   - EnemyShootable
   - ObjectShootable
   - CinemachineTarget
+  - Item
   layers:
   - Default
   - TransparentFX

@@ -87,6 +87,7 @@ namespace Workspace.koto_thing
             aiBehaviourModel.CurrentStateObservable
                 .Subscribe(nextState =>
                 {
+                    Debug.Log("Next PoliceState: " + nextState);
                     switch (nextState)
                     {
                         case AIState.Idle:
