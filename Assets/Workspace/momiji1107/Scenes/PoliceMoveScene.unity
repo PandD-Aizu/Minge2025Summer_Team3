@@ -255,11 +255,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1214714725
-      Data2: 1284554651
-      Data3: -86354019
-      Data4: 1772172785
-    Path: event:/Wood_AmbientMain
+      Data1: -1755764382
+      Data2: 1218770657
+      Data3: -1503983723
+      Data4: 223268593
+    Path: event:/Ambient/Tunnel_Ambient
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 2
@@ -1782,6 +1782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 180465063}
   rayDistance: 25
+  checkInterval: 1
   currentReverbMaterialType: 0
   reverbMaterialTypes: 
   reverbSnapShots:
@@ -1835,6 +1836,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 768721764}
+  view: {fileID: 0}
+  emitter: {fileID: 0}
 --- !u!114 &768721764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,8 +1853,15 @@ MonoBehaviour:
   playerTransform: {fileID: 180465063}
   characterController: {fileID: 180465061}
   moveSpeed: 2
+  runSpeedMultiplier: 2
+  crouchSpeedMultiplier: 0.5
   currentVelocity: {x: 0, y: 0, z: 0}
   speedChangeRate: 8
+  standingHeight: 2
+  crouchingHeight: 1
+  heightChangeSpeed: 5
+  isCrouching:
+    value: 0
 --- !u!1 &813313359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1995,6 +2005,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoText: {fileID: 1071675831}
+  dotReticle: {fileID: 0}
+  circleReticle: {fileID: 0}
+  dotSizePx: 6
+  minCirclePx: 12
+  muzzleFlashVFX: {fileID: 0}
+  muzzleFlashLight: {fileID: 0}
 --- !u!114 &1070143689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2009,6 +2025,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1070143690}
   view: {fileID: 1070143688}
+  emitter: {fileID: 0}
 --- !u!114 &1070143690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2036,9 +2053,15 @@ MonoBehaviour:
   ammoType: 0
   magCapacity: 12
   ammoInMag: 0
+  maxSpreadAngle: 5
+  timeToAim: 0.3
+  range: 1000
   fireRate: 0.5
-  reloadTime: 1.5
-  damage: 10
+  attackPower: 100
+  penetrationCount: 1
+  pointBlankDistance: 3
+  pointBlankMultiplier: 1.5
+  impulseSource: {fileID: 0}
 --- !u!1 &1071675829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2605,69 +2628,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
---- !u!1 &1298213772
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1298213774}
-  - component: {fileID: 1298213773}
-  m_Layer: 0
-  m_Name: AmbientSub
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1298213773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298213772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: 1497808284
-      Data2: 1307667495
-      Data3: -1029526132
-      Data4: -1111610412
-    Path: event:/Wood_AmbientSub
-  Event: 
-  EventPlayTrigger: 1
-  EventStopTrigger: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
---- !u!4 &1298213774
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298213772}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1407246191
 GameObject:
   m_ObjectHideFlags: 0
@@ -3354,7 +3314,7 @@ GameObject:
   - component: {fileID: 1618903758}
   m_Layer: 0
   m_Name: Police
-  m_TagString: EnemyShootable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3398,9 +3358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14159594098b040d087e6e0641695d4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoliceDetectionArea: {fileID: 266327585}
-  player: {fileID: 180465060}
-  battleDistance: 3
+  flickerModel: {fileID: 0}
+  flickerView: {fileID: 0}
 --- !u!114 &1618903760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3425,10 +3384,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2528c8837ab04359882aa5000aeab0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PoliceMoveSpeed: 0.01
   player: {fileID: 180465060}
-  Battleflag: 0
-  PoliceHP: 50
+  characterController: {fileID: 0}
+  policeMoveSpeed: 3
+  acceleration: 10
+  deceleration: 15
+  policeHp: 1000
+  policeAttack: 10
+  attackCoolDown: 3
+  battleDistance: 1
+  Battleflag:
+    value: 0
 --- !u!65 &1618903762
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3946,7 +3912,6 @@ SceneRoots:
   - {fileID: 9429535}
   - {fileID: 1541729621}
   - {fileID: 44018837}
-  - {fileID: 1298213774}
   - {fileID: 813313361}
   - {fileID: 383372625}
   - {fileID: 567136158}

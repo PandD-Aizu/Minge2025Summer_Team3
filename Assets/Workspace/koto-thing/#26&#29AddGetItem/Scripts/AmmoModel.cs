@@ -10,18 +10,29 @@ namespace Workspace.koto_thing
         [SerializeField] private int ammoCount;
         [SerializeField] private AmmoType ammoType;
 
+        [Header("インベントリUIの設定")] 
+        [SerializeField] private string displayName;
+        [TextArea, SerializeField] private string description;
+
         [Header("フラグ")] 
         [SerializeField] private bool isGet;
         [SerializeField] private bool isApplied;
 
+        [Header("弾薬2D画像")] 
+        [SerializeField] private Sprite ammoSprite;
+
         private readonly Subject<Unit> onApplied = new ();
+        private bool getIsApplied;
         public IObservable<Unit> OnApplied => onApplied;
         
         /* プロパティ */
-        public int GetAmmoCount => ammoCount;
+        public int GetAmount => ammoCount;
+        public string GetDisplayName => displayName;
+        public string GetDescription => description;
         public AmmoType GetAmmoType => ammoType;
-        public bool IsGet { get => isGet; set => isGet = value; }
-        public bool IsApplied { get => isApplied; set => isApplied = value; }
+        public Sprite GetSprite { get => ammoSprite; }
+        public bool SetIsGet { get => isGet; set => isGet = value; }
+        public bool GetIsApplied => getIsApplied;
 
         /// <summary>
         /// アイテムを適用する
@@ -34,24 +45,6 @@ namespace Workspace.koto_thing
             isApplied = true;
             onApplied.OnNext(Unit.Default);
             onApplied.OnCompleted();
-        }
-        
-        /// <summary>
-        /// アイテムを取得したかどうかのフラグを設定する
-        /// </summary>
-        /// <param name="value">取得したかどうか</param>
-        public void SetIsGet(bool value)
-        {
-            isGet = value;
-        }
-        
-        /// <summary>
-        /// アイテムが適用されたかどうかを取得する
-        /// </summary>
-        /// <returns>アイテムが適用されたかどうか</returns>
-        public bool GetIsApplied()
-        {
-            return isApplied;
         }
     }
 }

@@ -666,7 +666,6 @@ MonoBehaviour:
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 384
-  overlapBufferSize: 32
 --- !u!114 &135218644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1779,7 +1778,7 @@ MonoBehaviour:
   magCapacity: 12
   ammoInMag: 0
   maxSpreadAngle: 5
-  timeToAim: 1
+  timeToAim: 0.4
   range: 1000
   fireRate: 3
   attackPower: 100
@@ -7430,7 +7429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8369723304198862659, guid: 17f011ad18e006a40b5fd2df96c95a00, type: 3}
       propertyPath: m_AnimatePhysics
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8369723304198862659, guid: 17f011ad18e006a40b5fd2df96c95a00, type: 3}
       propertyPath: m_ApplyRootMotion
