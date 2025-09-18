@@ -30,6 +30,13 @@ namespace Workspace.koto_thing
                 view.NormalFlicker(model.GetNormalFlickerSpeed, model.RandomOffset, model.GetMinIntensity, model.GetMaxIntensity);
             else if (model.GetCurrentState == FlickerState.INTENSEFLICKER)
                 view.IntenseFlicker(model.GetIntenseFlickerSpeed, model.RandomOffset, model.GetIntenseMinIntensity, model.GetIntenseMaxIntensity);
+
+            //Fキーでフラッシュライトの点灯、消灯を切り替える
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (model.GetCurrentState == FlickerState.STABLE) model.SetFlickerState(FlickerState.OFF, view.GetFlashLight);
+                else if (model.GetCurrentState == FlickerState.OFF) model.SetFlickerState(FlickerState.STABLE, view.GetFlashLight);
+            }
         }
 
         private void SubscribeEvents()
