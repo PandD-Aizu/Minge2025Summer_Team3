@@ -19,12 +19,13 @@ namespace Workspace.koto_thing
         [SerializeField, Tooltip("使用済みか")] private bool isApplied;
         
         [Header("回復アイテム2D画像")] 
-        [SerializeField] private Sprite pillSprite;
+        [SerializeField, Tooltip("インベントリに表示させる画像")] private Sprite pillSprite;
         
-        private Subject<Unit> onApplied = new ();
+        private readonly Subject<Unit> onApplied = new ();
         public IObservable<Unit> OnApplied => onApplied;
 
-        public int GetAmount => healAmount;
+        public int GetAmount => pillCount;
+        public int GetHealAmount => healAmount;
         public string GetDisplayName => displayName;
         public string GetDescription => description;
         public Sprite GetSprite => pillSprite;

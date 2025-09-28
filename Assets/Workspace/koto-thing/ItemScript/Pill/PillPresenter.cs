@@ -24,7 +24,7 @@ namespace Workspace.koto_thing
             model.OnApplied
                 .Subscribe(_ =>
                 {
-                    playerHpModel.CurrentHp += model.GetAmount;
+                    playerHpModel.CurrentHp += model.GetHealAmount;
                 })
                 .AddTo(disposables);
         }
