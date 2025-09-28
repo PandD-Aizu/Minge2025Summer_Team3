@@ -2,7 +2,7 @@
 
 namespace Workspace.koto_thing.Battery
 {
-    public class BatteryView : MonoBehaviour
+    public class BatteryView : MonoBehaviour, IItemView
     {
         [SerializeField] private GameObject parentObject;
 

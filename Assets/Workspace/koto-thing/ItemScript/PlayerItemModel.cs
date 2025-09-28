@@ -29,10 +29,11 @@ namespace Workspace.koto_thing
                     item.SetIsGet = true;
                     if (item is MonoBehaviour mb)
                     {
-                        var view = mb.GetComponentInChildren<PillView>();
+                        var view = mb.GetComponentInChildren<IItemView>();
                         if (view != null)
                             view.Hide();
                     }
+                    
                     AddItem(item);
                     OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
                 }

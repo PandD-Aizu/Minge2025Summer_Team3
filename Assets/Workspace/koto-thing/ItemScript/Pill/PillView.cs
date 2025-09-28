@@ -2,7 +2,7 @@
 
 namespace Workspace.koto_thing
 {
-    public class PillView : MonoBehaviour
+    public class PillView : MonoBehaviour, IItemView
     {
         [SerializeField] private GameObject parentObject;
 
