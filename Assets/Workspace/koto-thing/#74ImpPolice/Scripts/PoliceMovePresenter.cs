@@ -14,6 +14,7 @@ namespace Workspace.koto_thing
         [SerializeField] private PoliceAIBehaviour aiBehaviourModel;
         [SerializeField] private BattleBGMController battleBGMController;
         [SerializeField] private PoliceAttackModel attackModel;
+        [SerializeField] private PoliceAnimationController policeAnimationController;
 
         private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -93,18 +94,22 @@ namespace Workspace.koto_thing
                         case AIState.Idle:
                             aiBehaviourModel.HandleIdleState(model);
                             battleBGMController.StopBattleBGM();
+                            policeAnimationController.PlayIdle();
                             break;
                         case AIState.Chasing:
                             aiBehaviourModel.HandleChaseState(detectionModel.PlayerTransform, model);
                             battleBGMController.PlayBattleBGM();
+                            policeAnimationController.PlayChase();
                             break;
                         case AIState.Searching:
                             aiBehaviourModel.HandleSearchState(detectionModel.LastKnownPosition, model);
                             battleBGMController.StopBattleBGM();
+                            policeAnimationController.PlaySearch();
                             break;
                         case AIState.Attacking:
                             aiBehaviourModel.HandleAttackState(detectionModel.PlayerTransform, model, attackModel);
                             battleBGMController.PlayBattleBGM();
+                            policeAnimationController.PlayAttack();
                             break;
                     }
                 })
