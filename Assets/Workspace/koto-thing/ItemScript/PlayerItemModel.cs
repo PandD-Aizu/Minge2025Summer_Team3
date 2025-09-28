@@ -27,6 +27,12 @@ namespace Workspace.koto_thing
                 if (hit.collider.TryGetComponent<IItem>(out var item))
                 {
                     item.SetIsGet = true;
+                    if (item is MonoBehaviour mb)
+                    {
+                        var view = mb.GetComponentInChildren<PillView>();
+                        if (view != null)
+                            view.Hide();
+                    }
                     AddItem(item);
                     OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
                 }
@@ -35,6 +41,8 @@ namespace Workspace.koto_thing
 
         public void UpdateItemList()
         {
+            Debug.Log("Current Item List: " + itemList.Count);
+            
             if (itemList == null || itemList.Count == 0) return;
 
             // 変更が必要なアイテムを記録するためのリスト
