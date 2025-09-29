@@ -37,8 +37,6 @@ namespace Workspace.koto_thing
                 if (Input.GetKeyDown(KeyCode.A)) view.MoveSelection(Vector2Int.left);
                 if (Input.GetKeyDown(KeyCode.D)) view.MoveSelection(Vector2Int.right);
             }
-            
-            model.UpdateItemList();
         }
 
         private void SubscribeEvents()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Workspace.koto_thing
 {
-    public class KeyModel : MonoBehaviour, IKey, IItem
+    public class KeyModel : MonoBehaviour, IKey, IItem, IAppliable
     {
         [Header("鍵のアイテム設定")]
         [SerializeField, Tooltip("取得量")] private int amount;
@@ -33,14 +33,39 @@ namespace Workspace.koto_thing
         public Sprite GetSprite => keySprite;
         public string KeyID => keyID;
 
+        public void AddAmount(int delta)
+        {
+            if (delta <= 0) 
+                return;
+            
+            amount += delta;
+            if (amount > 0) 
+                isApplied = false;
+        }
+
+        public bool ConsumeOne()
+        {
+            if (amount <= 0) 
+                return false;
+            
+            amount--;
+            if (amount <= 0)
+            {
+                isApplied = true;
+                onApplied.OnNext(Unit.Default);
+                onApplied.OnCompleted();
+                return true;
+            }
+            
+            return false;
+        }
+
         public void ApplyItem()
         {
-            if (isApplied || !isGet)
+            if (!isGet || amount <= 0)
                 return;
-
-            isApplied = true;
-            onApplied.OnNext(Unit.Default);
-            onApplied.OnCompleted();
+            
+            ConsumeOne();
         }
     }
 }

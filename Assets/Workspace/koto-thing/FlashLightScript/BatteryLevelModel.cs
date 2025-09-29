@@ -16,7 +16,8 @@ namespace Workspace.koto_thing
         public IObservable<bool> IsFlickeringObservable => isFlickering;
         public bool IsFlickering { get => isFlickering.Value; set => isFlickering.Value = value; }
 
-        public float BatteryLevel => batteryLevel;
+        public float GetBatteryLevel => batteryLevel;
+        public float GetMaxBatteryLevel => maxBatteryLevel;
 
         /// <summary>
         /// バッテリーを減らす

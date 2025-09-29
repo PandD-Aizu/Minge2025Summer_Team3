@@ -16,4 +16,3 @@ namespace Workspace.koto_thing
         public IObservable<float> CurrentHpObservable => currentHp.AsObservable();
     }
 }
-

@@ -2,7 +2,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace Workspace.koto_thing
+namespace Workspace.koto_thing.PlayerStatusScript
 {
     public class PlayerHpPresenter : MonoBehaviour, IDisposable
     {
@@ -14,13 +14,17 @@ namespace Workspace.koto_thing
 
         private void Start()
         {
+            view.Initialize();
+            
             SubscribeEvents();
-            model.CurrentHp = model.GetMaxHp; // 初期化
+            model.CurrentHp = model.GetMaxHp;
         }
 
         private void Update()
         {
-            
+            view.UpdateHealth(model.GetMaxHp, model.CurrentHp);
+            view.UpdateBeat();
+            view.UpdateDisplay(Time.deltaTime);
         }
 
         private void SubscribeEvents()
@@ -28,7 +32,6 @@ namespace Workspace.koto_thing
             model.CurrentHpObservable
                 .Subscribe(hp =>
                 {
-                    view.UpdateHpText(hp, model.GetMaxHp);
                     battleBGMController.ChangeBGM(hp, model.GetMaxHp);
                 })
                 .AddTo(disposables);

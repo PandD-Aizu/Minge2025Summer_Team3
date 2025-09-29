@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Workspace.koto_thing
 {
-    public class BatteryModel : MonoBehaviour, IItem
+    public class BatteryModel : MonoBehaviour, IItem, IAppliable
     {
         [Header("バッテリーアイテムの設定")] 
         [SerializeField, Tooltip("得られるアイテムの個数")] private int batteryCount;
@@ -34,12 +34,39 @@ namespace Workspace.koto_thing
 
         public bool GetIsApplied => isApplied;
         
+        public void AddAmount(int delta)
+        {
+            if (delta <= 0) 
+                return;
+            
+            batteryCount += delta;
+            if (batteryCount > 0) 
+                isApplied = false;
+        }
+
+        public bool ConsumeOne()
+        {
+            if (batteryCount <= 0) 
+                return false;
+            
+            batteryCount--;
+            if (batteryCount <= 0)
+            {
+                isApplied = true;
+                onApplied.OnNext(Unit.Default);
+                onApplied.OnCompleted();
+                return true;
+            }
+            
+            return false;
+        }
+
         public void ApplyItem()
         {
-            if (isApplied || !isGet)
+            if (!isGet || batteryCount <= 0)
                 return;
-
-            isApplied = true;
+            
+            ConsumeOne();
         }
     }
 }

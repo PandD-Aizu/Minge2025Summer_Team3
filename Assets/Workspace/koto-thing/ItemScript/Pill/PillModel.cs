@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Workspace.koto_thing
 {
-    public class PillModel : MonoBehaviour, IItem
+    public class PillModel : MonoBehaviour, IItem, IAppliable
     {
         [Header("回復アイテムの設定")] 
         [SerializeField, Tooltip("得られる回復アイテムの個数")] private int pillCount; 
@@ -32,14 +32,39 @@ namespace Workspace.koto_thing
         public bool SetIsGet { get => isGet; set => isGet = value; }
         public bool GetIsApplied => isApplied;
 
+        public void AddAmount(int delta)
+        {
+            if (delta <= 0) 
+                return;
+            
+            pillCount += delta;
+            if (pillCount > 0) 
+                isApplied = false;
+        }
+
+        public bool ConsumeOne()
+        {
+            if (pillCount <= 0) 
+                return false;
+            
+            onApplied.OnNext(Unit.Default); // 毎回発火
+            pillCount--;
+            if (pillCount <= 0)
+            {
+                isApplied = true;
+                onApplied.OnCompleted();
+                return true;
+            }
+            
+            return false;
+        }
+
         public void ApplyItem()
         {
-            if (isApplied || !isGet)
+            if (!isGet || pillCount <= 0)
                 return;
-
-            isApplied = true;
-            onApplied.OnNext(Unit.Default);
-            onApplied.OnCompleted();
+            
+            ConsumeOne();
         }
     }
 }
