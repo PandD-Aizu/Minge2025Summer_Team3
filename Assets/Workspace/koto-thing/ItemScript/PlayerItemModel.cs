@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
@@ -78,11 +79,14 @@ namespace Workspace.koto_thing
         }
 
         /// <summary>
-        /// アイテムを適用する
+        /// インベントリ内の鍵に特定のIDがあるかどうかをチェック
         /// </summary>
-        public void ApplyItem()
+        /// <param name="keyID">鍵のID</param>
+        /// <returns></returns>
+        public bool HasKey(string keyID)
         {
-            currentItem?.ApplyItem();
+            return itemList.Keys.OfType<IKey>()
+                .Any(k => k.KeyID == keyID);
         }
         
         /* ---以下ヘルパー関数--- */
