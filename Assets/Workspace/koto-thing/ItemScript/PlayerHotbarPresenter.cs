@@ -33,6 +33,7 @@ namespace Workspace.koto_thing
 
         private void SubscribeEvents()
         {
+            // スロット更新
             model.Bus.OnAssigned
                 .Subscribe(e =>
                 {
@@ -40,17 +41,23 @@ namespace Workspace.koto_thing
                 })
                 .AddTo(disposables);
             
+            // スロット使用
             model.Bus.OnUsed
                 .Subscribe(e =>
                 {
                     view?.PlayUseFeedback(e.SlotIndex, e.Consumed);
-                    if (e.Consumed && e.Item != null && e.Item.GetIsApplied)
+
+                    if (e.Consumed && e.Item != null)
                     {
-                        model.Unassign(e.SlotIndex);
+                        if (e.Item.GetAmount <= 0)
+                            model.Unassign(e.SlotIndex);
+                        else
+                            view?.UpdateSlot(e.SlotIndex, e.Item);
                     }
                 })
                 .AddTo(disposables);
 
+            // アイテム取得時に自動割り当て
             playerItemModel.OnItemChanged
                 .Subscribe(ev =>
                 {
