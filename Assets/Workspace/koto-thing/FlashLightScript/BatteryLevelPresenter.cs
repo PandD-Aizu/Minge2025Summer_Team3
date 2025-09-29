@@ -14,6 +14,8 @@ namespace Workspace.koto_thing
 
         private void Start()
         {
+            view.Initialize();
+            
             SubscribeEvents();
         }
 
@@ -21,6 +23,8 @@ namespace Workspace.koto_thing
         {
             model.DrainBattery();
             model.CheckFlicker();
+            
+            view.UpdateSegments(model.GetMaxBatteryLevel, model.GetBatteryLevel);
         }
 
         private void SubscribeEvents()

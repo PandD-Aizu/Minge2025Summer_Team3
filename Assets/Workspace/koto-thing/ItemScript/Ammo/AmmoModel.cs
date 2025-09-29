@@ -4,7 +4,7 @@ using UniRx;
 
 namespace Workspace.koto_thing
 {
-    public class AmmoModel : MonoBehaviour, IItem
+    public class AmmoModel : MonoBehaviour, IItem, IAppliable
     {
         [Header("弾薬の設定")]
         [SerializeField] private int ammoCount;
@@ -22,7 +22,6 @@ namespace Workspace.koto_thing
         [SerializeField] private Sprite ammoSprite;
 
         private readonly Subject<Unit> onApplied = new ();
-        private bool getIsApplied;
         public IObservable<Unit> OnApplied => onApplied;
         
         /* プロパティ */
@@ -32,19 +31,44 @@ namespace Workspace.koto_thing
         public AmmoType GetAmmoType => ammoType;
         public Sprite GetSprite { get => ammoSprite; }
         public bool SetIsGet { get => isGet; set => isGet = value; }
-        public bool GetIsApplied => getIsApplied;
+        public bool GetIsApplied => isApplied;
 
         /// <summary>
         /// アイテムを適用する
         /// </summary>
         public void ApplyItem()
         {
-            if (isApplied || !isGet)
+            if (!isGet || ammoCount <= 0)
                 return;
+            
+            ConsumeOne();
+        }
 
-            isApplied = true;
-            onApplied.OnNext(Unit.Default);
-            onApplied.OnCompleted();
+        public void AddAmount(int delta)
+        {
+            if (delta <= 0) 
+                return;
+            
+            ammoCount += delta;
+            if (ammoCount > 0) 
+                isApplied = false;
+        }
+
+        public bool ConsumeOne()
+        {
+            if (ammoCount <= 0) 
+                return false;
+            
+            onApplied.OnNext(Unit.Default); // 毎回発火
+            ammoCount--;
+            if (ammoCount <= 0)
+            {
+                isApplied = true;
+                onApplied.OnCompleted();
+                return true;
+            }
+            
+            return false;
         }
     }
 }

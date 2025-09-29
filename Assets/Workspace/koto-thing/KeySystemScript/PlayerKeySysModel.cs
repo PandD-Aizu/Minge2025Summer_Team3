@@ -47,11 +47,22 @@ namespace Workspace.koto_thing
             if (playerItemModel == null)
                 return false;
 
-            // ドアのIDがプレイヤーが持っている鍵のIDと一致するかどうかをチェック
-            if (playerItemModel.HasKey(door.RequiredKeyID))
+            // 必要鍵IDを保持しているか
+            var keyID = door.RequiredKeyID;
+            if (string.IsNullOrEmpty(keyID))
             {
                 door.UnLock();
                 return true;
+            }
+
+            if (playerItemModel.HasKey(keyID))
+            {
+                // 消費に成功した場合のみ解錠
+                if (playerItemModel.TryConsumeKey(keyID))
+                {
+                    door.UnLock();
+                    return true;
+                }
             }
 
             return false;
