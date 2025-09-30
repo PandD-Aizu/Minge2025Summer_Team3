@@ -7,37 +7,39 @@ using System.Threading;
 
 public class ArrangeMap : MonoBehaviour
 {
-    [SerializeField] private int mapSize; // マップの縦横の広さ(奇数で設定推奨)
+    [SerializeField] private int mapSize;
     [SerializeField] private GameObject Player;
-    [SerializeField] private GameObject StageRoot; // 親オブジェクト
-    [SerializeField] private GameObject StartRoom; // スタート地点
-    [SerializeField] private GameObject GoalRoom; // ゴール地点
-    [SerializeField] private GameObject[] PrefabMaps; // Prefabのオブジェクト群
-    
-    [Header("Async Settings")] 
-    [SerializeField] private int instantiateBatchSize = 16; // 何個生成したら1フレームYieldするか
-    [SerializeField] private int destroyBatchSize = 24; // 破棄バッチサイズ
-    [SerializeField] private int destroyDelayFrame = 1; // バッチ毎の遅延フレーム数
+    [SerializeField] private GameObject StageRoot;
+    [SerializeField] private GameObject StartRoom;
+    [SerializeField] private GameObject GoalRoom;
+    [SerializeField] private GameObject[] PrefabMaps;
+
+    [Header("Async Settings")]
+    [SerializeField] private int instantiateBatchSize = 16;
+    [SerializeField] private int destroyBatchSize = 24;
+    [SerializeField] private int destroyDelayFrame = 1;
 
     private RouteJudge routeJudgeScript;
-    private int mapNum; // マップ選択用のランダム値
-    private int mapRotate; // マップの向き選択用のランダム値
-    private const float mapWidth = 20.0f; // マップ配置の幅
-    private readonly List<GameObject> Map = new (); // 配置するマップ
+    private int mapNum;
+    private int mapRotate;
+    private const float mapWidth = 20.0f;
+    private readonly List<GameObject> Map = new();
     private int count;
 
-    private bool isShuffleComplete = true; // 初期は生成していないので true 扱い
+    private bool isShuffleComplete = true;
     private CancellationTokenSource shuffleCts;
-    private UniTask shuffleRunningTask; // 現在進行中のShuffleタスク
+    private UniTask shuffleRunningTask;
 
     public bool IsShuffling => !isShuffleComplete;
+
+    // マップ生成完了(ベイク後)通知イベント
+    public event Action MapReady;
 
     async void Start()
     {
         routeJudgeScript = GetComponent<RouteJudge>();
-
         if (mapSize % 2 == 0)
-            Debug.LogWarning("mapSize is even; odd size is recommended for symmetry.");
+            Debug.LogWarning("mapSize is even; odd size is recommended.");
 
         Player.transform.position = new Vector3(mapSize * mapWidth, 5.0f, ((mapSize - 1) / 2f) * mapWidth);
         StartRoom.transform.position = new Vector3(mapSize * mapWidth - 0.5f, 0.0f, ((mapSize - 1) / 2f) * mapWidth);
@@ -53,12 +55,8 @@ public class ArrangeMap : MonoBehaviour
         shuffleCts?.Dispose();
     }
 
-    /// <summary>
-    /// マップ生成(非同期)要求。進行中であれば既存タスクを返す。
-    /// </summary>
     public UniTask ShuffleMap(CancellationToken token = default)
     {
-        // 進行中ならそのタスクを返す
         if (shuffleRunningTask.Status == UniTaskStatus.Pending)
             return shuffleRunningTask;
         shuffleRunningTask = InternalShuffleMap(token);
@@ -89,7 +87,10 @@ public class ArrangeMap : MonoBehaviour
 
             await UniTask.SwitchToMainThread();
             StageRoot.GetComponent<NavMeshSurface>().BuildNavMesh();
-            routeJudgeScript.CheckMap();
+
+            // ここで直接判定せずイベント発火
+            MapReady?.Invoke();
+
             Debug.Log("Shuffle map complete");
         }
         catch (OperationCanceledException)
@@ -98,19 +99,16 @@ public class ArrangeMap : MonoBehaviour
         }
         finally
         {
-            isShuffleComplete = true; // キャンセルでもtrueにして再要求可能
+            isShuffleComplete = true;
         }
     }
 
-    /// <summary>
-    /// マップを段階的に破棄する(非同期)。
-    /// </summary>
     public async UniTask DestroyMapAsync(int batchSize = -1, int delayFrame = -1, CancellationToken token = default)
     {
         if (Map.Count == 0) return;
         if (batchSize <= 0) batchSize = destroyBatchSize;
         if (delayFrame < 0) delayFrame = destroyDelayFrame;
-        
+
         int destroyed = 0;
         var list = new List<GameObject>(Map);
         Map.Clear();
@@ -126,9 +124,6 @@ public class ArrangeMap : MonoBehaviour
         await Resources.UnloadUnusedAssets();
     }
 
-    /// <summary>
-    /// マップ即時破棄（テスト/デバッグ用途）。
-    /// </summary>
     public void DestroyMap()
     {
         Debug.Log("Destroy map (immediate)");
@@ -138,9 +133,6 @@ public class ArrangeMap : MonoBehaviour
         Map.Clear();
     }
 
-    /// <summary>
-    /// 進行中の生成をキャンセルし安全に再生成。
-    /// </summary>
     public async UniTask RegenerateAsync(CancellationToken token = default)
     {
         shuffleCts?.Cancel();
@@ -151,16 +143,12 @@ public class ArrangeMap : MonoBehaviour
         shuffleCts?.Dispose();
         shuffleCts = new CancellationTokenSource();
 
-        // 既存破棄
         await DestroyMapAsync(token: token);
 
         using var linked = CancellationTokenSource.CreateLinkedTokenSource(token, shuffleCts.Token);
         await ShuffleMap(linked.Token);
     }
 
-    /// <summary>
-    /// 1セル分のPrefab生成。
-    /// </summary>
     private async UniTask MakeMapAsync(int i, int j, CancellationToken token)
     {
         await UniTask.SwitchToMainThread();
@@ -170,8 +158,9 @@ public class ArrangeMap : MonoBehaviour
             Debug.LogWarning("Prefab is null - skipped");
             return;
         }
-        var instance = Instantiate(prefab, new Vector3(mapWidth * i, 0.0f, mapWidth * j), Quaternion.Euler(0, 90 * mapRotate, 0));
+        var instance = Instantiate(prefab, new Vector3(mapWidth * i, 0.0f, mapWidth * j),
+            Quaternion.Euler(0, 90 * mapRotate, 0));
         Map.Add(instance);
-        instance.transform.SetParent(StageRoot.transform, worldPositionStays: true);
+        instance.transform.SetParent(StageRoot.transform, true);
     }
 }
