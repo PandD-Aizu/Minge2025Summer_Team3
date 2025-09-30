@@ -3,6 +3,7 @@ using UnityEngine.AI;
 
 public class RouteJudge : MonoBehaviour
 {
+    [SerializeField] private ArrangeMap arrangeMapScript;
     [SerializeField] private GameObject SearchMarker; // 探索するマーカー
     [SerializeField] private GameObject[] Marker; //探索されるマーカー群
     private bool judge = false; //良いマップかどうかの判定
@@ -13,9 +14,14 @@ public class RouteJudge : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        path = new NavMeshPath();
+        arrangeMapScript = gameObject.GetComponent<ArrangeMap>();
 
-        //全てのマーカーに到達可能か調べる
+        path = new NavMeshPath();
+    }
+
+    //全てのマーカーに到達可能か調べる
+    public void CheckMap()
+    {
         for (markerNum = 0; markerNum < Marker.Length; markerNum++)
         {
             if (NavMesh.CalculatePath(SearchMarker.transform.position, Marker[markerNum].transform.position, NavMesh.AllAreas, path))
@@ -45,7 +51,8 @@ public class RouteJudge : MonoBehaviour
         timer += Time.deltaTime;
         if (timer > 0.3f && judge == false)
         {
-            Debug.Log("badMap");
+            arrangeMapScript.DestroyMap();
+            arrangeMapScript.ShuffleMap();
         }
     }
 }
