@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/Assets/Workspace/koto-thing/DocumentScript/DocumentData.cs">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/Assets/Workspace/koto-thing/DocumentScript/DocumentData.cs" />
+              <option name="originalContent" value="using System;&#10;using UnityEngine;&#10;&#10;namespace Workspace.koto_thing&#10;{&#10;    [Serializable]&#10;    public class DocumentData&#10;    {&#10;        public string title;&#10;        [TextArea] public string body;&#10;        public string[] pages;&#10;&#10;        /* ---ヘルパー関数--- */&#10;        &#10;        /// &lt;summary&gt;&#10;        /// ページ分割されたテキストを取得する&#10;        /// &lt;/summary&gt;&#10;        /// &lt;returns&gt;分割されたテキスト&lt;/returns&gt;&#10;        public string[] GetEffectivePages(string separator)&#10;        {&#10;            if (pages != null &amp;&amp; pages.Length &gt; 0)&#10;                return pages;&#10;            &#10;            if (string.IsNullOrEmpty(body))&#10;                return Array.Empty&lt;string&gt;();&#10;            &#10;            if (string.IsNullOrEmpty(separator)) &#10;                return new[] { body };&#10;&#10;            return body.Split(new[] { separator }, StringSplitOptions.None);&#10;        }&#10;    }&#10;}" />
+              <option name="updatedContent" value="using System;&#10;using UnityEngine;&#10;&#10;namespace Workspace.koto_thing&#10;{&#10;    [Serializable]&#10;    public class DocumentData&#10;    {&#10;        public string title;&#10;        [TextArea] public string body;&#10;        public string[] pages;&#10;&#10;        /* ---ヘルパー関数--- */&#10;        &#10;        /// &lt;summary&gt;&#10;        /// ページ分割されたテキストを取得する&#10;        /// &lt;/summary&gt;&#10;        /// &lt;returns&gt;分割されたテキスト&lt;/returns&gt;&#10;        public string[] GetEffectivePages(string separator)&#10;        {&#10;            if (pages != null &amp;&amp; pages.Length &gt; 0)&#10;                return pages;&#10;            &#10;            if (string.IsNullOrEmpty(body))&#10;                return Array.Empty&lt;string&gt;();&#10;            &#10;            if (string.IsNullOrEmpty(separator)) &#10;                return new[] { body };&#10;&#10;            return body.Split(new[] { separator }, StringSplitOptions.None);&#10;        }&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

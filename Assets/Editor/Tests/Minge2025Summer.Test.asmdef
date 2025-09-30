@@ -1,0 +1,23 @@
+{
+    "name": "Minge2025Summer.Test",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bd66d80d52c29a84387ea457e6c0c1b3",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:37490d53aa349294bab30faa9c0691a9",
+        "SampleTestSource"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
