@@ -24,7 +24,7 @@ public class RouteJudge : MonoBehaviour
     {
         for (markerNum = 0; markerNum < Marker.Length; markerNum++)
         {
-            if (NavMesh.CalculatePath(SearchMarker.transform.position, Marker[markerNum].transform.position, NavMesh.AllAreas, path))
+            if (NavMesh.CalculatePath(SearchMarker.transform.localPosition, Marker[markerNum].transform.position, NavMesh.AllAreas, path))
             {
                 Debug.Log("Can go to Marker" + markerNum);
                 judge = true;
