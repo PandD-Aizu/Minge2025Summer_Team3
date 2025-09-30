@@ -83,7 +83,7 @@ public class TutorialSequence : MonoBehaviour
     }
 
     /// <summary>
-    /// 次のステップに進み、新しいメッセージを表示する
+    /// 次のステップに進み、新しいメッセージを表示する。
     /// </summary>
     /// <param name="nextMessage">次のステップで表示するメッセージ</param>
     private void NextStep(string nextMessage)
