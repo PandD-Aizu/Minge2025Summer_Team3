@@ -37,6 +37,7 @@ namespace Workspace.koto_thing
             model.IsRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             
             model.Move(input);
+            model.ChangeNoiseSetting(input);
             
             float speed = model.GetCharacterController.velocity.magnitude;
             emitter.PlayFootStep(speed);
