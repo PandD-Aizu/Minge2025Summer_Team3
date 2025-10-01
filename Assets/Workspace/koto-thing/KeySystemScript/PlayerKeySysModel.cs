@@ -8,8 +8,8 @@ namespace Workspace.koto_thing
     {
         [SerializeField] private float interactDistance = 20.0f;
 
-        private Subject<Unit> onDoorOpened = new  Subject<Unit>();
-        public IObservable<Unit> OnDoorOpened => onDoorOpened;
+        private Subject<IDoor> onDoorOpened = new  Subject<IDoor>();
+        public IObservable<IDoor> OnDoorOpened => onDoorOpened;
         private Subject<Unit> onDoorOpenFailed = new Subject<Unit>();
         public IObservable<Unit> OnDoorOpenFailed => onDoorOpenFailed;
 
@@ -23,23 +23,28 @@ namespace Workspace.koto_thing
 
             if (!hit.collider.TryGetComponent<IDoor>(out var door))
                 return;
-            
-            Debug.Log("ドアに触れました");
 
-            // ドアを開ける
-            if (TryOpenDoor(door, playerItemModel))
-                onDoorOpened.OnNext(Unit.Default);
+            // 鍵がかかっている場合
+            if (!door.IsUnLocked)
+            {
+                if (TryUnlockKey(door, playerItemModel))
+                    onDoorOpened.OnNext(door);
+                else
+                    onDoorOpenFailed.OnNext(Unit.Default);
+            }
             else
-                onDoorOpenFailed.OnNext(Unit.Default);
+            {
+                door.TryOpen();
+            }
         }
 
         /// <summary>
-        /// ドアを開ける
+        /// 解錠する
         /// </summary>
-        /// <param name="door">ドアのモデル</param>
-        /// <param name="playerItemModel">アイテム管理のモデル</param>
-        /// <returns></returns>
-        private bool TryOpenDoor(IDoor door, PlayerItemModel playerItemModel = null)
+        /// <param name="door">鍵つきオブジェクトのモデルクラス</param>
+        /// <param name="playerItemModel">アイテム管理のモデルクラス</param>
+        /// <returns>解錠できたかどうか</returns>
+        private bool TryUnlockKey(IDoor door, PlayerItemModel playerItemModel = null)
         {
             if (door.IsUnLocked)
                 return true;

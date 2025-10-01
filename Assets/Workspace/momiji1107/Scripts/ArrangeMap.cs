@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.AI.Navigation;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -41,6 +42,10 @@ public class MapGenerator : MonoBehaviour
     [Tooltip("行き止まりのプレハブ")]
     [SerializeField] private GameObject deadEndPrefab;
 
+    [Header("NavMeshSurface設定")] 
+    [Tooltip("NavMeshSurfaceを持つオブジェクト")] 
+    [SerializeField] private NavMeshSurface navMeshSurface;
+
     #endregion
 
     // 各エリアの接続情報などを保持する内部クラス
@@ -80,6 +85,7 @@ public class MapGenerator : MonoBehaviour
         InstantiatePrefabs();       // マップデータに基づいてプレハブをインスタンス化
         PlaceSpecialPoint();        // スタート・ゴール以外の外周に特別な地点を配置
         PositionMapBasedOnMarker(); // マーカーの位置に基づいてマップ全体を移動
+        RebuildNavMesh();
     }
 
     /// <summary>
@@ -289,6 +295,12 @@ public class MapGenerator : MonoBehaviour
         mapContainer.transform.position += new Vector3(0, 0, areaSize / 2.0f); // 境界線の中央に合わせる
     }
 
+    // NavMeshを再構築
+    public void RebuildNavMesh()
+    {
+        if (navMeshSurface != null)
+            navMeshSurface.BuildNavMesh();
+    }
 
     #region Helper Methods
 
