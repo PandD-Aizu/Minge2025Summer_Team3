@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0
+  m_AmbientIntensity: 3.29
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -9570,6 +9570,8 @@ GameObject:
   - component: {fileID: 1007740901}
   - component: {fileID: 1007740903}
   - component: {fileID: 1007740902}
+  - component: {fileID: 1007740905}
+  - component: {fileID: 1007740904}
   m_Layer: 7
   m_Name: Door
   m_TagString: Untagged
@@ -9607,7 +9609,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredKeyID: test
-  isUnlocked: 0
+  isUnlocked: 1
+  doorType: 1
+  openDistance: 1
+  openAngle: -90
+  openDuration: 1
+  startOpened: 0
 --- !u!65 &1007740903
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9629,6 +9636,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.3, y: 2, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1007740904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007740900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f285e686ae4b41109f2f19110ef1e3bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movableRoot: {fileID: 983702794}
+  slideLocalDirection: {x: 0, y: 1, z: 0}
+  swingLocalAxis: {x: 0, y: 1, z: 0}
+  invertSwing: 0
+  hingeLocalPivot: {x: 0, y: -1, z: 0.5}
+--- !u!114 &1007740905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007740900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31fd7546c99a4ddd9a647d6a1f807821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 1007740902}
+  view: {fileID: 1007740904}
 --- !u!1 &1007814623
 GameObject:
   m_ObjectHideFlags: 0
@@ -13555,8 +13593,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NoiseProfile: {fileID: 11400000, guid: 1abb568f139a1564ca4740adaa1d886e, type: 2}
   PivotOffset: {x: 0, y: 0, z: 0}
-  AmplitudeGain: 0.05000002
-  FrequencyGain: 0.1
+  AmplitudeGain: 0.05000007
+  FrequencyGain: 0.1000013
   m_NoiseOffsets: {x: -328.5853, y: 852.5061, z: -590.4896}
 --- !u!114 &1500675498
 MonoBehaviour:
@@ -18776,11 +18814,12 @@ MonoBehaviour:
   startMarker: {fileID: 1271959724}
   specialPointPrefab: {fileID: 683429996}
   designatedParent: {fileID: 2024036917}
-  cornerPrefab: {fileID: 723390443449273840, guid: d6f6c28479500254cad0d1507aab2ac0, type: 3}
-  straightPrefab: {fileID: 3340239500601192077, guid: f9a5dda455473ab4fb25e710feeb7988, type: 3}
+  cornerPrefab: {fileID: 8486602172799233565, guid: a19464c20e7eb2f4ebc3428310853dee, type: 3}
+  straightPrefab: {fileID: 5315448401262760336, guid: 6246b2aa543865f44a2d791ba0e11e31, type: 3}
   tJunctionPrefab: {fileID: 9200776964876932772, guid: ea7e1b3179b82a249aa96f4129ab09de, type: 3}
-  crossroadsPrefab: {fileID: 4937824410875481907, guid: b3c20f7e1edfeed46a87a74e2cedc4c0, type: 3}
-  deadEndPrefab: {fileID: 1019832456304246911, guid: 47d23f7ca656a2c4a835345f36452937, type: 3}
+  crossroadsPrefab: {fileID: 5225182914018373572, guid: a76b98ea2a20b9042ae669b962f8e5ba, type: 3}
+  deadEndPrefab: {fileID: 7448025035832332811, guid: 2dcdc0cf58bf31743beed4f262fa2044, type: 3}
+  navMeshSurface: {fileID: 324164841}
 --- !u!1 &2073717148
 GameObject:
   m_ObjectHideFlags: 0
