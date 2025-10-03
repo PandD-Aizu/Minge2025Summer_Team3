@@ -1,5 +1,6 @@
 ﻿using System;
 using UniRx;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Workspace.koto_thing

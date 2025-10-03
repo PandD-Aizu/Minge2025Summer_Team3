@@ -18,7 +18,8 @@ MonoBehaviour:
   - m_GUID: 7f05b04481bf420ea617b73728031dc6
     m_Address: Assets/Workspace/koto-thing/DocumentScript/DocumentSource/SampleDocument/SampleSource.json
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - JSON Documents
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 3013793f27d51664ca8eb336d1fcee61, type: 2}
