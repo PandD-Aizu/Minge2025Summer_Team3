@@ -18662,17 +18662,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21fb234d8a317403ea4bd31c4fd5edb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapWidth: 5
-  mapHeight: 5
+  mapWidth: 3
+  mapHeight: 3
   areaSize: 20
+  extraConnectionRatio: 0.15
   startMarker: {fileID: 1271959724}
-  specialPointPrefab: {fileID: 0}
+  specialPointPrefab: {fileID: 4937824410875481907, guid: b3c20f7e1edfeed46a87a74e2cedc4c0, type: 3}
   designatedParent: {fileID: 2024036917}
-  cornerPrefab: {fileID: 8486602172799233565, guid: a19464c20e7eb2f4ebc3428310853dee, type: 3}
-  straightPrefab: {fileID: 5315448401262760336, guid: 6246b2aa543865f44a2d791ba0e11e31, type: 3}
-  tJunctionPrefab: {fileID: 1532970698584905506, guid: 063ee1d822def024a96ad4c9e43575f3, type: 3}
-  crossroadsPrefab: {fileID: 5225182914018373572, guid: a76b98ea2a20b9042ae669b962f8e5ba, type: 3}
-  deadEndPrefab: {fileID: 7448025035832332811, guid: 2dcdc0cf58bf31743beed4f262fa2044, type: 3}
+  cornerPrefabs:
+  - {fileID: 8486602172799233565, guid: a19464c20e7eb2f4ebc3428310853dee, type: 3}
+  straightPrefabs:
+  - {fileID: 5315448401262760336, guid: 6246b2aa543865f44a2d791ba0e11e31, type: 3}
+  tJunctionPrefabs:
+  - {fileID: 1532970698584905506, guid: 063ee1d822def024a96ad4c9e43575f3, type: 3}
+  crossroadsPrefabs:
+  - {fileID: 5225182914018373572, guid: a76b98ea2a20b9042ae669b962f8e5ba, type: 3}
+  deadEndPrefabs:
+  - {fileID: 7448025035832332811, guid: 2dcdc0cf58bf31743beed4f262fa2044, type: 3}
   navMeshSurface: {fileID: 324164841}
 --- !u!1 &2073717148
 GameObject:

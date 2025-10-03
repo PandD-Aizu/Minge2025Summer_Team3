@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Unity.AI.Navigation;
 
 public class MapGenerator : MonoBehaviour
@@ -16,6 +17,10 @@ public class MapGenerator : MonoBehaviour
     [Tooltip("エリア（タイル）1つあたりのサイズ")]
     [SerializeField] private float areaSize = 5.0f;
 
+    [Header("閉路設定")] 
+    [Tooltip("閉路を生成する割合")] 
+    [SerializeField, Range(0.0f, 1.0f)] private float extraConnectionRatio = 0.15f;
+
     [Header("オブジェクト設定")]
     [Tooltip("スタート地点の目印となるオブジェクト")]
     [SerializeField] private Transform startMarker;
@@ -28,19 +33,19 @@ public class MapGenerator : MonoBehaviour
 
     [Header("道プレハブ")]
     [Tooltip("カーブ（角）のプレハブ")]
-    [SerializeField] private GameObject cornerPrefab;
+    [SerializeField] private List<GameObject> cornerPrefabs;
 
     [Tooltip("直線のプレハブ")]
-    [SerializeField] private GameObject straightPrefab;
+    [SerializeField] private List<GameObject> straightPrefabs;
 
     [Tooltip("T字路のプレハブ")]
-    [SerializeField] private GameObject tJunctionPrefab;
+    [SerializeField] private List<GameObject> tJunctionPrefabs;
 
     [Tooltip("十字路のプレハブ")]
-    [SerializeField] private GameObject crossroadsPrefab;
+    [SerializeField] private List<GameObject> crossroadsPrefabs;
     
     [Tooltip("行き止まりのプレハブ")]
-    [SerializeField] private GameObject deadEndPrefab;
+    [SerializeField] private List<GameObject> deadEndPrefabs;
 
     [Header("NavMeshSurface設定")] 
     [Tooltip("NavMeshSurfaceを持つオブジェクト")] 
@@ -58,6 +63,7 @@ public class MapGenerator : MonoBehaviour
 
     private Area[,] map;             // マップデータ
     private GameObject mapContainer; // 生成されたマップ全体をまとめるコンテナ
+    private Vector3? reservedSpecialPosition;
 
     void Start()
     {
@@ -79,12 +85,14 @@ public class MapGenerator : MonoBehaviour
         if (designatedParent != null)
             mapContainer.transform.parent = designatedParent;
 
-        InitializeMap();            // マップデータを初期化
-        ForceExternalConnections(); // スタート・ゴール地点の外部接続を強制
-        GeneratePaths();            // 深さ優先探索で迷路を生成
-        InstantiatePrefabs();       // マップデータに基づいてプレハブをインスタンス化
-        PlaceSpecialPoint();        // スタート・ゴール以外の外周に特別な地点を配置
-        PositionMapBasedOnMarker(); // マーカーの位置に基づいてマップ全体を移動
+        InitializeMap();                   // マップデータを初期化
+        ForceExternalConnections();        // スタート・ゴール地点の外部接続を強制
+        GeneratePaths();                   // 深さ優先探索で迷路を生成
+        AddExtraConnections();             // 木構造に辺を追加して閉路を生成
+        DetermineAndReserveSpecialPoint(); // 外周に特別な地点を配置する位置を決定
+        InstantiatePrefabs();              // マップデータに基づいてプレハブをインスタンス化
+        SpawnReservedSpecialPoint();       // スタート・ゴール以外の外周に特別な地点を配置
+        PositionMapBasedOnMarker();        // マーカーの位置に基づいてマップ全体を移動
         RebuildNavMesh();
     }
 
@@ -159,6 +167,141 @@ public class MapGenerator : MonoBehaviour
     }
 
     /// <summary>
+    /// 木構造に辺を追加して閉路を作成する
+    /// </summary>
+    private void AddExtraConnections()
+    {
+        if (extraConnectionRatio <= 0.0f)
+            return;
+        
+        // 閉路を作成できるエリアペアのリストを作成
+        List<(Vector2Int a, Vector2Int b)> closedPairs = new List<(Vector2Int, Vector2Int)>();
+        for (int x = 0; x < mapWidth; x++)
+        {
+            for (int y = 0; y < mapHeight; y++)
+            {
+                Area currentArea = map[x, y];
+                Vector2Int currentPos = new Vector2Int(x, y);
+
+                // 東側のエリアと閉路を作成できるか
+                if (x + 1 < mapWidth)
+                {
+                    Area east = map[x + 1, y];
+                    if (!currentArea.East && !east.West)
+                        closedPairs.Add((currentPos, new Vector2Int(x + 1, y)));
+                }
+                
+                // 北側のエリアと閉路を作成できるか
+                if (y + 1 < mapHeight)
+                {
+                    Area north = map[x, y + 1];
+                    if (!currentArea.North && !north.South)
+                        closedPairs.Add((currentPos, new Vector2Int(x, y + 1)));
+                }
+            }
+        }
+
+        // 閉路を作成できるペアがなければ終了
+        if (closedPairs.Count == 0)
+            return;
+
+        int openCount = Mathf.RoundToInt(closedPairs.Count * Mathf.Clamp01(extraConnectionRatio));
+
+        // フィッシャー - イェーツのシャッフルアルゴリズムでリストをシャッフル
+        for (int i = closedPairs.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            (closedPairs[i], closedPairs[randomIndex]) = (closedPairs[randomIndex], closedPairs[i]);
+        }
+
+        // 指定された数だけ閉路を開く
+        for (int i = 0; i < openCount; i++)
+        {
+            var pair = closedPairs[i];
+            BreakWall(pair.a, pair.b);
+        }
+    }
+
+    private void DetermineAndReserveSpecialPoint()
+    {
+        reservedSpecialPosition = null;
+        if (specialPointPrefab == null)
+            return;
+
+        int centerX = mapWidth / 2;
+        Vector2Int startPos = new Vector2Int(centerX, 0);
+        Vector2Int goalPos = new Vector2Int(centerX, mapHeight - 1);
+        
+        List<Vector2Int> perimeterCells = new List<Vector2Int>();
+
+        for (int x = 0; x < mapWidth; x++)
+        {
+            if (x == startPos.x)
+                continue;
+            
+            perimeterCells.Add(new Vector2Int(x, 0));
+        }
+
+        for (int x = 0; x < mapWidth; x++)
+        {
+            if (x == goalPos.x)
+                continue;
+            
+            perimeterCells.Add(new Vector2Int(x, mapHeight - 1));
+        }
+
+        for (int y = 0; y < mapHeight; y++)
+        {
+            perimeterCells.Add(new Vector2Int(0, y));
+        }
+
+        for (int y = 0; y < mapHeight; y++)
+        {
+            perimeterCells.Add(new Vector2Int(mapWidth - 1, y));
+        }
+
+        if (perimeterCells.Count == 0)
+            return;
+
+        for (int i = perimeterCells.Count - 1; i > 0; i--)
+        {
+            int randomIndex = Random.Range(0, i + 1);
+            (perimeterCells[i], perimeterCells[randomIndex]) = (perimeterCells[randomIndex], perimeterCells[i]);
+        }
+        
+        foreach (var cell in perimeterCells)
+        {
+            // 角の場合の優先方向決定 (South, North, West, East の優先)
+            Vector3 outsidePos;
+            Area a = map[cell.x, cell.y];
+
+            if (cell.y == 0 && cell.x != startPos.x) // 南
+            {
+                a.South = true;
+                outsidePos = new Vector3(cell.x * areaSize, 0, -areaSize);
+            }
+            else if (cell.y == mapHeight - 1 && cell.x != goalPos.x) // 北
+            {
+                a.North = true;
+                outsidePos = new Vector3(cell.x * areaSize, 0, mapHeight * areaSize);
+            }
+            else if (cell.x == 0) // 西
+            {
+                a.West = true;
+                outsidePos = new Vector3(-areaSize, 0, cell.y * areaSize);
+            }
+            else // 東
+            {
+                a.East = true;
+                outsidePos = new Vector3(mapWidth * areaSize, 0, cell.y * areaSize);
+            }
+
+            reservedSpecialPosition = outsidePos;
+            break;
+        }
+    }
+
+    /// <summary>
     /// マップデータに基づいてプレハブをインスタンス化
     /// </summary>
     private void InstantiatePrefabs()
@@ -187,7 +330,7 @@ public class MapGenerator : MonoBehaviour
                 switch (connectionCount)
                 {
                     case 1: // 行き止まり
-                        prefabToInstantiate = deadEndPrefab;
+                        prefabToInstantiate = GetRandom(deadEndPrefabs);
                         if (currentArea.North) yRotation = 0;
                         else if (currentArea.East) yRotation = 90;
                         else if (currentArea.South) yRotation = 180;
@@ -197,17 +340,17 @@ public class MapGenerator : MonoBehaviour
                     case 2: // 直線 or カーブ
                         if (currentArea.North && currentArea.South)
                         {
-                            prefabToInstantiate = straightPrefab;
+                            prefabToInstantiate = GetRandom(straightPrefabs);
                             yRotation = 0;
                         }
                         else if (currentArea.East && currentArea.West)
                         {
-                            prefabToInstantiate = straightPrefab;
+                            prefabToInstantiate = GetRandom(straightPrefabs);
                             yRotation = 90;
                         }
                         else
                         {
-                            prefabToInstantiate = cornerPrefab;
+                            prefabToInstantiate = GetRandom(cornerPrefabs);
                             if (currentArea.North && currentArea.East) yRotation = 0;
                             else if (currentArea.East && currentArea.South) yRotation = 90;
                             else if (currentArea.South && currentArea.West) yRotation = 180;
@@ -216,7 +359,7 @@ public class MapGenerator : MonoBehaviour
                         break;
 
                     case 3: // T字路
-                        prefabToInstantiate = tJunctionPrefab;
+                        prefabToInstantiate = GetRandom(tJunctionPrefabs);
                         if (!currentArea.West) yRotation = 0;         // N, E, S
                         else if (!currentArea.North) yRotation = 90;  // E, S, W
                         else if (!currentArea.East) yRotation = 180;  // S, W, N
@@ -224,7 +367,7 @@ public class MapGenerator : MonoBehaviour
                         break;
 
                     case 4: // 十字路
-                        prefabToInstantiate = crossroadsPrefab;
+                        prefabToInstantiate = GetRandom(crossroadsPrefabs);
                         yRotation = 0;
                         break;
                 }
@@ -243,39 +386,10 @@ public class MapGenerator : MonoBehaviour
     /// <summary>
     /// スタート・ゴール以外の外周に特別な地点を配置
     /// </summary>
-    private void PlaceSpecialPoint()
+    private void SpawnReservedSpecialPoint()
     {
-        // 特別な地点のプレハブが指定されていない場合はスキップ
-        if (specialPointPrefab == null)
-            return;
-        
-        List<Vector2Int> perimeter = new List<Vector2Int>();
-        // 上下の外周
-        for (int x = 0; x < mapWidth; x++)
-        {
-            perimeter.Add(new Vector2Int(x, 0));
-            perimeter.Add(new Vector2Int(x, mapHeight - 1));
-        }
-        // 左右の外周（角を除く）
-        for (int y = 1; y < mapHeight - 1; y++)
-        {
-            perimeter.Add(new Vector2Int(0, y));
-            perimeter.Add(new Vector2Int(mapWidth - 1, y));
-        }
-        
-        // スタートとゴールの座標を除外
-        Vector2Int startPos = new Vector2Int(mapWidth / 2, 0);
-        Vector2Int goalPos = new Vector2Int(mapWidth / 2, mapHeight - 1);
-        perimeter.Remove(startPos);
-        perimeter.Remove(goalPos);
-
-        // 候補の中からランダムに1つ選ぶ
-        if(perimeter.Count > 0)
-        {
-            Vector2Int specialPointPos = perimeter[Random.Range(0, perimeter.Count)];
-            Vector3 worldPos = new Vector3(specialPointPos.x * areaSize, 0, specialPointPos.y * areaSize);
-            Instantiate(specialPointPrefab, worldPos, Quaternion.identity, mapContainer.transform);
-        }
+        if (specialPointPrefab == null || !reservedSpecialPosition.HasValue) return;
+        Instantiate(specialPointPrefab, reservedSpecialPosition.Value, Quaternion.identity, mapContainer.transform);
     }
 
     /// <summary>
@@ -303,6 +417,19 @@ public class MapGenerator : MonoBehaviour
     }
 
     #region Helper Methods
+
+    /// <summary>
+    /// 生成可能なプレハブリストからランダムに1つ取得
+    /// </summary>
+    /// <param name="list">生成可能なエリア部品のプレハブ素材たち</param>
+    /// <returns>リスト内のランダムなプレハブ</returns>
+    private GameObject GetRandom(List<GameObject> list)
+    {
+        if (list == null || list.Count == 0)
+            return null;
+
+        return list[Random.Range(0, list.Count)];
+    }
 
     /// <summary>
     /// 指定された座標の未訪問の隣接エリアを取得
