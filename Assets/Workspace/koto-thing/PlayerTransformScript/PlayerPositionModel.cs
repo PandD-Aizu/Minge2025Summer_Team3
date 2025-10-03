@@ -16,8 +16,9 @@ namespace Workspace.koto_thing
         [SerializeField] private float crouchSpeedMultiplier = 0.5f;
         [SerializeField] private Vector3 currentVelocity;
         [SerializeField] private float speedChangeRate = 10.0f;
-        
-        [Header("しゃがみ関係")]
+
+        [Header("しゃがみ関係")] 
+        [SerializeField] private CapsuleCollider playerCollider;
         [SerializeField] private float standingHeight = 2.0f;
         [SerializeField] private float crouchingHeight = 1.0f;
         [SerializeField] private float heightChangeSpeed = 5.0f;
@@ -135,6 +136,14 @@ namespace Workspace.koto_thing
                     Mathf.Lerp(noiseSetting.FrequencyGain, targetFrequency, Time.deltaTime * frequencyChangeSpeed);
             }
 
+        }
+        
+        public void ChangeColliderHeight()
+        {
+            targetHeight = IsCrouching ? crouchingHeight : standingHeight;
+            currentHeight = Mathf.Lerp(playerCollider.height, targetHeight, Time.deltaTime * heightChangeSpeed);
+            playerCollider.height = currentHeight;
+            characterController.height = currentHeight;
         }
         
         /// <summary>
