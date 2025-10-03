@@ -25,7 +25,7 @@ namespace Workspace.koto_thing
 
         private void Update()
         {
-            var gun = model.GetCurrentEquippedGun;
+            var gun = model.CurrentEquippedGun;
             if (gun == null)
                 return;
 
@@ -65,7 +65,7 @@ namespace Workspace.koto_thing
                 .AddTo(disposables);
 
             // 射撃時
-            model.GetCurrentEquippedGun.OnFire
+            model.CurrentEquippedGun.OnFire
                 .Subscribe(_ =>
                 {
                     view.PlayMuzzleFlash();

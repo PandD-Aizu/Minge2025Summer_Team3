@@ -9,6 +9,9 @@ namespace Workspace.koto_thing
 {
     public class Pistol : MonoBehaviour, IGun
     {
+        [Header("Addressables関連")]
+        [SerializeField, Tooltip("Addressablesのアドレス")] private string address;
+        
         [Header("弾丸関連")] 
         [SerializeField, Tooltip("弾丸の種類")] private AmmoType ammoType = AmmoType.Pistol;
         [SerializeField, Tooltip("弾倉に入る最大弾薬数")] private int magCapacity = 12;
@@ -42,6 +45,7 @@ namespace Workspace.koto_thing
         private float spreadPenalty;
         
         public Subject<Unit> OnFire { get; } = new ();
+        public string GetGunName { get; }
 
         private float aimTimer;
         private float nextFireTime;

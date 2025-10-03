@@ -19,15 +19,21 @@ namespace Workspace.koto_thing
         /* プロパティ */
         public Subject<bool> OnReload { get; } = new ();
         public Subject<Unit> NotifyReload { get; } = new ();
-        public IGun GetCurrentEquippedGun => currentEquippedGun;
-        public Dictionary<AmmoType, int> GetAmmoInventory => ammoInventory;
-        
-        // TODO: テスト用
-        private void Awake()
+        public IGun CurrentEquippedGun
         {
-            currentEquippedGun = GetComponent<Pistol>();
-            currentEquippedGun.Equip();
+            get => currentEquippedGun;
+            set 
+            {
+                currentEquippedGun = value;
+                currentEquippedGun.Equip();
+                
+                // リロード残留情報をリセット
+                hasPendingReload = false;
+                pendingReloadCount = 0;
+            }
         }
+
+        public Dictionary<AmmoType, int> GetAmmoInventory => ammoInventory;
 
         /// <summary>
         /// リロードのための下準備をする
