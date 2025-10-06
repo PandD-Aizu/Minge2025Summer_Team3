@@ -20,14 +20,13 @@ namespace Workspace.koto_thing
         private Tween currentTween;
         private bool initialized;
 
+        // 直近のオープン設定を保持してクローズ側で利用
+        private DoorModel lastModel;
+
         public void Initialize()
         {
-            if (initialized) 
-                return;
-            
-            if (movableRoot == null) 
-                movableRoot = transform;
-            
+            if (initialized) return;
+            if (movableRoot == null) movableRoot = transform;
             closedLocalPos = movableRoot.localPosition;
             closedLocalRot = movableRoot.localRotation;
             initialized = true;
@@ -37,6 +36,9 @@ namespace Workspace.koto_thing
         {
             if (!initialized) Initialize();
             if (currentTween != null && currentTween.IsActive()) currentTween.Kill();
+            if (model == null) return;
+
+            lastModel = model; // 開いた設定を保存
 
             switch (model.DoorType)
             {
@@ -92,30 +94,58 @@ namespace Workspace.koto_thing
                 ).SetEase(Ease.InOutSine);
             }
         }
-
+        
         public void PlayClose(float duration)
         {
             if (!initialized) Initialize();
             if (currentTween != null && currentTween.IsActive()) currentTween.Kill();
 
+            if (lastModel == null)
+            {
+                // フォールバック: 単純に元へ
+                currentTween = movableRoot.DOLocalMove(closedLocalPos, duration)
+                    .SetEase(Ease.InOutSine);
+                movableRoot.DOLocalRotateQuaternion(closedLocalRot, duration);
+                return;
+            }
+
+            switch (lastModel.DoorType)
+            {
+                case DoorType.Sliding:
+                    PlayCloseSliding(duration);
+                    break;
+                case DoorType.Swing:
+                    PlayCloseSwing(duration, lastModel);
+                    break;
+            }
+        }
+
+        private void PlayCloseSliding(float duration)
+        {
+            currentTween = movableRoot.DOLocalMove(closedLocalPos, duration).SetEase(Ease.InOutSine);
+            // 回転は開閉で変えていない前提
+        }
+
+        private void PlayCloseSwing(float duration, DoorModel model)
+        {
+            Vector3 axis = swingLocalAxis == Vector3.zero ? Vector3.up : swingLocalAxis.normalized;
+            // 開き時に使った角度方向へ既に回転している前提で閉じは元に戻す
             if (hingeLocalPivot == Vector3.zero)
             {
-                var fromRot = movableRoot.localRotation;
-                currentTween = DOTween.Sequence()
-                    .Join(movableRoot.DOLocalMove(closedLocalPos, duration).SetEase(Ease.InOutSine))
-                    .Join(DOTween.To(
-                        () => 0f,
-                        t => movableRoot.localRotation = Quaternion.Slerp(fromRot, closedLocalRot, t),
-                        1f,
-                        duration
-                    ).SetEase(Ease.InOutSine));
+                Quaternion fromRot = movableRoot.localRotation;
+                Quaternion toRot = closedLocalRot;
+                currentTween = DOTween.To(
+                    () => 0f,
+                    v => movableRoot.localRotation = Quaternion.Slerp(fromRot, toRot, v),
+                    1f,
+                    duration
+                ).SetEase(Ease.InOutSine);
             }
             else
             {
                 Vector3 pivot = hingeLocalPivot;
                 Quaternion fromRot = movableRoot.localRotation;
                 Quaternion toRot = closedLocalRot;
-                // 不動基準は常に閉じた状態の pivot
                 Vector3 pivotClosed = closedLocalRot * pivot;
 
                 currentTween = DOTween.To(
@@ -144,6 +174,7 @@ namespace Workspace.koto_thing
             if (!initialized) Initialize();
             if (currentTween != null && currentTween.IsActive()) currentTween.Kill();
             if (model == null) return;
+            lastModel = model;
 
             switch (model.DoorType)
             {

@@ -5,6 +5,7 @@ namespace Workspace.koto_thing
 {
     public interface IGun
     {
+        public string GetGunName { get; }
         public Subject<Unit> OnFire { get; }
         public void Tick(float deltaTime);
         

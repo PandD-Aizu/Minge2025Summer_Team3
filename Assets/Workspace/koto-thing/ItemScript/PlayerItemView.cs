@@ -185,7 +185,7 @@ namespace Workspace.koto_thing
         private bool TryGetRequiredAmmoType(GunModel gunModel, out AmmoType ammoType)
         {
             ammoType = default;
-            var gun = gunModel.GetCurrentEquippedGun;
+            var gun = gunModel.CurrentEquippedGun;
             if (gun == null) return false;
 
             try

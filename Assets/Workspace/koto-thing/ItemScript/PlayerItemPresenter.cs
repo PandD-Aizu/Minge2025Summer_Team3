@@ -53,7 +53,7 @@ namespace Workspace.koto_thing
                 })
                 .AddTo(disposable);
 
-            gunModel.GetCurrentEquippedGun?.OnFire
+            gunModel.CurrentEquippedGun?.OnFire
                 .Subscribe(_ =>
                 {
                     view.ConsumeOneAmmoForEquippedGun(gunModel);
