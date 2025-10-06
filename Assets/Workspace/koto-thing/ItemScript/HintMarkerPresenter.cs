@@ -9,50 +9,65 @@ namespace Workspace.koto_thing
         [SerializeField] private HintMarkerModel model;
         [SerializeField] private HintMarkerView view;
 
-        private CompositeDisposable disposables = new ();
+        private readonly CompositeDisposable disposables = new();
 
         private void Start()
         {
-            SubscribeEvents();
-        }
-
-        private void Update()
-        {
-            view.RotateTowardsCamera();
-            view.UpdateAlphaByDistance(model.PlayerTransform, model.GetMaxDistance, model.GetMinDistance);
-        }
-        
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                view.SwitchVisibility(true);
-                model.PlayerTransform = other.transform;
-            }
-        }
-        
-        public void OnTriggerExit(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                view.SwitchVisibility(false);
-                model.PlayerTransform = null;
-            }
-        }
-
-        private void SubscribeEvents()
-        {
+            if (model == null) 
+                model = GetComponent<HintMarkerModel>();
+            if (view == null) 
+                view = GetComponentInChildren<HintMarkerView>();
             
+            view.Initialize();
+            view.SwitchVisibility(false);
         }
 
-        public void OnDestroy()
+        private void LateUpdate()
         {
-            Dispose();
+            // プレイヤー参照が無い間は位置のみ維持（表示されていればそのまま）
+            var target = model.TargetRoot;
+            view.UpdatePositionAndScale(
+                target,
+                model.VerticalOffset,
+                model.UseRendererBounds,
+                model.ExtraHeight,
+                model.PlayerTransform,
+                model.MaxDistance,
+                model.ScaleWithDistance,
+                model.ScaleCurve,
+                model.BaseScale,
+                model.MaxScaleMultiplier
+            );
+
+            if (model.PlayerTransform != null)
+            {
+                view.RotateBillboard(model.Billboard);
+                view.UpdateAlphaByDistance(model.PlayerTransform, model.MaxDistance, model.MinDistance);
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.CompareTag("Player")) return;
+            model.PlayerTransform = other.transform;
+            view.SwitchVisibility(true);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.CompareTag("Player")) return;
+            model.PlayerTransform = null;
+            view.SwitchVisibility(false);
         }
 
         public void Dispose()
         {
             disposables.Dispose();
+        }
+
+        private void OnDestroy()
+        {
+            Dispose();
         }
     }
 }

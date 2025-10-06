@@ -2,6 +2,7 @@
 using UniRx;
 using UnityEngine;
 using Workspace.momiji1107;
+using UnityEngine.AI;
 
 namespace Workspace.koto_thing
 {
@@ -17,29 +18,71 @@ namespace Workspace.koto_thing
         [SerializeField] private PoliceAnimationController policeAnimationController;
 
         private CompositeDisposable disposables = new CompositeDisposable();
+        private bool navMeshInitialized;
+
+        private void Awake()
+        {
+            if (model != null && model.GetAgent != null && !MapGenerator.NavMeshReady)
+                model.GetAgent.enabled = false;
+        }
 
         private void Start()
         {
-            model.GetAgent.updatePosition = false;
-            model.GetAgent.updateRotation = false;
-            
-            battleBGMController = GameObject.Find("BattleBGM").GetComponent<BattleBGMController>();
-            
+            MapGenerator.NavMeshReadyAsObservable()
+                .Take(1)
+                .Subscribe(_ => TryInitializeAfterNavMesh())
+                .AddTo(disposables);
+        }
+
+        private void TryInitializeAfterNavMesh()
+        {
+            if (navMeshInitialized) return;
+            if (model == null || model.GetAgent == null) return;
+            if (!MapGenerator.NavMeshReady) return;
+
+            var agent = model.GetAgent;
+            if (!agent.enabled)
+            {
+                agent.enabled = true;
+            }
+
+            if (!agent.isOnNavMesh)
+            {
+                if (NavMesh.SamplePosition(agent.transform.position, out NavMeshHit hit, 5f, agent.areaMask))
+                {
+                    agent.Warp(hit.position);
+                }
+                else
+                {
+                    Debug.LogWarning($"PoliceMovePresenter: NavMesh上に配置できませんでした: {agent.name}");
+                }
+            }
+
+            agent.updatePosition = false;
+            agent.updateRotation = false;
+
+            battleBGMController = GameObject.Find("BattleBGM")?.GetComponent<BattleBGMController>();
+            if (battleBGMController == null)
+                Debug.LogWarning("BattleBGMController がシーンに見つかりません");
+
             aiBehaviourModel.CurrentState = AIState.Idle;
             SubscribeEvents();
+            navMeshInitialized = true;
         }
 
         private void Update()
         {
-            // 検知更新
-            detectionModel.FindPlayerInVision();
+            if (!navMeshInitialized) return;
 
-            // 状態判定(優先度: Attacking > Chasing > Searching > Idle)
+            detectionModel.FindPlayerInVision();
             var target = detectionModel.PlayerTransform;
             bool canSee = target != null;
             bool hasLkp = detectionModel.HasLastKnownPosition;
+            bool inRange = canSee && attackModel != null && attackModel.IsInRange(target);
+            bool canAttackNow = inRange && attackModel != null && attackModel.CanAttack();
 
-            if (canSee && attackModel != null && attackModel.IsInRange(target))
+            // 状態判定(優先度: Attacking > Chasing > Searching > Idle)
+            if (canAttackNow)
             {
                 aiBehaviourModel.CurrentState = AIState.Attacking;
                 aiBehaviourModel.HandleAttackState(target, model, attackModel);
@@ -54,7 +97,6 @@ namespace Workspace.koto_thing
                 aiBehaviourModel.CurrentState = AIState.Searching;
                 aiBehaviourModel.HandleSearchState(detectionModel.LastKnownPosition, model);
 
-                // 到達判定
                 var agent = model.GetAgent;
                 if (agent != null && agent.isOnNavMesh && !agent.pathPending)
                 {
@@ -73,18 +115,26 @@ namespace Workspace.koto_thing
                 aiBehaviourModel.HandleIdleState(model);
             }
 
-            // モーション更新と適用
-            model.UpdatePlanarVelocity();
-            model.UpdateRotation();
-            model.ApplyGravity();
-            model.ApplyMovement();
-            
-            emitter.PlayFootStep(model.GetSpeed);
+            if (aiBehaviourModel.CurrentState == AIState.Attacking)
+            {
+                model.ForceStopImmediate();
+            }
+            else
+            {
+                model.UpdatePlanarVelocity();
+                model.UpdateRotation();
+                model.ApplyGravity();
+                model.ApplyMovement();
+                emitter.PlayFootStep(model.GetSpeed);
+            }
+
             emitter.UpdateMoanTimer();
         }
 
         private void SubscribeEvents()
         {
+            if (disposables.Count > 1) return;
+
             aiBehaviourModel.CurrentStateObservable
                 .Subscribe(nextState =>
                 {
@@ -93,33 +143,39 @@ namespace Workspace.koto_thing
                     {
                         case AIState.Idle:
                             aiBehaviourModel.HandleIdleState(model);
-                            battleBGMController.StopBattleBGM();
+                            battleBGMController?.StopBattleBGM();
                             policeAnimationController.PlayIdle();
                             break;
                         case AIState.Chasing:
                             aiBehaviourModel.HandleChaseState(detectionModel.PlayerTransform, model);
-                            battleBGMController.PlayBattleBGM();
+                            battleBGMController?.PlayBattleBGM();
                             policeAnimationController.PlayChase();
                             break;
                         case AIState.Searching:
                             aiBehaviourModel.HandleSearchState(detectionModel.LastKnownPosition, model);
-                            battleBGMController.StopBattleBGM();
+                            battleBGMController?.StopBattleBGM();
                             policeAnimationController.PlaySearch();
                             break;
                         case AIState.Attacking:
                             aiBehaviourModel.HandleAttackState(detectionModel.PlayerTransform, model, attackModel);
-                            battleBGMController.PlayBattleBGM();
-                            policeAnimationController.PlayAttack();
+                            battleBGMController?.PlayBattleBGM();
                             break;
                     }
                 })
                 .AddTo(disposables);
+
+            if (attackModel != null)
+            {
+                attackModel.OnAttack
+                    .Subscribe(_ => policeAnimationController.PlayAttack())
+                    .AddTo(disposables);
+            }
         }
-        
+
         private void OnDestroy()
         {
             Dispose();
-            battleBGMController.StopBattleBGM();
+            battleBGMController?.StopBattleBGM();
         }
 
         public void Dispose()

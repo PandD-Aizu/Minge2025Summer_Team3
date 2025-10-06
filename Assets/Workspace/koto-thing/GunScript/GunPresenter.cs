@@ -17,6 +17,8 @@ namespace Workspace.koto_thing
         [SerializeField, Tooltip("敵が銃声を聞き取れる半径(メートル)")] private float gunshotHearRadius = 35f;
 
         private CompositeDisposable disposables = new ();
+        private readonly SerialDisposable gunFireSubscription = new();
+        private IGun lastGun;
 
         private void Start()
         {
@@ -28,6 +30,13 @@ namespace Workspace.koto_thing
             var gun = model.CurrentEquippedGun;
             if (gun == null)
                 return;
+
+            // 銃が切り替わったら OnFire 購読を差し替え
+            if (gun != lastGun)
+            {
+                lastGun = gun;
+                gunFireSubscription.Disposable = gun.OnFire.Subscribe(_ => OnGunFired());
+            }
 
             // 毎フレーム更新（精度回復など）
             gun.Tick(Time.deltaTime);
@@ -56,27 +65,23 @@ namespace Workspace.koto_thing
             view.UpdateReticle(gun, Input.GetMouseButton(1));
         }
 
+        private void OnGunFired()
+        {
+            view.PlayMuzzleFlash();
+            emitter.PlayFireSound();
+            view.PlayMuzzleFlashLight().Forget();
+
+            var cam = fireCamera != null ? fireCamera : Camera.main;
+            Vector3 pos = cam != null ? cam.transform.position : view.transform.position;
+            MessageBroker.Default.Publish(new SoundEvent(pos, gunshotHearRadius, SoundType.Gunshot, gameObject));
+        }
+
         private void SubscribeEvents()
         {
             // リロード処理
             model.OnReload
                 .SelectMany(isEmptyReload => emitter.PlayReloadAndWait(isEmptyReload))
                 .Subscribe(_ => model.Reload())
-                .AddTo(disposables);
-
-            // 射撃時
-            model.CurrentEquippedGun.OnFire
-                .Subscribe(_ =>
-                {
-                    view.PlayMuzzleFlash();
-                    emitter.PlayFireSound();
-                    view.PlayMuzzleFlashLight().Forget();
-
-                    // 銃声を世界へPublish（敵の聴覚が購読）
-                    var cam = fireCamera != null ? fireCamera : Camera.main;
-                    Vector3 pos = cam != null ? cam.transform.position : view.transform.position;
-                    MessageBroker.Default.Publish(new SoundEvent(pos, gunshotHearRadius, SoundType.Gunshot, gameObject));
-                })
                 .AddTo(disposables);
         }
 
@@ -87,6 +92,7 @@ namespace Workspace.koto_thing
 
         public void Dispose()
         {
+            gunFireSubscription.Dispose();
             disposables.Dispose();
         }
     }

@@ -109,5 +109,18 @@ namespace Workspace.koto_thing
                 agent.SetDestination(policeTransform.position);
             }
         }
+
+        /// <summary>
+        /// 攻撃中など、直ちに完全停止させたい場合に使用。Planar速度を即ゼロ化しパスも破棄。
+        /// </summary>
+        public void ForceStopImmediate()
+        {
+            planarVelocity = Vector3.zero;
+            if (agent != null && agent.isOnNavMesh)
+            {
+                agent.ResetPath();
+                agent.velocity = Vector3.zero;
+            }
+        }
     }
 }

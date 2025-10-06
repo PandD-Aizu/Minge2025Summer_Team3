@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 8681662416804077977}
   - component: {fileID: 8351675993000126132}
   - component: {fileID: 3069562430471569831}
+  - component: {fileID: 2070761054494888519}
   m_Layer: 0
   m_Name: TunnelWall07
   m_TagString: Untagged
@@ -147,6 +148,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2070761054494888519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838400327204663932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &1147412790046575515
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +173,7 @@ GameObject:
   - component: {fileID: 2761556401417594920}
   - component: {fileID: 1841276347901926668}
   - component: {fileID: 310742820699627707}
+  - component: {fileID: 4919757084547876135}
   m_Layer: 0
   m_Name: TunnelWall03
   m_TagString: Untagged
@@ -255,6 +270,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4919757084547876135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147412790046575515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &1852736078865667256
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,6 +329,7 @@ GameObject:
   - component: {fileID: 4639106060568136013}
   - component: {fileID: 8756991844739472683}
   - component: {fileID: 7298365656267629024}
+  - component: {fileID: 9051591731224322240}
   m_Layer: 0
   m_Name: TunnelWall04
   m_TagString: Untagged
@@ -397,6 +426,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9051591731224322240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4318292655474168816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &4623205413966823108
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,6 +451,7 @@ GameObject:
   - component: {fileID: 1216739401091639119}
   - component: {fileID: 803791405285984012}
   - component: {fileID: 4909644621702003601}
+  - component: {fileID: 2708934099822005861}
   m_Layer: 0
   m_Name: TunnelWall06
   m_TagString: Untagged
@@ -505,6 +548,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2708934099822005861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4623205413966823108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &5814764436367848045
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,6 +573,7 @@ GameObject:
   - component: {fileID: 4242223662773337629}
   - component: {fileID: 1046446874290347445}
   - component: {fileID: 848325890103828500}
+  - component: {fileID: 3097647460399771890}
   m_Layer: 0
   m_Name: TunnelWall01
   m_TagString: Untagged
@@ -613,6 +670,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3097647460399771890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5814764436367848045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &7370316809966154766
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,6 +695,7 @@ GameObject:
   - component: {fileID: 1376903081191741287}
   - component: {fileID: 3892595758804922686}
   - component: {fileID: 5721635062914701922}
+  - component: {fileID: 2928721099621423452}
   m_Layer: 0
   m_Name: TunnelWall05
   m_TagString: Untagged
@@ -721,6 +792,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2928721099621423452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7370316809966154766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &7680565655123924280
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,6 +817,7 @@ GameObject:
   - component: {fileID: 614848282066204349}
   - component: {fileID: 1133581937912492581}
   - component: {fileID: 8528514425881688967}
+  - component: {fileID: 7822682642234182778}
   m_Layer: 0
   m_Name: TunnelRoad
   m_TagString: Untagged
@@ -829,6 +914,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7822682642234182778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7680565655123924280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &8486602172799233565
 GameObject:
   m_ObjectHideFlags: 0
@@ -874,6 +972,7 @@ GameObject:
   - component: {fileID: 3339426583905612421}
   - component: {fileID: 8445016572718739326}
   - component: {fileID: 2679587444130182191}
+  - component: {fileID: 6532274740866472720}
   m_Layer: 0
   m_Name: TunnelWall02
   m_TagString: Untagged
@@ -970,6 +1069,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6532274740866472720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9075153904373669910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1001 &697646440140602934
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1320,7 +1432,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  useOcclusion: 0
+  useOcclusion: 1
   useBackgroundCloudOcclusion: 0
   environmentOcclusion: 0
   useWaterOcclusion: 0
@@ -1637,7 +1749,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  useOcclusion: 0
+  useOcclusion: 1
   useBackgroundCloudOcclusion: 0
   environmentOcclusion: 0
   useWaterOcclusion: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5721238073596674844}
   - component: {fileID: 2156538044002077516}
   - component: {fileID: 4144573360896421068}
+  - component: {fileID: 7287076832412953401}
   m_Layer: 0
   m_Name: TunnelWall01
   m_TagString: Untagged
@@ -108,6 +109,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7287076832412953401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587433121017300123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &2247955752295391701
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +134,7 @@ GameObject:
   - component: {fileID: 7093487078342801208}
   - component: {fileID: 3192410780190478604}
   - component: {fileID: 3025451218493617706}
+  - component: {fileID: 5174205021729815366}
   m_Layer: 0
   m_Name: TunnelRoad
   m_TagString: Untagged
@@ -216,6 +231,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5174205021729815366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247955752295391701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1 &2983847963169913978
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,6 +357,7 @@ GameObject:
   - component: {fileID: 387159392844089881}
   - component: {fileID: 7708008913301761282}
   - component: {fileID: 7854203067658358487}
+  - component: {fileID: 3888378970821011219}
   m_Layer: 0
   m_Name: TunnelWall02
   m_TagString: Untagged
@@ -425,6 +454,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3888378970821011219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6374653024967553843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 2
 --- !u!1001 &3033200898904884190
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -697,7 +739,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  useOcclusion: 0
+  useOcclusion: 1
   useBackgroundCloudOcclusion: 0
   environmentOcclusion: 0
   useWaterOcclusion: 0
@@ -1014,7 +1056,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  useOcclusion: 0
+  useOcclusion: 1
   useBackgroundCloudOcclusion: 0
   environmentOcclusion: 0
   useWaterOcclusion: 0

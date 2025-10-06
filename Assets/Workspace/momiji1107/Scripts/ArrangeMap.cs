@@ -1,11 +1,20 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using JetBrains.Annotations;
 using Unity.AI.Navigation;
+using UniRx;
+using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
 {
+    private static readonly Subject<Unit> navMeshRebuiltSubject = new Subject<Unit>();
+    public static bool NavMeshReady { get; private set; }
+    public static IObservable<Unit> NavMeshReadyAsObservable()
+    {
+        // 既に完了しているなら即値を返し、未完了なら完了時のストリームを返す
+        return NavMeshReady ? Observable.Return(Unit.Default) : navMeshRebuiltSubject.AsObservable();
+    }
+
     #region Inspector Fields
     [Header("マップ設定")]
     [Tooltip("マップの幅（必ず奇数を指定）")]
@@ -75,6 +84,8 @@ public class MapGenerator : MonoBehaviour
     /// </summary>
     public void GenerateMap() // Remark: 外部から呼び出せるようにしておく
     {
+        NavMeshReady = false; // 再生成開始でリセット
+
         // 既存のマップがあれば削除
         if (mapContainer != null)
             Destroy(mapContainer);
@@ -414,6 +425,8 @@ public class MapGenerator : MonoBehaviour
     {
         if (navMeshSurface != null)
             navMeshSurface.BuildNavMesh();
+        NavMeshReady = true;
+        navMeshRebuiltSubject.OnNext(Unit.Default); // UniRx通知
     }
 
     #region Helper Methods

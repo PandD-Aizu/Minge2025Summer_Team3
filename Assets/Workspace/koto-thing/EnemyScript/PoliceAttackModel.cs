@@ -10,6 +10,7 @@ namespace Workspace.koto_thing
         [Header("依存関係")] 
         [SerializeField] private Transform policeTransform;
         [SerializeField] private Animator animator;
+        [SerializeField, Tooltip("攻撃アニメーションのTrigger名")] private string attackTriggerName = "AttackTrigger";
 
         [Header("攻撃設定")] 
         [SerializeField, Tooltip("近接攻撃が届く距離")] private float attackRange = 2.0f;
@@ -18,18 +19,18 @@ namespace Workspace.koto_thing
         [SerializeField, Tooltip("攻撃時に少しだけ前進させる量")] private float lungeDistance = 0.0f;
 
         private float lastAttackTime = -999f;
-        private static readonly int AttackHash = Animator.StringToHash("Attack");
 
         private readonly Subject<Unit> onAttack = new Subject<Unit>();
-        public IObservable<Unit> OnAttack => onAttack;
+        public IObservable<Unit> OnAttack => onAttack; // 実際に攻撃動作が行われた瞬間
+
+        private Transform pendingTarget;           // 現在進行中攻撃のターゲット
+        private bool damageAppliedThisAttack;      // ダメージを既に適用したか
 
         public float AttackRange => attackRange;
 
         /// <summary>
-        /// 攻撃対象が攻撃範囲内にいるかどうかをチェック
+        /// 攻撃対象が攻撃範囲内にいるかどうか
         /// </summary>
-        /// <param name="target">攻撃対象</param>
-        /// <returns>攻撃できるかどうか</returns>
         public bool IsInRange(Transform target)
         {
             if (target == null || policeTransform == null) return false;
@@ -37,40 +38,30 @@ namespace Workspace.koto_thing
         }
 
         /// <summary>
-        /// 攻撃が可能かどうかチェック
+        /// クールダウン経過で攻撃可能か
         /// </summary>
-        /// <returns>攻撃可能かどうか</returns>
         public bool CanAttack()
         {
             return Time.time >= lastAttackTime + attackCooldown;
         }
 
         /// <summary>
-        /// 攻撃する
+        /// 攻撃試行し、成功したらイベント発火
         /// </summary>
-        /// <param name="target">攻撃対象</param>
-        /// <returns>攻撃できたかどうか</returns>
         public bool TryAttack(Transform target)
         {
             if (target == null) return false;
             if (!IsInRange(target) || !CanAttack()) return false;
             
-            if (animator != null)
-            {
-                animator.SetTrigger(AttackHash);
-            }
-            
-            if (lungeDistance > 0f)
+            if (lungeDistance > 0f && policeTransform != null)
             {
                 Vector3 fwd = Vector3.ProjectOnPlane((target.position - policeTransform.position).normalized, Vector3.up);
                 policeTransform.position += fwd * Mathf.Min(lungeDistance, attackRange * 0.25f);
             }
 
-            // ダメージ適用
-            var hp = target.GetComponentInChildren<PlayerHpModel>();
-            if (hp != null)
-                hp.CurrentHp -= attackDamage;
-
+            // 攻撃開始
+            pendingTarget = target;
+            damageAppliedThisAttack = false;
             lastAttackTime = Time.time;
             onAttack.OnNext(Unit.Default);
             return true;
