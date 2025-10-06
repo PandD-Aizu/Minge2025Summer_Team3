@@ -8,6 +8,7 @@ namespace RenderingScript
 {
     public class FlyController : MonoBehaviour
     {
+        #region Parameters
         [Header("ハエの描画関連")] 
         [SerializeField] private Mesh flyMesh;
         [SerializeField] private Material flyMaterial;
@@ -36,7 +37,9 @@ namespace RenderingScript
         [SerializeField, Tooltip("障害物オブジェクト")] private Transform[] obstacles;
         [SerializeField, Tooltip("障害物回避の強さ")] private float obstacleAvoidanceWeight = 3.0f;
         [SerializeField, Tooltip("障害物回避の感知距離")] private float obstacleAvoidanceRadius = 1.5f;
+        #endregion
         
+        #region InternalVariables
         private ComputeBuffer flyDataBuffer;
         private ComputeBuffer obstacleDataBuffer;
         private ComputeBuffer argsBuffer;
@@ -45,7 +48,11 @@ namespace RenderingScript
         
         private ComputeBuffer visibleBoidBuffer; // AppendStructuredBuffer用
         private ComputeBuffer countBuffer;       // 1uintのRawカウンタ読み出し
+        
+        private int lastObstacleCount = -1;
+        #endregion
 
+        #region Structures
         struct FlyData
         {
             public Vector3 position;
@@ -60,6 +67,7 @@ namespace RenderingScript
             public Vector3 position;
             public float radius;
         }
+        #endregion
 
         private void Start()
         {
@@ -86,27 +94,22 @@ namespace RenderingScript
 
         private void Update()
         {
+            EnsureObstacleBuffer();
+            
             int kernelIndex = computeShader.FindKernel("CSMain");
-            
             computeShader.SetBuffer(kernelIndex, "boidDataBuffer", flyDataBuffer);
-            if (obstacleDataBuffer == null)
-            {
-                obstacleDataBuffer = new ComputeBuffer(1, Marshal.SizeOf(typeof(ObstacleData)));
-                obstacleDataBuffer.SetData(new ObstacleData[1]);
-            }
             computeShader.SetBuffer(kernelIndex, "obstacleDataBuffer", obstacleDataBuffer);
-            computeShader.SetInt("obstacleCount", obstacles == null ? 0 : obstacles.Length);
-            
+
+            int obstacleCount = (obstacles == null) ? 0 : obstacles.Length;
+            computeShader.SetInt("obstacleCount", obstacleCount);
+
             computeShader.SetFloat("deltaTime", Time.deltaTime);
             computeShader.SetInt("boidCount", flyCount);
             computeShader.SetFloat("separationWeight", separationWeight);
             computeShader.SetFloat("alignmentWeight", alignmentWeight);
             computeShader.SetFloat("cohesionWeight", cohesionWeight);
             computeShader.SetFloat("perceptionRadius", perceptionRadius);
-
-            if (target != null)
-                computeShader.SetVector("targetPosition", target.position);
-            
+            if (target) computeShader.SetVector("targetPosition", target.position);
             computeShader.SetFloat("targetWeight", targetWeight);
             computeShader.SetVector("boundsSize", boundsSize);
             computeShader.SetVector("boundsCenter", transform.position);
@@ -195,21 +198,41 @@ namespace RenderingScript
         /// </summary>
         private void InitializeObstacles()
         {
-            if (obstacles == null || obstacles.Length == 0)
-                return;
-
-            ObstacleData[] obstacleData = new ObstacleData[obstacles.Length];
-            for (int i = 0; i < obstacles.Length; i++)
+            obstacleDataBuffer?.Release();
+            obstacleDataBuffer = null;
+            
+            int count = (obstacles != null && obstacles.Length > 0) ? obstacles.Length : 1;
+            var data = new ObstacleData[count];
+            if (obstacles != null && obstacles.Length > 0)
             {
-                obstacleData[i] = new ObstacleData()
+                for (int i = 0; i < obstacles.Length; i++)
                 {
-                    position = obstacles[i].position,
-                    radius = obstacles[i].localScale.x / 2.0f,
-                };
+                    data[i] = new ObstacleData()
+                    {
+                        position = obstacles[i].position,
+                        radius = obstacles[i].localScale.x * 0.5f
+                    };
+                }
+            }
+            else
+            {
+                data[0] = new ObstacleData { position = Vector3.zero, radius = 0.0f };
             }
             
-            obstacleDataBuffer = new ComputeBuffer(obstacles.Length, Marshal.SizeOf(typeof(ObstacleData)));
-            obstacleDataBuffer.SetData(obstacleData);
+            obstacleDataBuffer = new ComputeBuffer(count, Marshal.SizeOf(typeof(ObstacleData)));
+            obstacleDataBuffer.SetData(data);
+            lastObstacleCount = (obstacles == null) ? 0 : obstacles.Length;
+        }
+
+        /// <summary>
+        /// 障害物バッファの確認と更新
+        /// 障害物リストが変化していたらバッファを再初期化
+        /// </summary>
+        private void EnsureObstacleBuffer()
+        {
+            int current = (obstacles == null) ? 0 : obstacles.Length;
+            if (obstacleDataBuffer == null || current != lastObstacleCount)
+                InitializeObstacles();
         }
 
         private void OnDestroy()
