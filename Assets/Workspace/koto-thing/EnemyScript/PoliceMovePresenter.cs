@@ -11,7 +11,7 @@ namespace Workspace.koto_thing
         [SerializeField] private PoliceMoveModel model;
         [SerializeField] private PoliceEmitter emitter;
         [SerializeField] private PoliceCollisionDetectionModel detectionModel;
-        [SerializeField] private PoliceStatusModel statusModel;
+        [SerializeField] private PoliceHPModel hpModel;
         [SerializeField] private PoliceAIBehaviour aiBehaviourModel;
         [SerializeField] private BattleBGMController battleBGMController;
         [SerializeField] private PoliceAttackModel attackModel;

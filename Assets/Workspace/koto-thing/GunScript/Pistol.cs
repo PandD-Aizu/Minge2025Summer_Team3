@@ -9,8 +9,8 @@ namespace Workspace.koto_thing
 {
     public class Pistol : MonoBehaviour, IGun
     {
-        [Header("Addressables関連")]
-        [SerializeField, Tooltip("Addressablesのアドレス")] private string address;
+        [Header("共有ダメージモデル")] 
+        [SerializeField] private GunDamageModel gunDamageModel;
         
         [Header("弾丸関連")] 
         [SerializeField, Tooltip("弾丸の種類")] private AmmoType ammoType = AmmoType.Pistol;
@@ -37,6 +37,8 @@ namespace Workspace.koto_thing
         [SerializeField, Tooltip("拡散ペナルティの上限(度)")] private float maxSpreadPenalty = 10.0f;
 
         [Header("射撃カメラ/ヒットバッファ")]
+        [SerializeField, Tooltip("レイキャストのレイヤーマスク")] 
+        private LayerMask raycastLayerMask = ~0;
         [SerializeField, Tooltip("RaycastNonAlloc用のバッファサイズ")] 
         private int bufferSize = 32;
         [SerializeField, Tooltip("RaycastNonAlloc用のヒット配列サイズ")] private int raycastBufferSize = 32;
@@ -80,59 +82,23 @@ namespace Workspace.koto_thing
             float kick = Mathf.Lerp(fireSpreadKickHip, fireSpreadKickAim, aimT);
             spreadPenalty = Mathf.Min(maxSpreadPenalty, spreadPenalty + kick);
             
+            // 向きと発射元を決定
             Vector3 shootDirection = GetShootDirection();
             Vector3 origin = Camera.main.transform.position;
 
-            int hitCount = Physics.RaycastNonAlloc(origin, shootDirection, raycastBuffer, range);
+            // レイキャストしてヒットした敵にダメージを与える
+            int hitCount = Physics.RaycastNonAlloc(origin, shootDirection, raycastBuffer, range, raycastLayerMask);
             if (hitCount > 0)
             {
-                // 近距離順に単純選択法で並べ替え（低コスト・小配列前提）
-                for (int i = 0; i < hitCount - 1; i++)
-                {
-                    int minIndex = i;
-                    float minDist = raycastBuffer[minIndex].distance;
-                    for (int j = i + 1; j < hitCount; j++)
-                    {
-                        float d = raycastBuffer[j].distance;
-                        if (d < minDist)
-                        {
-                            minDist = d;
-                            minIndex = j;
-                        }
-                    }
-                    if (minIndex != i)
-                    {
-                        var tmp = raycastBuffer[i];
-                        raycastBuffer[i] = raycastBuffer[minIndex];
-                        raycastBuffer[minIndex] = tmp;
-                    }
-                }
-
-                int penetratedEnemyCount = 0;
-                HashSet<IEnemyStatus> damagedEnemies = new HashSet<IEnemyStatus>();
-
-                for (int i = 0; i < hitCount; i++)
-                {
-                    if (penetratedEnemyCount >= penetrationCount)
-                        break;
-
-                    var hit = raycastBuffer[i];
-                    var col = hit.collider;
-                    if (col != null && col.CompareTag("EnemyShootable"))
-                    {
-                        IEnemyStatus enemyStatus = col.GetComponentInChildren<IEnemyStatus>();
-                        if (enemyStatus != null && !damagedEnemies.Contains(enemyStatus))
-                        {
-                            float finalDamage = attackPower;
-                            if (hit.distance <= pointBlankDistance)
-                                finalDamage *= pointBlankMultiplier;
-
-                            enemyStatus.ReceiveDamage(finalDamage);
-                            damagedEnemies.Add(enemyStatus);
-                            penetratedEnemyCount++;
-                        }
-                    }
-                }
+                gunDamageModel.ProcessHits(
+                    raycastBuffer,
+                    hitCount, 
+                    attackPower, 
+                    range,
+                    pointBlankDistance, 
+                    pointBlankMultiplier, 
+                    penetrationCount
+                );
             }
             
             Debug.DrawRay(origin, shootDirection.normalized * range, Color.red, 2.0f);

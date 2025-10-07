@@ -4,7 +4,7 @@ using UnityEngine;
 using Workspace.koto_thing;
 using Workspace.momiji1107;
 
-public class Police_Model : MonoBehaviour, IEnemyStatus
+public class Police_Model : MonoBehaviour, IEnemyHP, IEnemyPartHitReceiver
 {
     [Header("Playerオブジェクト")]
     [SerializeField] private GameObject player; // プレイヤーオブジェクト
@@ -23,9 +23,17 @@ public class Police_Model : MonoBehaviour, IEnemyStatus
     [SerializeField] private float attackCoolDown = 3.0f; // 攻撃のクールダウン時間
     [SerializeField] private float battleDistance = 1.0f; // 戦闘距離
 
+    [Header("被弾デバフ(足)")]
+    [SerializeField, Tooltip("足(脚)に被弾した際の移動速度倍率")] private float legShotSlowMultiplier = 0.5f;
+    [SerializeField, Tooltip("足被弾スロー継続時間(秒)")] private float legShotSlowDuration = 2.0f;
+    [SerializeField, Tooltip("足に再度被弾したら効果時間をリフレッシュするか")] private bool refreshLegSlow = true;
+
     private float currentCoolDown = 0.0f;         // 現在のクールダウン時間
     private float currentSpeed = 0.0f;            // 現在の速度
     private Vector3 moveDirection = Vector3.zero; // 移動方向
+
+    private float currentSlowMultiplier = 1f;      // 現在のスロー倍率(1=通常)
+    private float slowExpireTime = 0f;             // スロー終了時刻
 
     private bool isMoving = false;
     public ReactiveProperty<bool> Battleflag = new ReactiveProperty<bool>(false); //プレイヤーが範囲内にいるかどうか
@@ -40,9 +48,15 @@ public class Police_Model : MonoBehaviour, IEnemyStatus
     {
         if (player != null && Battleflag.Value)
         {
+            // スロー時間更新判定
+            if (currentSlowMultiplier < 1f && Time.time >= slowExpireTime)
+            {
+                currentSlowMultiplier = 1f; // スロー解除
+            }
+
             // 方向と速度を決定
             Vector3 direction = (player.transform.position - transform.position).normalized;
-            float targetSpeed = policeMoveSpeed;
+            float targetSpeed = policeMoveSpeed * currentSlowMultiplier; // 足スロー考慮
 
             // スピードを調整
             if (Vector3.Distance(transform.position, player.transform.position) > 0.1f)
@@ -50,8 +64,8 @@ public class Police_Model : MonoBehaviour, IEnemyStatus
             else
                 currentSpeed = Mathf.MoveTowards(currentSpeed, 0.0f, deceleration * Time.deltaTime);
 
-            // 移動ベクトルを計算して移動
-            currentSpeed = Mathf.Clamp(currentSpeed, 0.0f, policeMoveSpeed);
+            // 移動ベクトルを計算して移動 (クランプもスロー後の上限で)
+            currentSpeed = Mathf.Clamp(currentSpeed, 0.0f, targetSpeed);
             moveDirection = direction * currentSpeed;
 
             // ここで向きと移動を適用
@@ -101,6 +115,28 @@ public class Police_Model : MonoBehaviour, IEnemyStatus
         {
             OffBattleflag();
             Destroy(gameObject);
+        }
+    }
+
+    /// <summary>
+    /// 部位被弾コールバック (足に当たったらスロー)
+    /// </summary>
+    public void OnPartHit(Workspace.koto_thing.EnemyBodyParts part, float finalDamage)
+    {
+        if (part == EnemyBodyParts.LEFT_LEG || part == EnemyBodyParts.RIGHT_LEG)
+        {
+            // 既により強い(=小さい)スローがかかっている場合は保持 / リフレッシュ設定
+            bool apply = currentSlowMultiplier <= 0f || legShotSlowMultiplier < currentSlowMultiplier;
+            if (apply)
+            {
+                currentSlowMultiplier = Mathf.Clamp(legShotSlowMultiplier, 0.05f, 1f);
+                slowExpireTime = Time.time + legShotSlowDuration;
+            }
+            else if (refreshLegSlow && currentSlowMultiplier <= legShotSlowMultiplier + 0.0001f)
+            {
+                // 同じ強さのスローをリフレッシュ
+                slowExpireTime = Time.time + legShotSlowDuration;
+            }
         }
     }
 }

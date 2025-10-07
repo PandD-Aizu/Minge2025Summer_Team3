@@ -1,4 +1,5 @@
 using UnityEngine;
+using Workspace.koto_thing;
 using Workspace.momiji1107;
 
 public class PoliceDetectionArea : MonoBehaviour
