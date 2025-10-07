@@ -16,8 +16,10 @@ namespace Workspace.koto_thing
         private int pendingReloadCount;
         private AmmoType pendingAmmoType;
 
-        // 弾変更通知: (AmmoType, 現在残量)
+        // 弾残量変更通知 (取得/消費/同期)
         public Subject<(AmmoType ammoType, int count)> AmmoChanged { get; } = new();
+        // リロードでマガジンへ弾を適用した瞬間のみ通知 (適用数)
+        public Subject<(AmmoType ammoType, int appliedCount)> AmmoApplied { get; } = new();
 
         /* プロパティ */
         public Subject<bool> OnReload { get; } = new ();
@@ -153,8 +155,11 @@ namespace Workspace.koto_thing
             if (newValue < 0) newValue = 0; // 安全
             SetAmmoAbsolute(pendingAmmoType, newValue);
 
+            int applied = pendingReloadCount;
             currentEquippedGun.Reload(pendingReloadCount);
 
+            AmmoApplied.OnNext((pendingAmmoType, applied));
+            
             hasPendingReload = false;
             pendingReloadCount = 0;
         }

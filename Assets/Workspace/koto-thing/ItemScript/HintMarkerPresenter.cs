@@ -36,7 +36,8 @@ namespace Workspace.koto_thing
                 model.ScaleWithDistance,
                 model.ScaleCurve,
                 model.BaseScale,
-                model.MaxScaleMultiplier
+                model.MaxScaleMultiplier,
+                model.PositionOffset
             );
 
             if (model.PlayerTransform != null)

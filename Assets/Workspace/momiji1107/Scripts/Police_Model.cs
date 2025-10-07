@@ -81,13 +81,26 @@ public class Police_Model : MonoBehaviour, IEnemyHP, IEnemyPartHitReceiver
     {
         currentCoolDown += Time.deltaTime;
     
-        // レイキャストでプレイヤーを検出し、攻撃
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, battleDistance) &&
-            hit.collider.CompareTag("Player") && 
-            currentCoolDown >= attackCoolDown)
+        if (currentCoolDown < attackCoolDown)
+            return; // クールダウン未完了
+
+        // プレイヤー方向へ少し上からレイを飛ばす
+        var origin = transform.position + Vector3.up * 1.0f;
+        var dir = (player.transform.position + Vector3.up * 0.9f) - origin;
+        var dist = Mathf.Max(0.1f, battleDistance);
+
+        if (Physics.Raycast(origin, dir.normalized, out RaycastHit hit, dist))
         {
-            hit.collider.GetComponentInChildren<PlayerHpModel>().CurrentHp -= policeAttack;
-            currentCoolDown = 0.0f;
+            if (hit.collider.CompareTag("Player"))
+            {
+                // 親方向優先でPlayerHpModelを取得
+                var hp = hit.collider.GetComponentInParent<PlayerHpModel>() ?? hit.collider.GetComponentInChildren<PlayerHpModel>();
+                if (hp != null)
+                {
+                    hp.CurrentHp -= policeAttack;
+                    currentCoolDown = 0.0f;
+                }
+            }
         }
     }
    

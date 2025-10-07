@@ -79,6 +79,7 @@ namespace Workspace.koto_thing
         /// <param name="scaleCurve"></param>
         /// <param name="baseScale"></param>
         /// <param name="maxScaleMultiplier"></param>
+        /// <param name="positionOffset"></param>
         public void UpdatePositionAndScale(
             Transform target,
             float verticalOffset,
@@ -89,7 +90,8 @@ namespace Workspace.koto_thing
             bool scaleWithDistance,
             AnimationCurve scaleCurve,
             float baseScale,
-            float maxScaleMultiplier
+            float maxScaleMultiplier,
+            Vector3 positionOffset = default
         )
         {
             if (target == null) return;
@@ -119,6 +121,7 @@ namespace Workspace.koto_thing
 
             Vector3 pos = target.position;
             pos.y = topY + extraHeight + verticalOffset;
+            pos += positionOffset;
             transform.position = pos;
 
             // スケール

@@ -61,9 +61,8 @@ namespace Workspace.koto_thing
             if (delta <= 0) 
                 return;
             
+            var prevAmount = ammoCount;
             ammoCount += delta;
-            if (ammoCount > 0) 
-                isApplied = false;
         }
 
         public bool ConsumeOne()

@@ -64,6 +64,7 @@ namespace Workspace.koto_thing
             damageAppliedThisAttack = false;
             lastAttackTime = Time.time;
             onAttack.OnNext(Unit.Default);
+            pendingTarget.GetComponentInChildren<PlayerHpModel>().CurrentHp -= attackDamage;
             return true;
         }
     }

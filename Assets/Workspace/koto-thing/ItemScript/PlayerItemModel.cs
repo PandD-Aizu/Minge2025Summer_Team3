@@ -15,6 +15,8 @@ namespace Workspace.koto_thing
         private Dictionary<IItem, IDisposable> appliedSubscriptions = new (); // IAppliableの購読管理用辞書
         private IItem currentItem;
         
+        private readonly Dictionary<ISpecialItem, int> specialItemList = new();
+
         public Subject<InventoryItemEvent> OnItemChanged = new ();
 
         /// <summary>
@@ -32,6 +34,14 @@ namespace Workspace.koto_thing
                 {
                     var view = pickedMb.GetComponentInChildren<IItemView>();
                     if (view != null) view.Hide();
+                }
+
+                // --- 特殊アイテムは通常インベントリに入れず専用リストへ ---
+                if (picked is ISpecialItem special)
+                {
+                    var storedSpecial = AddSpecialItem(special);
+                    OnItemChanged.OnNext(new InventoryItemEvent(storedSpecial, storedSpecial.GetAmount));
+                    return; // 通常インベントリ処理は行わない
                 }
 
                 // 実際にインベントリに保持される参照 (スタック時は既存アイテム参照)
@@ -64,7 +74,9 @@ namespace Workspace.koto_thing
         /// <returns>特殊アイテムのリスト</returns>
         public IEnumerable<ISpecialItem> EnumerateSpecialItems()
         {
-            return itemList.Keys.OfType<ISpecialItem>();
+            // 旧仕様: itemList.Keys.OfType<ISpecialItem>()
+            // 新仕様: 専用コレクションから列挙
+            return specialItemList.Keys;
         }
         
         /* ---以下ヘルパー関数--- */
@@ -75,14 +87,8 @@ namespace Workspace.koto_thing
         /// <param name="item">追加するアイテム</param>
         private IItem AddItem(IItem item)
         {
-            if (item is ISpecialItem si && si.IsUnique)
-            {
-                if (itemList.Keys.OfType<ISpecialItem>().Any(x => x.SpecialID == si.SpecialID))
-                {
-                    if (item is MonoBehaviour duplicateMb) Destroy(duplicateMb.gameObject);
-                    return item; // 追加されなかったので拾った参照をそのまま返す（呼び出し側で扱わない前提）
-                }
-            }
+            // 特殊アイテムはここでは扱わない（GetItemで分岐済）
+            if (item is ISpecialItem) return item;
 
             foreach (var existing in itemList.Keys.ToList())
             {
@@ -254,31 +260,67 @@ namespace Workspace.koto_thing
         public bool TryUseSpecial(ISpecialItem item, SpecialItemContext context, out string failReason)
         {
             failReason = null;
-            if (item == null || !itemList.ContainsKey(item))
+            if (item == null || !specialItemList.ContainsKey(item))
                 return false;
 
             if (!item.CanUse(context, out failReason))
                 return false;
 
-            // アイテムを使用
             if (item.IsConsumable)
             {
-                ConsumeItem(item);
+                var becameZero = item.ConsumeOne();
+                if (becameZero || item.GetAmount <= 0)
+                {
+                    specialItemList.Remove(item);
+                    OnItemChanged.OnNext(new InventoryItemEvent(item, 0, true));
+                }
+                else
+                {
+                    specialItemList[item] = item.GetAmount;
+                    OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
+                }
             }
-            // 消費しない場合は ApplyItem を呼び出すだけ
             else
             {
                 item.ApplyItem();
                 OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
             }
-
             return true;
         }
-        
+
+        // --- 特殊アイテム追加ヘルパー（通常インベントリとは独立） ---
+        private ISpecialItem AddSpecialItem(ISpecialItem item)
+        {
+            if (item.IsUnique)
+            {
+                if (specialItemList.Keys.Any(x => x.SpecialID == item.SpecialID))
+                {
+                    if (item is MonoBehaviour dup) Destroy(dup.gameObject);
+                    return item;
+                }
+            }
+
+            foreach (var existing in specialItemList.Keys.ToList())
+            {
+                if (existing.SpecialID == item.SpecialID && existing.CanStack && item.CanStack)
+                {
+                    existing.AddAmount(item.GetAmount);
+                    specialItemList[existing] = existing.GetAmount;
+                    if (item is MonoBehaviour mb && existing is MonoBehaviour emb && mb.gameObject != emb.gameObject)
+                    {
+                        Destroy(mb.gameObject);
+                    }
+                    return existing;
+                }
+            }
+
+            specialItemList[item] = item.GetAmount;
+            return item;
+        }
+
         /// <summary>
         /// 弾丸同期用スナップショットを構築する
         /// </summary>
-        /// <returns>スナップショット</returns>
         public IEnumerable<(AmmoType type, int count)> BuildAmmoSnapshot()
         {
             foreach (var kv in itemList)
@@ -293,9 +335,6 @@ namespace Workspace.koto_thing
         /// <summary>
         /// GunModel 側で弾薬所持数が変化した際にインベントリ内 AmmoModel を同期する
         /// </summary>
-        /// <param name="ammoType">対象弾薬種</param>
-        /// <param name="newCount">新しい総所持数(0で削除)</param>
-        /// <returns>true: 反映した | false: 対象無し</returns>
         public bool UpdateAmmoFromGun(AmmoType ammoType, int newCount)
         {
             foreach (var key in itemList.Keys.ToList())
@@ -318,11 +357,9 @@ namespace Workspace.koto_thing
                         itemList[key] = newCount;
                         OnItemChanged.OnNext(new InventoryItemEvent(key, newCount));
                     }
-                    
                     return true;
                 }
             }
-            
             return false;
         }
     }

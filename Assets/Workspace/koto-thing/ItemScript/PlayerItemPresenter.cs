@@ -47,6 +47,14 @@ namespace Workspace.koto_thing
             model.OnItemChanged
                 .Subscribe(itemChangeEvent =>
                 {
+                    // 特殊アイテムは通常インベントリスロットに表示しない
+                    if (itemChangeEvent.Item is ISpecialItem)
+                    {
+                        // 取得/消費サウンドなどは共通で鳴らす
+                        emitter.PlayPickUp();
+                        return;
+                    }
+
                     if (itemChangeEvent.Removed)
                         view.RemoveItemSlot(itemChangeEvent.Item);
                     else
