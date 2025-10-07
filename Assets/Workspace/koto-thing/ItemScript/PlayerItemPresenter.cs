@@ -12,10 +12,13 @@ namespace Workspace.koto_thing
         [SerializeField] private GunModel gunModel;
 
         private CompositeDisposable disposable = new ();
+        private bool suppressGunSync = false; // GunModel->Inventory 反映中は逆方向同期を抑制
 
         private void Start()
         {
             SubscribeEvents();
+            
+            gunModel.SyncFromInventory(model.BuildAmmoSnapshot());
         }
 
         private void Update()
@@ -49,14 +52,34 @@ namespace Workspace.koto_thing
                     else
                         view.UpdateItemSlot(itemChangeEvent.Item, itemChangeEvent.Amount);
                     
+                    // GunModel からの反映中でなければ Inventory をソースとして GunModel を再同期
+                    if (!suppressGunSync && gunModel != null)
+                    {
+                        gunModel.SyncFromInventory(model.BuildAmmoSnapshot());
+                    }
+
                     emitter.PlayPickUp();
                 })
                 .AddTo(disposable);
 
+            // 発砲時のマガジン内視覚更新
             gunModel.CurrentEquippedGun?.OnFire
                 .Subscribe(_ =>
                 {
                     view.ConsumeOneAmmoForEquippedGun(gunModel);
+                })
+                .AddTo(disposable);
+
+            // GunModel 側（リロードなど）で所持弾が変わった場合、Inventory / UI に反映
+            gunModel.AmmoChanged
+                .Subscribe(tuple =>
+                {
+                    if (gunModel == null) return;
+                    // ループ防止フラグ
+                    suppressGunSync = true;
+                    var updated = model.UpdateAmmoFromGun(tuple.ammoType, tuple.count);
+                    suppressGunSync = false;
+                    // 更新されなかった(=インベントリに該当弾薬が無かった)場合、GunModel が残量0を出したシナリオなどは無視
                 })
                 .AddTo(disposable);
         }
