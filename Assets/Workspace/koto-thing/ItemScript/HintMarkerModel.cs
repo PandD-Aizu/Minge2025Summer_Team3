@@ -11,6 +11,7 @@ public class HintMarkerModel : MonoBehaviour
     [SerializeField] private float verticalOffset = 0.15f;  // Bounds 上端からの追加オフセット
     [SerializeField] private bool useRendererBounds = true; // 高さ計算に Renderer Bounds を利用
     [SerializeField] private float extraHeight = 0.0f;      // 任意追加高さ
+    [SerializeField, Tooltip("XYZ をまとめて加算するワールド座標オフセット(新規)")] private Vector3 positionOffset = Vector3.zero;
 
     [Header("スケール制御")]
     [SerializeField] private bool scaleWithDistance = true;
@@ -41,4 +42,5 @@ public class HintMarkerModel : MonoBehaviour
     public float BaseScale => baseScale;
     public float MaxScaleMultiplier => maxScaleMultiplier;
     public bool Billboard => billboard;
+    public Vector3 PositionOffset => positionOffset;
 }

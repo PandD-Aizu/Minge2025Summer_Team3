@@ -16,6 +16,11 @@ namespace Workspace.koto_thing
         private int pendingReloadCount;
         private AmmoType pendingAmmoType;
 
+        // 弾残量変更通知 (取得/消費/同期)
+        public Subject<(AmmoType ammoType, int count)> AmmoChanged { get; } = new();
+        // リロードでマガジンへ弾を適用した瞬間のみ通知 (適用数)
+        public Subject<(AmmoType ammoType, int appliedCount)> AmmoApplied { get; } = new();
+
         /* プロパティ */
         public Subject<bool> OnReload { get; } = new ();
         public Subject<Unit> NotifyReload { get; } = new ();
@@ -33,22 +38,94 @@ namespace Workspace.koto_thing
             }
         }
 
-        public Dictionary<AmmoType, int> GetAmmoInventory => ammoInventory;
+        public IReadOnlyDictionary<AmmoType, int> GetAmmoInventory => ammoInventory; // 外部からは読み取り専用
 
         /// <summary>
-        /// リロードのための下準備をする
+        /// 外部インベントリのスナップショットから完全同期する(これが唯一のソースオブトゥルースである前提)
+        /// 既存値をクリアして上書きし、差分を AmmoChanged で通知する
+        /// </summary>
+        /// <param name="snapshot">(AmmoType type, int count) の列挙</param>
+        public void SyncFromInventory(IEnumerable<(AmmoType type, int count)> snapshot)
+        {
+            // 変更前のコピーを取得し差分検出に使用
+            var old = new Dictionary<AmmoType, int>(ammoInventory);
+            ammoInventory.Clear();
+            foreach (var (type, count) in snapshot)
+            {
+                if (count > 0)
+                    ammoInventory[type] = count;
+            }
+            
+            // 差分通知
+            foreach (var kv in ammoInventory)
+            {
+                if (!old.TryGetValue(kv.Key, out var prev) || prev != kv.Value)
+                {
+                    AmmoChanged.OnNext((kv.Key, kv.Value));
+                }
+            }
+            
+            foreach (var kv in old)
+            {
+                if (!ammoInventory.ContainsKey(kv.Key))
+                {
+                    AmmoChanged.OnNext((kv.Key, 0));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 指定タイプの弾数を絶対値で設定 (0 以下で削除)
+        /// UI同期
+        /// </summary>
+        public void SetAmmoAbsolute(AmmoType ammoType, int count)
+        {
+            int before = ammoInventory.GetValueOrDefault(ammoType, -1);
+            if (count <= 0)
+            {
+                if (ammoInventory.Remove(ammoType) || before != -1)
+                {
+                    AmmoChanged.OnNext((ammoType, 0));
+                }
+                return;
+            }
+            ammoInventory[ammoType] = count;
+            if (before != count)
+            {
+                AmmoChanged.OnNext((ammoType, count));
+            }
+        }
+        
+        /// <summary>
+        /// 弾丸を加算 (アイテム取得時など)。内部で SetAmmoAbsolute を使用しイベント発行を統一
+        /// </summary>
+        public void AddAmmo(AmmoType type, int count)
+        {
+            if (count == 0) return;
+            int current = ammoInventory.GetValueOrDefault(type);
+            SetAmmoAbsolute(type, current + count);
+        }
+
+        /// <summary>
+        /// 現在の内部スナップショットを返す
+        /// </summary>
+        public Dictionary<AmmoType, int> GetAmmoSnapshot()
+        {
+            return new Dictionary<AmmoType, int>(ammoInventory);
+        }
+
+        /// <summary>
+        /// リロードのための下準備をする(マガジンに追加予定の弾数を算出してイベント通知)
         /// </summary>
         public void PreReload()
         {
             if (currentEquippedGun == null || hasPendingReload)
                 return;
 
-            // リロードに必要な弾薬を計算する
             int bulletsNeeded = currentEquippedGun.GetMagCapacity() - currentEquippedGun.GetAmmoInMag();
             if (bulletsNeeded <= 0)
                 return;
             
-            // 所持弾薬から補充できる弾数を計算する
             var ammoType = currentEquippedGun.GetAmmoType();
             int bulletsAvailable = ammoInventory.GetValueOrDefault(ammoType);
             int bulletsToReload = Mathf.Min(bulletsNeeded, bulletsAvailable);
@@ -61,68 +138,60 @@ namespace Workspace.koto_thing
             pendingReloadCount = bulletsToReload;
             pendingAmmoType = ammoType;
             
-            // OnReloadイベントを発行
             OnReload.OnNext(isEmptyReload);
         }
 
         /// <summary>
-        /// 銃に弾薬をリロードする
+        /// 事前計算したpendingReloadCountを用いてリロードを確定させる。
+        /// 弾数を減算しイベントを通知。
         /// </summary>
         public void Reload()
         {
             if (!hasPendingReload || currentEquippedGun == null)
                 return;
             
-            // 所持弾薬を更新して、銃に弾薬を補充する
-            ammoInventory[pendingAmmoType] -= pendingReloadCount;
+            int current = ammoInventory.GetValueOrDefault(pendingAmmoType);
+            int newValue = current - pendingReloadCount;
+            if (newValue < 0) newValue = 0; // 安全
+            SetAmmoAbsolute(pendingAmmoType, newValue);
+
+            int applied = pendingReloadCount;
             currentEquippedGun.Reload(pendingReloadCount);
 
+            AmmoApplied.OnNext((pendingAmmoType, applied));
+            
             hasPendingReload = false;
             pendingReloadCount = 0;
         }
-        
-        /// <summary>
-        /// 弾丸を追加する
-        /// </summary>
-        /// <param name="type">追加する弾の種類</param>
-        /// <param name="count">追加する弾数</param>
-        public void AddAmmo(AmmoType type, int count)
-        {
-            if (ammoInventory.ContainsKey(type))
-                ammoInventory[type] += count;
-            else
-                ammoInventory[type] = count;
-        }
 
         /* ---以下ヘルパー関数--- */
-        
         /// <summary>
-        /// 現在装備している銃の総弾薬数を取得する
+        /// 現在装備銃タイプの総所持弾薬数を取得。
         /// </summary>
-        /// <returns>現在装備している銃の総弾薬数</returns>
         public int GetCurrentAmmo()
         {
             return ammoInventory.GetValueOrDefault(currentEquippedGun.GetAmmoType());
         }
         
         /// <summary>
-        /// 現在装備している銃のマガジン容量を取得する
+        /// 現在装備銃のマガジン容量。
         /// </summary>
-        /// <returns>現在装備している銃のマガジン容量</returns>
         public int GetCurrentMagCapacity()
         {
             return currentEquippedGun.GetMagCapacity();
         }
 
         /// <summary>
-        /// 現在装備している銃のマガジン内の弾薬数を取得する
+        /// 現在装備銃のマガジン内弾数。
         /// </summary>
-        /// <returns>現在装備している銃のマガジン内の弾薬数</returns>
         public int GetCurrentAmmoInMag()
         {
             return currentEquippedGun.GetAmmoInMag();
         }
 
+        /// <summary>
+        /// マガジンが空 & 所持弾ありならリロード UIを促すイベント送出。
+        /// </summary>
         public void CheckReload()
         {
             if (currentEquippedGun.GetAmmoInMag() == 0 && GetCurrentAmmo() > 0)

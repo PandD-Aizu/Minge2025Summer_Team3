@@ -15,6 +15,8 @@ namespace Workspace.koto_thing
         private Dictionary<IItem, IDisposable> appliedSubscriptions = new (); // IAppliableの購読管理用辞書
         private IItem currentItem;
         
+        private readonly Dictionary<ISpecialItem, int> specialItemList = new();
+
         public Subject<InventoryItemEvent> OnItemChanged = new ();
 
         /// <summary>
@@ -22,27 +24,36 @@ namespace Workspace.koto_thing
         /// </summary>
         public void GetItem()
         {
-            // カメラの正面にあるアイテムをレイキャストで取得
-            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, maxDistance);
-            if (hit.collider != null)
+            var cam = Camera.main;
+            if (cam == null) return;
+            Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, maxDistance);
+            if (hit.collider != null && hit.collider.TryGetComponent<IItem>(out var picked))
             {
-                // IItemを持っているなら取得
-                if (hit.collider.TryGetComponent<IItem>(out var item))
+                picked.SetIsGet = true;
+                if (picked is MonoBehaviour pickedMb)
                 {
-                    // アイテム取得フラグを立てる
-                    item.SetIsGet = true;
-                    if (item is MonoBehaviour mb)
-                    {
-                        var view = mb.GetComponentInChildren<IItemView>();
-                        if (view != null)
-                            view.Hide();
-                    }
-                    
-                    // インベントリに追加
-                    AddItem(item);
-                    SubscribeApplied(item);
-                    OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
+                    var view = pickedMb.GetComponentInChildren<IItemView>();
+                    if (view != null) view.Hide();
                 }
+
+                // --- 特殊アイテムは通常インベントリに入れず専用リストへ ---
+                if (picked is ISpecialItem special)
+                {
+                    var storedSpecial = AddSpecialItem(special);
+                    OnItemChanged.OnNext(new InventoryItemEvent(storedSpecial, storedSpecial.GetAmount));
+                    return; // 通常インベントリ処理は行わない
+                }
+
+                // 実際にインベントリに保持される参照 (スタック時は既存アイテム参照)
+                var storedItem = AddItem(picked);
+                // Ammo: 新規スロットとして追加された場合のみ適用済みフラグを付与
+                if (picked is AmmoModel pickedAmmo && ReferenceEquals(storedItem, pickedAmmo))
+                {
+                    pickedAmmo.MarkAppliedOnPickup();
+                }
+                // 必要なら適用監視（既存の場合は内部で二重購読防止）
+                SubscribeApplied(storedItem);
+                OnItemChanged.OnNext(new InventoryItemEvent(storedItem, storedItem.GetAmount));
             }
         }
 
@@ -63,7 +74,9 @@ namespace Workspace.koto_thing
         /// <returns>特殊アイテムのリスト</returns>
         public IEnumerable<ISpecialItem> EnumerateSpecialItems()
         {
-            return itemList.Keys.OfType<ISpecialItem>();
+            // 旧仕様: itemList.Keys.OfType<ISpecialItem>()
+            // 新仕様: 専用コレクションから列挙
+            return specialItemList.Keys;
         }
         
         /* ---以下ヘルパー関数--- */
@@ -72,43 +85,29 @@ namespace Workspace.koto_thing
         /// アイテムを追加する
         /// </summary>
         /// <param name="item">追加するアイテム</param>
-        private int AddItem(IItem item)
+        private IItem AddItem(IItem item)
         {
-            // 特殊アイテムの重複チェック
-            if (item is ISpecialItem si && si.IsUnique)
-            {
-                // 既に同じIDの特殊アイテムがある場合は追加しない
-                if (itemList.Keys.OfType<ISpecialItem>()
-                    .Any(x => x.SpecialID == si.SpecialID))
-                {
-                    // 重複した場合は追加せずに破棄
-                    if (item is MonoBehaviour duplicateMb)
-                        Destroy(duplicateMb.gameObject);
+            // 特殊アイテムはここでは扱わない（GetItemで分岐済）
+            if (item is ISpecialItem) return item;
 
-                    return 0;
-                }
-            }
-            
-            // 既存スタック探索
-            foreach (var existing in itemList.Keys)
+            foreach (var existing in itemList.Keys.ToList())
             {
                 if (CanStack(existing, item))
                 {
-                    var before = existing.GetAmount;
                     existing.AddAmount(item.GetAmount);
                     itemList[existing] = existing.GetAmount;
                     if (item is MonoBehaviour mb && existing is MonoBehaviour emb && mb.gameObject != emb.gameObject)
+                    {
                         Destroy(mb.gameObject);
-                    
-                    return itemList[existing];
+                    }
+                    return existing; // 既存スタック参照を返す
                 }
             }
-            
-            // 新規スタック追加
+
+            // 新規スタック
             itemList[item] = item.GetAmount;
             SubscribeApplied(item);
-            
-            return itemList[item];
+            return item;
         }
 
         /// <summary>
@@ -119,29 +118,34 @@ namespace Workspace.koto_thing
         /// <returns>スタック可能ならtrueを返す</returns>
         private bool CanStack(IItem a, IItem b)
         {
-            // null チェック
-            if (a == b) 
-                return true;
-            
-            // 型が違うならスタック不可
-            if (a.GetType() != b.GetType()) 
-                return false;
+            if (a == b) return true; // 同一参照はマージ許可（安全策）
+            if (a.GetType() != b.GetType()) return false; // 型違いは不可
 
-            // 特殊アイテムの場合はID一致かつCanStackフラグが両方ともtrueでないとスタック不可
-            if (a is ISpecialItem || b is ISpecialItem)
+            // 特殊アイテム: 既存仕様を尊重（同一ID & 双方CanStackなら）
+            if (a is ISpecialItem sa && b is ISpecialItem sb)
             {
-                // 両方ともISpecialItemでなければスタック不可
-                if (a is ISpecialItem sa && b is ISpecialItem sb)
-                    return sa.SpecialID == sb.SpecialID && sa.CanStack && sb.CanStack;
-
-                return false;
+                return sa.SpecialID == sb.SpecialID && sa.CanStack && sb.CanStack;
             }
-            
-            // 鍵の場合は ID 一致でスタック
+
+            // 鍵: 既存仕様 (KeyID一致でスタック) ※必要ならIStackable化も検討
             if (a is IKey ka && b is IKey kb)
-                return ka.KeyID == kb.KeyID;
-            
-            return true; // 同型は基本スタック
+            {
+                return ka.KeyID == kb.KeyID; // 鍵は従来通り
+            }
+
+            // 新仕様: 双方が IStackable を実装し、かつ CanStack true のときのみスタック
+            var saStack = a as IStackable;
+            var sbStack = b as IStackable;
+            if (saStack != null && sbStack != null)
+            {
+                if (saStack.CanStack && sbStack.CanStack)
+                {
+                    return true;
+                }
+            }
+
+            // それ以外は同型でも別インスタンスとして扱う
+            return false;
         }
 
         /// <summary>
@@ -150,7 +154,7 @@ namespace Workspace.koto_thing
         /// <param name="item">アイテム</param>
         private void SubscribeApplied(IItem item)
         {
-            // IAppliableでなければ監視不要
+            // IsAppliableでなければ監視不要
             if (item is not IAppliable appliable) 
                 return;
             
@@ -181,7 +185,7 @@ namespace Workspace.koto_thing
                     // まだ残っているなら数量更新
                     else
                     {
-                        OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount, false));
+                        OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
                     }
                 }
             });
@@ -220,7 +224,7 @@ namespace Workspace.koto_thing
             else
             {
                 itemList[item] = item.GetAmount;
-                OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount, false));
+                OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
             }
             
             return true;
@@ -256,25 +260,107 @@ namespace Workspace.koto_thing
         public bool TryUseSpecial(ISpecialItem item, SpecialItemContext context, out string failReason)
         {
             failReason = null;
-            if (item == null || !itemList.ContainsKey(item))
+            if (item == null || !specialItemList.ContainsKey(item))
                 return false;
 
             if (!item.CanUse(context, out failReason))
                 return false;
 
-            // アイテムを使用
             if (item.IsConsumable)
             {
-                ConsumeItem(item);
+                var becameZero = item.ConsumeOne();
+                if (becameZero || item.GetAmount <= 0)
+                {
+                    specialItemList.Remove(item);
+                    OnItemChanged.OnNext(new InventoryItemEvent(item, 0, true));
+                }
+                else
+                {
+                    specialItemList[item] = item.GetAmount;
+                    OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
+                }
             }
-            // 消費しない場合は ApplyItem を呼び出すだけ
             else
             {
                 item.ApplyItem();
-                OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount, false));
+                OnItemChanged.OnNext(new InventoryItemEvent(item, item.GetAmount));
+            }
+            return true;
+        }
+
+        // --- 特殊アイテム追加ヘルパー（通常インベントリとは独立） ---
+        private ISpecialItem AddSpecialItem(ISpecialItem item)
+        {
+            if (item.IsUnique)
+            {
+                if (specialItemList.Keys.Any(x => x.SpecialID == item.SpecialID))
+                {
+                    if (item is MonoBehaviour dup) Destroy(dup.gameObject);
+                    return item;
+                }
             }
 
-            return true;
+            foreach (var existing in specialItemList.Keys.ToList())
+            {
+                if (existing.SpecialID == item.SpecialID && existing.CanStack && item.CanStack)
+                {
+                    existing.AddAmount(item.GetAmount);
+                    specialItemList[existing] = existing.GetAmount;
+                    if (item is MonoBehaviour mb && existing is MonoBehaviour emb && mb.gameObject != emb.gameObject)
+                    {
+                        Destroy(mb.gameObject);
+                    }
+                    return existing;
+                }
+            }
+
+            specialItemList[item] = item.GetAmount;
+            return item;
+        }
+
+        /// <summary>
+        /// 弾丸同期用スナップショットを構築する
+        /// </summary>
+        public IEnumerable<(AmmoType type, int count)> BuildAmmoSnapshot()
+        {
+            foreach (var kv in itemList)
+            {
+                if (kv.Key is AmmoModel ammo)
+                {
+                    yield return (ammo.GetAmmoType, ammo.GetAmount);
+                }
+            }
+        }
+
+        /// <summary>
+        /// GunModel 側で弾薬所持数が変化した際にインベントリ内 AmmoModel を同期する
+        /// </summary>
+        public bool UpdateAmmoFromGun(AmmoType ammoType, int newCount)
+        {
+            foreach (var key in itemList.Keys.ToList())
+            {
+                if (key is AmmoModel ammo && ammo.GetAmmoType == ammoType)
+                {
+                    if (newCount <= 0)
+                    {
+                        itemList.Remove(key);
+                        if (appliedSubscriptions.TryGetValue(key, out var disp))
+                        {
+                            disp.Dispose();
+                            appliedSubscriptions.Remove(key);
+                        }
+                        OnItemChanged.OnNext(new InventoryItemEvent(key, 0, true));
+                    }
+                    else
+                    {
+                        ammo.SetAmountAbsolute(newCount);
+                        itemList[key] = newCount;
+                        OnItemChanged.OnNext(new InventoryItemEvent(key, newCount));
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

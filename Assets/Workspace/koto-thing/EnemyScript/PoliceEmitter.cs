@@ -1,7 +1,7 @@
 ﻿using FMODUnity;
 using UnityEngine;
 
-namespace Workspace.momiji1107
+namespace Workspace.koto_thing
 {
     public class PoliceEmitter : MonoBehaviour
     {
@@ -23,14 +23,14 @@ namespace Workspace.momiji1107
         private float moanTimer = 0.0f;
         private float stepTimer = 0.0f;
         private float nextMoanTime;
-        private bool sholdPlayMoan = false;
+        private bool shouldPlayMoan = false;
         
         public void PlayEnemyMoan() => enemyMoanEmitter.Play();
         public void PlayCloseEnemySound() => closeEnemyEmitter.Play();
 
         public void UpdateMoanTimer()
         {
-            if (!sholdPlayMoan)
+            if (!shouldPlayMoan)
                 return;
 
             moanTimer += Time.deltaTime;
@@ -45,14 +45,14 @@ namespace Workspace.momiji1107
 
         public void StartMoaning()
         {
-            sholdPlayMoan = true;
+            shouldPlayMoan = true;
             SetNextMoanTime();
             moanTimer = 0.0f;
         }
         
         public void StopMoaning()
         {
-            sholdPlayMoan = false;
+            shouldPlayMoan = false;
             moanTimer = 0.0f;
         }
         
