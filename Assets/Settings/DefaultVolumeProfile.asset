@@ -465,6 +465,7 @@ MonoBehaviour:
   - {fileID: -6288072647309666549}
   - {fileID: 7518938298396184218}
   - {fileID: -1410297666881709256}
+  - {fileID: 6990458703192214644}
 --- !u!114 &853819529557874667
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -866,6 +867,28 @@ MonoBehaviour:
   m_Name: VolumeComponentSupportedOnAnySRP
   m_EditorClassIdentifier: Unity.RenderPipelines.Core.Editor.Tests:UnityEngine.Rendering.Tests:VolumeComponentEditorSupportedOnTests/VolumeComponentSupportedOnAnySRP
   active: 1
+--- !u!114 &6990458703192214644
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a7d0ab4f9a40a5a6df915b9e3469d8, type: 3}
+  m_Name: PixelationVolume
+  m_EditorClassIdentifier: 
+  active: 1
+  m_Color:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0
+  pixelSize:
+    m_OverrideState: 1
+    m_Value: 100
 --- !u!114 &7173750748008157695
 MonoBehaviour:
   m_ObjectHideFlags: 3

@@ -10,7 +10,8 @@ namespace Title
         [Header("STARTボタン")]
         [SerializeField] private string gameSceneAddress;
 
-        [Header("OPTIONボタン")] 
+        [Header("パネル")] 
+        [SerializeField] private GameObject titlePanel;
         [SerializeField] private GameObject optionPanel;
 
         [Header("オプションに表示するオブジェクトグループ")] 
@@ -38,11 +39,13 @@ namespace Title
         public void OpenOptions()
         {
             optionPanel.SetActive(true);
+            titlePanel.SetActive(false);
         }
 
         public void CloseOptions()
         {
             optionPanel.SetActive(false);
+            titlePanel.SetActive(true);
         }
 
         public void QuitGame()

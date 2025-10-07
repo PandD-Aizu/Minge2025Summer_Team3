@@ -39,6 +39,8 @@ namespace Workspace.koto_thing
                 return;
             
             amount += delta;
+            isGet = true;
+            
             if (amount > 0) 
                 isApplied = false;
         }
@@ -51,13 +53,12 @@ namespace Workspace.koto_thing
             amount--;
             if (amount <= 0)
             {
+                amount = 0;
                 isApplied = true;
                 onApplied.OnNext(Unit.Default);
-                onApplied.OnCompleted();
-                return true;
             }
             
-            return false;
+            return true;
         }
 
         public void ApplyItem()

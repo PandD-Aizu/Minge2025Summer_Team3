@@ -1,14 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UniRx;
+using UnityEngine;
 
 namespace Workspace.koto_thing
 {
-    public class PlayerPositionPresenter : MonoBehaviour
+    public class PlayerPositionPresenter : MonoBehaviour, IDisposable
     {
         [SerializeField] private PlayerPositionModel model;
         [SerializeField] private PlayerPositionView view;
         [SerializeField] private PlayerPositionEmitter emitter;
         [SerializeField] private PlayerItemView itemView;
         [SerializeField] private PlayerDocumentModel documentModel;
+
+        private CompositeDisposable disposables = new ();
 
         private void Start()
         {
@@ -37,6 +41,8 @@ namespace Workspace.koto_thing
             model.IsRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             
             model.Move(input);
+            model.ChangeNoiseSetting(input);
+            model.ChangeColliderHeight();
             
             float speed = model.GetCharacterController.velocity.magnitude;
             emitter.PlayFootStep(speed);
@@ -44,7 +50,22 @@ namespace Workspace.koto_thing
 
         private void SubscribeEvents()
         {
-            
+            model.IsCrouchingObservable
+                .Subscribe(_ =>
+                {
+
+                })
+                .AddTo(disposables);
+        }
+
+        private void OnDestroy()
+        {
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            disposables.Dispose();
         }
     }
 }

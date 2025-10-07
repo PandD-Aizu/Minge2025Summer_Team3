@@ -27,9 +27,9 @@ namespace Workspace.koto_thing
         private void SubscribeEvents()
         {
             model.OnDoorOpened
-                .Subscribe(_ =>
+                .Subscribe(door =>
                 {
-
+                    door.TryOpen();
                 })
                 .AddTo(disposables);
 

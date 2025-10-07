@@ -2,7 +2,7 @@
 
 namespace Workspace.koto_thing
 {
-    public class AmmoView : MonoBehaviour
+    public class AmmoView : MonoBehaviour, IItemView
     {
         [SerializeField] private GameObject parentObject;
 

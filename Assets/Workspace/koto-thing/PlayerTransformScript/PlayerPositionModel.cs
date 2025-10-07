@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UniRx;
+using Unity.Cinemachine;
 
 namespace Workspace.koto_thing
 {
@@ -15,11 +16,21 @@ namespace Workspace.koto_thing
         [SerializeField] private float crouchSpeedMultiplier = 0.5f;
         [SerializeField] private Vector3 currentVelocity;
         [SerializeField] private float speedChangeRate = 10.0f;
-        
-        [Header("しゃがみ関係")]
+
+        [Header("しゃがみ関係")] 
+        [SerializeField] private CapsuleCollider playerCollider;
         [SerializeField] private float standingHeight = 2.0f;
         [SerializeField] private float crouchingHeight = 1.0f;
         [SerializeField] private float heightChangeSpeed = 5.0f;
+
+        [Header("Cinemachine関係")] 
+        [SerializeField] private CinemachineBasicMultiChannelPerlin noiseSetting;
+        [SerializeField] private Vector2 stoppingNoiseValue;
+        [SerializeField] private Vector2 walkingNoiseValue;
+        [SerializeField] private Vector2 runningNoiseValue;
+        [SerializeField] private Vector2 crouchingNoiseValue;
+        [SerializeField] private float amplitudeChangeSpeed = 5.0f;
+        [SerializeField] private float frequencyChangeSpeed = 5.0f;
 
         public ReactiveProperty<bool> isCrouching = new ();
         public IObservable<bool> IsCrouchingObservable => isCrouching.AsObservable();
@@ -28,6 +39,10 @@ namespace Workspace.koto_thing
         private bool isRunning;
         private float currentHeight;
         private float targetHeight;
+        
+        // カメラの揺れ
+        private float targetAmplitude;
+        private float targetFrequency;
         
         /* プロパティ */
         public CharacterController GetCharacterController => characterController;
@@ -81,6 +96,54 @@ namespace Workspace.koto_thing
             ApplyGravity();
             
             characterController.Move(currentVelocity * Time.deltaTime);
+        }
+
+        /// <summary>
+        /// カメラのブレ設定を変更
+        /// </summary>
+        /// <param name="input">移動入力</param>
+        public void ChangeNoiseSetting(Vector2 input)
+        {
+            if (isRunning)
+            {
+                targetAmplitude = runningNoiseValue.x;
+                targetFrequency = runningNoiseValue.y;
+            }
+            else if (IsCrouching)
+            {
+                targetAmplitude = crouchingNoiseValue.x;
+                targetFrequency = crouchingNoiseValue.y;
+            }
+            else if (input != Vector2.zero)
+            {
+                targetAmplitude = walkingNoiseValue.x;
+                targetFrequency = walkingNoiseValue.y;
+            }
+            else
+            {
+                targetAmplitude = stoppingNoiseValue.x;
+                targetFrequency = stoppingNoiseValue.y;
+            }
+            
+            
+
+            if (noiseSetting != null)
+            {
+                noiseSetting.AmplitudeGain = 
+                    Mathf.Lerp(noiseSetting.AmplitudeGain, targetAmplitude, Time.deltaTime * amplitudeChangeSpeed);
+                
+                noiseSetting.FrequencyGain = 
+                    Mathf.Lerp(noiseSetting.FrequencyGain, targetFrequency, Time.deltaTime * frequencyChangeSpeed);
+            }
+
+        }
+        
+        public void ChangeColliderHeight()
+        {
+            targetHeight = IsCrouching ? crouchingHeight : standingHeight;
+            currentHeight = Mathf.Lerp(playerCollider.height, targetHeight, Time.deltaTime * heightChangeSpeed);
+            playerCollider.height = currentHeight;
+            characterController.height = currentHeight;
         }
         
         /// <summary>

@@ -14,14 +14,16 @@ namespace Workspace.koto_thing
 
         private void Start()
         {
-            gunModel = FindFirstObjectByType<GunModel>();
-            
+            if (gunModel == null)
+            {
+                gunModel = FindFirstObjectByType<GunModel>();
+            }
             SubscribeEvents();
         }
 
         private void Update()
         {
-            model.ApplyItem();
+            
         }
 
         private void SubscribeEvents()
