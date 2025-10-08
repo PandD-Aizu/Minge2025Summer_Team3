@@ -12,8 +12,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Tree
+    second: {fileID: 2100000, guid: cc6eb3f3e7147b148a2bbf6baa2b492f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: TreeBranch
     second: {fileID: 2100000, guid: cc6eb3f3e7147b148a2bbf6baa2b492f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TreeLeavs
+    second: {fileID: 2100000, guid: ae518240b439b454582aafd43cd63491, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
