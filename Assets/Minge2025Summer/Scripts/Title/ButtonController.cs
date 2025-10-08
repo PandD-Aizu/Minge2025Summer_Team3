@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Title
 {
     public class ButtonController : MonoBehaviour
     {
-        [Header("STARTボタン")]
+        [Header("STARTボタン")] 
         [SerializeField] private string gameSceneAddress;
-
+        [SerializeField, Tooltip("画面全体を覆う画像")] private Image screenBackgroundImage;
+        [SerializeField, Tooltip("フェード秒数")] private float fadeDuration = 0.5f;
+        
         [Header("パネル")] 
         [SerializeField] private GameObject titlePanel;
         [SerializeField] private GameObject optionPanel;
@@ -28,26 +32,52 @@ namespace Title
         private void Start()
         {
             currentOptionObject = controlOptionObject;
+            screenBackgroundImage.gameObject.SetActive(false);
         }
         
+        /// <summary>
+        /// STARTボタンを押したときの処理
+        /// </summary>
         public void StartGame()
         {
-            AsyncOperationHandle handle = Addressables.LoadSceneAsync(gameSceneAddress, LoadSceneMode.Single);
-            handle.Completed += OnSceneLoaded;
+            screenBackgroundImage.gameObject.SetActive(true);
+            var c = screenBackgroundImage.color;
+            c.a = 0f;
+            screenBackgroundImage.color = c;
+            var target = c; target.a = 1f;
+            DOTween.To(
+                () => screenBackgroundImage.color,
+                col => screenBackgroundImage.color = col,
+                target,
+                fadeDuration
+            ).OnComplete(() =>
+            {
+                AsyncOperationHandle handle = Addressables.LoadSceneAsync(gameSceneAddress, LoadSceneMode.Single);
+                handle.Completed += OnSceneLoaded;
+            });
         }
 
+        /// <summary>
+        /// オプション画面を開く
+        /// </summary>
         public void OpenOptions()
         {
             optionPanel.SetActive(true);
             titlePanel.SetActive(false);
         }
 
+        /// <summary>
+        /// オプション画面を閉じる
+        /// </summary>
         public void CloseOptions()
         {
             optionPanel.SetActive(false);
             titlePanel.SetActive(true);
         }
 
+        /// <summary>
+        /// ゲームを終了する
+        /// </summary>
         public void QuitGame()
         {
             #if UNITY_EDITOR
@@ -57,6 +87,9 @@ namespace Title
             #endif
         }
         
+        ///<summary>
+        /// シーンをロードしたときの処理
+        /// </summary>> 
         private void OnSceneLoaded(AsyncOperationHandle handle)
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
@@ -66,41 +99,17 @@ namespace Title
         }
         
         /* オプションのボタン関数 */
-        public void AlignControlOption()
-        {
-            ShowOptionObject(controlOptionObject);
-        }
+        public void AlignControlOption() => ShowOptionObject(controlOptionObject);
+        public void AlignCameraOption() => ShowOptionObject(cameraOptionObject);
+        public void AlignGameSettingOption() => ShowOptionObject(gameSettingOptionObject);
+        public void AlignGraphicOption() => ShowOptionObject(graphicOptionObject);
+        public void AlignAudioOption() => ShowOptionObject(audioOptionObject);
+        public void AlignLanguageOption() => ShowOptionObject(languageOptionObject);
+        public void AlignAccessibilityOption() => ShowOptionObject(accessibilityOptionObject);
 
-        public void AlignCameraOption()
-        {
-            ShowOptionObject(cameraOptionObject);
-        }
-        
-        public void AlignGameSettingOption()
-        {
-            ShowOptionObject(gameSettingOptionObject);
-        }
-        
-        public void AlignGraphicOption()
-        {
-            ShowOptionObject(graphicOptionObject);
-        }
-        
-        public void AlignAudioOption()
-        {
-            ShowOptionObject(audioOptionObject);
-        }
-        
-        public void AlignLanguageOption()
-        {
-            ShowOptionObject(languageOptionObject);
-        }
-        
-        public void AlignAccessibilityOption()
-        {
-            ShowOptionObject(accessibilityOptionObject);
-        }
-
+        ///<summary>
+        /// オプションボタンの指定パネルを切り替え
+        /// </summary>> 
         private void ShowOptionObject(GameObject targetObject)
         {
             currentOptionObject?.SetActive(false);
