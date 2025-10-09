@@ -118,12 +118,8 @@ Shader "Unlit/PickupHintMarkerSprite"
                 return col;
             }
             ENDCG
-
-            // 動的キーワードにせず、シンプルな分岐: CommandBuffer 等で SetFloat 変更後に再適用
-            // 深度モード適用 (FixedFunction で分岐できないため Pass 分離が最も確実)
         }
-
-        // Mode 1: 常に前(ZTest Always)
+        
         Pass
         {
             Name "HINTMARKER_FORCE_FRONT"
@@ -135,8 +131,7 @@ Shader "Unlit/PickupHintMarkerSprite"
             Blend SrcAlpha OneMinusSrcAlpha
             ColorMask 0
         }
-
-        // Mode 2: 深度書き込み用 (ZWrite On で他半透明に埋もれない)
+        
         Pass
         {
             Name "HINTMARKER_WRITE_DEPTH"
