@@ -7,23 +7,21 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Minge2025Summer.Main.InGame
 {
-    public class InformationScreenModel : MonoBehaviour
+    public class ObjectiveTextModel : MonoBehaviour
     {
         [Serializable]
         private class JsonSchema
         {
             public string title;
+            public string subTitle;
             public string body;
-            public string[] bulletPoints;
-            public string illustrationSpriteAddress; // Sprite の Addressables アドレス（任意）
+            public string illustrationSpriteAddress; 
         }
         
-        private readonly Dictionary<string, InformationScreenData> cache = new();
+        private readonly Dictionary<string, ObjectiveTextData> cache = new();
 
-        private readonly Subject<InformationScreenData> showSubject = new();
-        private readonly Subject<Unit> hideSubject = new();
-        public IObservable<InformationScreenData> OnShow => showSubject;
-        public IObservable<Unit> OnHide => hideSubject;
+        private readonly Subject<ObjectiveTextData> showSubject = new();
+        public IObservable<ObjectiveTextData> OnShow => showSubject;
 
         [SerializeField, Tooltip("同一アドレスの再リクエスト時にキャッシュを使うか")]
         private bool enableCache = true;
@@ -69,7 +67,7 @@ namespace Minge2025Summer.Main.InGame
                     return;
                 }
                 
-                var bullets = schema.bulletPoints != null ? new List<string>(schema.bulletPoints) : new List<string>();
+                var bullets = schema.subTitle != null ? new string(schema.body) : new string("");
 
                 // イラストが指定されていればそれもロード
                 if (!string.IsNullOrWhiteSpace(schema.illustrationSpriteAddress))
@@ -77,24 +75,19 @@ namespace Minge2025Summer.Main.InGame
                     Addressables.LoadAssetAsync<Sprite>(schema.illustrationSpriteAddress).Completed += handle =>
                     {
                         Sprite sprite = handle.Status == AsyncOperationStatus.Succeeded ? handle.Result : null;
-                        var data = new InformationScreenData(schema.title, schema.body, bullets, sprite);
+                        var data = new ObjectiveTextData(schema.title, schema.body, bullets, sprite);
                         if (enableCache) cache[jsonAddress] = data;
                         showSubject.OnNext(data);
                     };
                 }
                 else
                 {
-                    var data = new InformationScreenData(schema.title, schema.body, bullets, null);
+                    var data = new ObjectiveTextData(schema.title, schema.body, bullets, null);
                     if (enableCache) cache[jsonAddress] = data;
                     showSubject.OnNext(data);
                 }
             }
         }
-
-        /// <summary>
-        /// 情報画面の非表示を要求。
-        /// </summary>
-        public void RequestHide() => hideSubject.OnNext(Unit.Default);
     }
 }
 
