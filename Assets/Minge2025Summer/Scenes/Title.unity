@@ -372,6 +372,7 @@ GameObject:
   - component: {fileID: 52789133}
   - component: {fileID: 52789132}
   - component: {fileID: 52789131}
+  - component: {fileID: 52789134}
   m_Layer: 5
   m_Name: LanguageButton
   m_TagString: Untagged
@@ -398,7 +399,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -550}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &52789128
 MonoBehaviour:
@@ -573,6 +574,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &52789134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52789126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &53812500
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,6 +799,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fb2c39211cc4a5d88c218325745a9ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  titleFadeController: {fileID: 1274550843}
+  optionFadeController: {fileID: 230993985}
   gameSceneAddress: InGameScene
   screenBackgroundImage: {fileID: 1545928301}
   fadeDuration: 2
@@ -881,7 +915,7 @@ GameObject:
   - component: {fileID: 80797576}
   - component: {fileID: 80797575}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: BackText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1678,6 +1712,7 @@ GameObject:
   - component: {fileID: 163903663}
   - component: {fileID: 163903662}
   - component: {fileID: 163903664}
+  - component: {fileID: 163903665}
   m_Layer: 5
   m_Name: GameStartButton
   m_TagString: Untagged
@@ -1879,6 +1914,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85af0bfa6b229944c95c06444f59740b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &163903665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163903657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 404351117
+      Data2: 1230630626
+      Data3: -795028554
+      Data4: 1538518716
+    Path: event:/ButtonSE/GameStartButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &177818646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,6 +2019,79 @@ RectTransform:
   m_AnchoredPosition: {x: 500, y: -550}
   m_SizeDelta: {x: 800, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &230993983
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 230993984}
+  - component: {fileID: 230993985}
+  m_Layer: 0
+  m_Name: OptionFadeCotroller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &230993984
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230993983}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1660135466}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &230993985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 230993983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 050fbc6c9c224f84a3d4956e98c7632c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInObjects:
+  - {fileID: 918234941}
+  - {fileID: 1382903855}
+  - {fileID: 1720513127}
+  - {fileID: 529717767}
+  - {fileID: 441442214}
+  - {fileID: 1242549060}
+  - {fileID: 1954659552}
+  - {fileID: 1319726648}
+  fadeInTexts:
+  - {fileID: 1810986968}
+  - {fileID: 1567267677}
+  - {fileID: 1847339768}
+  - {fileID: 653749779}
+  - {fileID: 1389778335}
+  - {fileID: 571203547}
+  - {fileID: 1478565993}
+  - {fileID: 80797575}
+  fadeDuration: 1
+  fadeEase: 3
+  imageSlideOffsetX: 80
+  imageStartDelay: 0
+  textSlideOffsetX: 40
+  textStartDelay: 0.1
+  textStagger: 0.15
+  disableLayoutGroupDuringAnimation: 1
+  targetLayoutGroup: {fileID: 627710972}
+  sequentialTextMode: 1
+  debugLogDelays: 0
 --- !u!1 &238556207
 GameObject:
   m_ObjectHideFlags: 0
@@ -2043,6 +2182,7 @@ GameObject:
   - component: {fileID: 243723277}
   - component: {fileID: 243723276}
   - component: {fileID: 243723275}
+  - component: {fileID: 243723278}
   m_Layer: 5
   m_Name: GraphicsButton
   m_TagString: Untagged
@@ -2069,7 +2209,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -350}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &243723272
 MonoBehaviour:
@@ -2244,6 +2384,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &243723278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243723270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &264751058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,6 +2827,7 @@ GameObject:
   - component: {fileID: 362185532}
   - component: {fileID: 362185531}
   - component: {fileID: 362185530}
+  - component: {fileID: 362185533}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -2682,7 +2854,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -750}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &362185527
 MonoBehaviour:
@@ -2857,6 +3029,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &362185533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362185525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &377207063
 GameObject:
   m_ObjectHideFlags: 0
@@ -3150,7 +3353,7 @@ GameObject:
   - component: {fileID: 441442215}
   - component: {fileID: 441442214}
   m_Layer: 5
-  m_Name: Underline
+  m_Name: AudioUnderline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3712,7 +3915,7 @@ GameObject:
   - component: {fileID: 529717768}
   - component: {fileID: 529717767}
   m_Layer: 5
-  m_Name: Underline
+  m_Name: GraphicsUnderline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3992,6 +4195,7 @@ GameObject:
   - component: {fileID: 547688646}
   - component: {fileID: 547688645}
   - component: {fileID: 547688644}
+  - component: {fileID: 547688647}
   m_Layer: 5
   m_Name: AccesibilityButton
   m_TagString: Untagged
@@ -4018,7 +4222,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -650}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &547688641
 MonoBehaviour:
@@ -4193,6 +4397,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &547688647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547688639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &571203545
 GameObject:
   m_ObjectHideFlags: 0
@@ -4205,7 +4440,7 @@ GameObject:
   - component: {fileID: 571203548}
   - component: {fileID: 571203547}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: LanguageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4532,7 +4767,7 @@ GameObject:
   - component: {fileID: 653749780}
   - component: {fileID: 653749779}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GraphicsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4918,6 +5153,7 @@ GameObject:
   - component: {fileID: 699948118}
   - component: {fileID: 699948117}
   - component: {fileID: 699948116}
+  - component: {fileID: 699948119}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -5119,6 +5355,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &699948119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 699948111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &726431551
 GameObject:
   m_ObjectHideFlags: 0
@@ -5345,6 +5612,7 @@ GameObject:
   - component: {fileID: 743701871}
   - component: {fileID: 743701870}
   - component: {fileID: 743701869}
+  - component: {fileID: 743701872}
   m_Layer: 5
   m_Name: ControlsButton
   m_TagString: Untagged
@@ -5371,7 +5639,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -50}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &743701866
 MonoBehaviour:
@@ -5546,6 +5814,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &743701872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743701864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &755911369
 GameObject:
   m_ObjectHideFlags: 0
@@ -6028,7 +6327,7 @@ GameObject:
   - component: {fileID: 918234942}
   - component: {fileID: 918234941}
   m_Layer: 5
-  m_Name: Underline
+  m_Name: ControlsUnderline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6383,6 +6682,7 @@ GameObject:
   - component: {fileID: 1041997871}
   - component: {fileID: 1041997870}
   - component: {fileID: 1041997869}
+  - component: {fileID: 1041997875}
   m_Layer: 5
   m_Name: CreditButton
   m_TagString: Untagged
@@ -6584,6 +6884,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041997867}
   m_CullTransparentMesh: 1
+--- !u!114 &1041997875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041997867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1050714541
 GameObject:
   m_ObjectHideFlags: 0
@@ -6863,6 +7194,7 @@ GameObject:
   - component: {fileID: 1089528505}
   - component: {fileID: 1089528504}
   - component: {fileID: 1089528503}
+  - component: {fileID: 1089528506}
   m_Layer: 5
   m_Name: GameSettingsButton
   m_TagString: Untagged
@@ -6889,7 +7221,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -250}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1089528500
 MonoBehaviour:
@@ -7064,6 +7396,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1089528506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089528498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1113625270
 GameObject:
   m_ObjectHideFlags: 0
@@ -7567,7 +7930,7 @@ GameObject:
   - component: {fileID: 1242549061}
   - component: {fileID: 1242549060}
   m_Layer: 5
-  m_Name: Underline
+  m_Name: LanguageUnderline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7716,7 +8079,7 @@ GameObject:
   - component: {fileID: 1274550842}
   - component: {fileID: 1274550843}
   m_Layer: 0
-  m_Name: FadeController
+  m_Name: TitleFadeController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7921,7 +8284,7 @@ GameObject:
   - component: {fileID: 1319726649}
   - component: {fileID: 1319726648}
   m_Layer: 5
-  m_Name: Underline
+  m_Name: BackUnderline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8195,7 +8558,7 @@ GameObject:
   - component: {fileID: 1382903856}
   - component: {fileID: 1382903855}
   m_Layer: 5
-  m_Name: Underline
+  m_Name: CameraUnderline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8306,7 +8669,7 @@ GameObject:
   - component: {fileID: 1389778336}
   - component: {fileID: 1389778335}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AudioText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8932,7 +9295,7 @@ GameObject:
   - component: {fileID: 1478565994}
   - component: {fileID: 1478565993}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: AccesibilityText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9275,6 +9638,7 @@ GameObject:
   - component: {fileID: 1518245783}
   - component: {fileID: 1518245782}
   - component: {fileID: 1518245781}
+  - component: {fileID: 1518245784}
   m_Layer: 5
   m_Name: AudioButton
   m_TagString: Untagged
@@ -9301,7 +9665,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -450}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1518245778
 MonoBehaviour:
@@ -9476,6 +9840,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1518245784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518245776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1523860256
 GameObject:
   m_ObjectHideFlags: 0
@@ -9855,6 +10250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1558451530}
   - component: {fileID: 1558451529}
+  - component: {fileID: 1558451531}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -9889,6 +10285,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1558451531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558451528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e18656846fa4c64b750ce33a9737645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterSlider: {fileID: 1760960331}
+  bgmSlider: {fileID: 1002101414}
+  sfxSlider: {fileID: 1523860258}
+  voiceSlider: {fileID: 1783493126}
+  ambientSlider: {fileID: 156026154}
+  systemSlider: {fileID: 63476022}
 --- !u!1 &1567267675
 GameObject:
   m_ObjectHideFlags: 0
@@ -9901,7 +10315,7 @@ GameObject:
   - component: {fileID: 1567267678}
   - component: {fileID: 1567267677}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: CameraText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11033,6 +11447,7 @@ Transform:
   m_Children:
   - {fileID: 75976348}
   - {fileID: 1274550842}
+  - {fileID: 230993984}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1669691421
@@ -11125,6 +11540,7 @@ GameObject:
   - component: {fileID: 1689631283}
   - component: {fileID: 1689631282}
   - component: {fileID: 1689631281}
+  - component: {fileID: 1689631284}
   m_Layer: 5
   m_Name: CameraButton
   m_TagString: Untagged
@@ -11151,7 +11567,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: -150}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1689631278
 MonoBehaviour:
@@ -11326,6 +11742,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1689631284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689631276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1693291583
 GameObject:
   m_ObjectHideFlags: 0
@@ -11416,6 +11863,7 @@ GameObject:
   - component: {fileID: 1696052767}
   - component: {fileID: 1696052766}
   - component: {fileID: 1696052765}
+  - component: {fileID: 1696052768}
   m_Layer: 5
   m_Name: OptionButton
   m_TagString: Untagged
@@ -11617,6 +12065,37 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1696052768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696052760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -453956429
+      Data2: 1163890930
+      Data3: 1897112507
+      Data4: -959801488
+    Path: event:/ButtonSE/NormalButtonSE
+  Event: 
+  EventPlayTrigger: 19
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1703681642
 GameObject:
   m_ObjectHideFlags: 0
@@ -11704,7 +12183,7 @@ GameObject:
   - component: {fileID: 1720513128}
   - component: {fileID: 1720513127}
   m_Layer: 5
-  m_Name: Underline
+  m_Name: GameSettingsUnderline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12488,7 +12967,7 @@ GameObject:
   - component: {fileID: 1810986969}
   - component: {fileID: 1810986968}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: ControlsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12823,7 +13302,7 @@ GameObject:
   - component: {fileID: 1847339769}
   - component: {fileID: 1847339768}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: GameSettingsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13318,7 +13797,7 @@ GameObject:
   - component: {fileID: 1954659553}
   - component: {fileID: 1954659552}
   m_Layer: 5
-  m_Name: Underline
+  m_Name: AccesibilityUnderline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

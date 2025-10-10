@@ -9,6 +9,10 @@ namespace Title
 {
     public class ButtonController : MonoBehaviour
     {
+        [Header("依存関係")] 
+        [SerializeField, Tooltip("タイトルのフェードコントローラ")] private FadeController titleFadeController;
+        [SerializeField, Tooltip("オプションのフェードコントローラ")] private FadeController optionFadeController;
+        
         [Header("STARTボタン")] 
         [SerializeField] private string gameSceneAddress;
         [SerializeField, Tooltip("画面全体を覆う画像")] private Image screenBackgroundImage;
@@ -32,6 +36,7 @@ namespace Title
         private void Start()
         {
             currentOptionObject = controlOptionObject;
+            optionPanel.SetActive(false);
             screenBackgroundImage.gameObject.SetActive(false);
         }
         
@@ -64,6 +69,7 @@ namespace Title
         {
             optionPanel.SetActive(true);
             titlePanel.SetActive(false);
+            optionFadeController.Play();
         }
 
         /// <summary>
@@ -73,6 +79,7 @@ namespace Title
         {
             optionPanel.SetActive(false);
             titlePanel.SetActive(true);
+            titleFadeController.Play();
         }
 
         /// <summary>
