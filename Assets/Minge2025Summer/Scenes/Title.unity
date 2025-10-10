@@ -5930,7 +5930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleFadeController: {fileID: 1274550843}
   optionFadeController: {fileID: 230993985}
-  gameSceneAddress: InGameScene
+  gameSceneAddress: IntroScene
   screenBackgroundImage: {fileID: 1545928301}
   fadeDuration: 2
   titlePanel: {fileID: 1884288210}
@@ -19418,7 +19418,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  size: {x: 55.404995, y: 41.651485, z: 83.027145}
+  size: {x: 58.394997, y: 44.641487, z: 86.017136}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -19458,7 +19458,7 @@ Transform:
   m_GameObject: {fileID: 477522394}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6529713, y: 12.553167, z: 22.287518}
+  m_LocalPosition: {x: 2.6529713, y: 12.553167, z: 22.287514}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
