@@ -35,6 +35,8 @@ namespace Workspace.koto_thing
         public ReactiveProperty<bool> isCrouching = new ();
         public IObservable<bool> IsCrouchingObservable => isCrouching.AsObservable();
         
+        public bool ForceCrouch { get; set; }
+        
         private float horizontalSpeed;
         private bool isRunning;
         private float currentHeight;

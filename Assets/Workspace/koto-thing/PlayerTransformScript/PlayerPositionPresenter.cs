@@ -24,7 +24,10 @@ namespace Workspace.koto_thing
             // 入力処理
             Vector2 input = Vector2.zero;
             
-            model.IsCrouching = Input.GetKey(KeyCode.Space);
+            if (model.ForceCrouch)
+                model.IsCrouching = true;
+            else
+                model.IsCrouching = Input.GetKey(KeyCode.Space);
 
             if (itemView.IsOpen) return;
             if (documentModel.IsDocumentOpen) return;
