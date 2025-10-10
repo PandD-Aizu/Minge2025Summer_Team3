@@ -73,6 +73,7 @@ public class MapGenerator : MonoBehaviour
     private Area[,] map;             // マップデータ
     private GameObject mapContainer; // 生成されたマップ全体をまとめるコンテナ
     private Vector3? reservedSpecialPosition;
+    private float reservedSpecialRotation;
 
     void Start()
     {
@@ -233,84 +234,104 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private void DetermineAndReserveSpecialPoint()
+    /// <summary>
+/// 外周に特別な部屋を追加する
+/// </summary>
+private void DetermineAndReserveSpecialPoint()
+{
+    // 既に予約されている場合はリセット
+    reservedSpecialPosition = null;
+    reservedSpecialRotation = 0f; // 回転も初期化
+    if (specialPointPrefab == null)
+        return;
+
+    // スタート・ゴール地点を除く外周のセルをリストアップ
+    int centerX = mapWidth / 2;
+    Vector2Int startPos = new Vector2Int(centerX, 0);
+    Vector2Int goalPos = new Vector2Int(centerX, mapHeight - 1);
+    
+    // 外周セルリストを作成
+    List<Vector2Int> perimeterCells = new List<Vector2Int>();
+
+    // 下側の外周（南側）
+    for (int x = 0; x < mapWidth; x++)
     {
-        reservedSpecialPosition = null;
-        if (specialPointPrefab == null)
-            return;
-
-        int centerX = mapWidth / 2;
-        Vector2Int startPos = new Vector2Int(centerX, 0);
-        Vector2Int goalPos = new Vector2Int(centerX, mapHeight - 1);
+        if (x == startPos.x)
+            continue;
         
-        List<Vector2Int> perimeterCells = new List<Vector2Int>();
-
-        for (int x = 0; x < mapWidth; x++)
-        {
-            if (x == startPos.x)
-                continue;
-            
-            perimeterCells.Add(new Vector2Int(x, 0));
-        }
-
-        for (int x = 0; x < mapWidth; x++)
-        {
-            if (x == goalPos.x)
-                continue;
-            
-            perimeterCells.Add(new Vector2Int(x, mapHeight - 1));
-        }
-
-        for (int y = 0; y < mapHeight; y++)
-        {
-            perimeterCells.Add(new Vector2Int(0, y));
-        }
-
-        for (int y = 0; y < mapHeight; y++)
-        {
-            perimeterCells.Add(new Vector2Int(mapWidth - 1, y));
-        }
-
-        if (perimeterCells.Count == 0)
-            return;
-
-        for (int i = perimeterCells.Count - 1; i > 0; i--)
-        {
-            int randomIndex = Random.Range(0, i + 1);
-            (perimeterCells[i], perimeterCells[randomIndex]) = (perimeterCells[randomIndex], perimeterCells[i]);
-        }
-        
-        foreach (var cell in perimeterCells)
-        {
-            // 角の場合の優先方向決定 (South, North, West, East の優先)
-            Vector3 outsidePos;
-            Area a = map[cell.x, cell.y];
-
-            if (cell.y == 0 && cell.x != startPos.x) // 南
-            {
-                a.South = true;
-                outsidePos = new Vector3(cell.x * areaSize, 0, -areaSize);
-            }
-            else if (cell.y == mapHeight - 1 && cell.x != goalPos.x) // 北
-            {
-                a.North = true;
-                outsidePos = new Vector3(cell.x * areaSize, 0, mapHeight * areaSize);
-            }
-            else if (cell.x == 0) // 西
-            {
-                a.West = true;
-                outsidePos = new Vector3(-areaSize, 0, cell.y * areaSize);
-            }
-            else // 東
-            {
-                a.East = true;
-                outsidePos = new Vector3(mapWidth * areaSize, 0, cell.y * areaSize);
-            }
-
-            reservedSpecialPosition = outsidePos;
-            break;
-        }
+        perimeterCells.Add(new Vector2Int(x, 0));
     }
+
+    // 上側の外周（北側）
+    for (int x = 0; x < mapWidth; x++)
+    {
+        if (x == goalPos.x)
+            continue;
+        
+        perimeterCells.Add(new Vector2Int(x, mapHeight - 1));
+    }
+
+    // 左側の外周（西側）
+    for (int y = 0; y < mapHeight; y++)
+    {
+        perimeterCells.Add(new Vector2Int(0, y));
+    }
+
+    // 右側の外周（東側）
+    for (int y = 0; y < mapHeight; y++)
+    {
+        perimeterCells.Add(new Vector2Int(mapWidth - 1, y));
+    }
+
+    // 外周セルがなければ終了
+    if (perimeterCells.Count == 0)
+        return;
+
+    // フィッシャー - イェーツのシャッフルアルゴリズムでリストをシャッフル
+    for (int i = perimeterCells.Count - 1; i > 0; i--)
+    {
+        int randomIndex = Random.Range(0, i + 1);
+        (perimeterCells[i], perimeterCells[randomIndex]) = (perimeterCells[randomIndex], perimeterCells[i]);
+    }
+    
+    // ランダムに選んだ外周セルの中から、スタート・ゴール地点を避けて最初に見つかったセルに特別な部屋を配置
+    foreach (var cell in perimeterCells)
+    {
+        Vector3 outsidePos;
+        float yRotation = 0f;
+        Area a = map[cell.x, cell.y];
+
+        if (cell.y == 0 && cell.x != startPos.x) // 南側の外周
+        {
+            a.South = true;
+            outsidePos = new Vector3(cell.x * areaSize, 0, -areaSize);
+            yRotation = 0f; // 北側入り口をそのまま北に向ける
+        }
+        else if (cell.y == mapHeight - 1 && cell.x != goalPos.x) // 北側の外周
+        {
+            a.North = true;
+            outsidePos = new Vector3(cell.x * areaSize, 0, mapHeight * areaSize);
+            yRotation = 180f; // 北側入り口を南に向ける
+        }
+        else if (cell.x == 0) // 西側の外周
+        {
+            a.West = true;
+            outsidePos = new Vector3(-areaSize, 0, cell.y * areaSize);
+            yRotation = 90f; // 北側入り口を東に向ける
+        }
+        else // 東側の外周
+        {
+            a.East = true;
+            outsidePos = new Vector3(mapWidth * areaSize, 0, cell.y * areaSize);
+            yRotation = 270f; // 北側入り口を西に向ける
+        }
+
+        reservedSpecialPosition = outsidePos;
+        reservedSpecialRotation = yRotation;
+        break;
+    }
+}
+
 
     /// <summary>
     /// マップデータに基づいてプレハブをインスタンス化
@@ -400,8 +421,11 @@ public class MapGenerator : MonoBehaviour
     private void SpawnReservedSpecialPoint()
     {
         if (specialPointPrefab == null || !reservedSpecialPosition.HasValue) return;
-        Instantiate(specialPointPrefab, reservedSpecialPosition.Value, Quaternion.identity, mapContainer.transform);
+    
+        Quaternion rotation = Quaternion.Euler(0, reservedSpecialRotation, 0);
+        Instantiate(specialPointPrefab, reservedSpecialPosition.Value, rotation, mapContainer.transform);
     }
+
 
     /// <summary>
     /// マーカーの位置に基づいてマップ全体を移動

@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using UniRx;
-using Unity.VisualScripting;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 namespace Workspace.koto_thing

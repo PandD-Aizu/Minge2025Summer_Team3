@@ -64,6 +64,13 @@ namespace Title
             voiceSlider.value = voiceVolume;
             ambientSlider.value = ambientVolume;
             systemSlider.value = systemVolume;
+            
+            master.setVolume(masterVolume);
+            bgm.setVolume(bgmVolume);
+            sfx.setVolume(sfxVolume);
+            voice.setVolume(voiceVolume);
+            ambient.setVolume(ambientVolume);
+            system.setVolume(systemVolume);
 
             masterSlider.onValueChanged.AddListener(SetMasterVolume);
             bgmSlider.onValueChanged.AddListener(SetBGMVolume);

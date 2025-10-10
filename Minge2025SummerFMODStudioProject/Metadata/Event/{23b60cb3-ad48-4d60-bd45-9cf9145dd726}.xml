@@ -73,6 +73,9 @@
 		<relationship name="modules">
 			<destination>{55d8ea67-369c-4fdf-89f9-e0e8fb5d42c1}</destination>
 		</relationship>
+		<relationship name="markers">
+			<destination>{3926e92c-def9-49d7-9536-b06859ef6a21}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{fe9e0cfd-4491-47fa-80a2-474c465d15c9}">
 		<relationship name="effectChain">
@@ -116,6 +119,20 @@
 			<destination>{fe9e0cfd-4491-47fa-80a2-474c465d15c9}</destination>
 		</relationship>
 	</object>
+	<object class="LoopRegion" id="{3926e92c-def9-49d7-9536-b06859ef6a21}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="length">
+			<value>13</value>
+		</property>
+		<relationship name="timeline">
+			<destination>{b8e13562-a480-4eda-82bb-b64a7e0c68e4}</destination>
+		</relationship>
+		<relationship name="markerTrack">
+			<destination>{78064eb9-47e7-4dc8-8d1f-e97db8ea874d}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusEffectChain" id="{ad7fa669-4552-4929-ad0e-ba11b58315c3}">
 		<relationship name="effects">
 			<destination>{165803a8-b064-4ab6-bcc7-4106d9127c5d}</destination>
@@ -133,6 +150,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{d3ef4b11-a1ad-432e-8a76-787de90633b6}">
 		<relationship name="effects">
+			<destination>{a71c68a3-0ae5-4e89-9f1f-1b1f1c8dd717}</destination>
 			<destination>{2690c7f4-cd48-430c-8226-29c5bff6be56}</destination>
 		</relationship>
 	</object>
@@ -156,6 +174,17 @@
 		<relationship name="audioFile">
 			<destination>{db513956-5479-44ac-aef0-78d8fce7ff18}</destination>
 		</relationship>
+	</object>
+	<object class="CompressorEffect" id="{a71c68a3-0ae5-4e89-9f1f-1b1f1c8dd717}">
+		<property name="threshold">
+			<value>-37</value>
+		</property>
+		<property name="attackTime">
+			<value>5</value>
+		</property>
+		<property name="releaseTime">
+			<value>50</value>
+		</property>
 	</object>
 	<object class="MixerBusFader" id="{2690c7f4-cd48-430c-8226-29c5bff6be56}" />
 </objects>
