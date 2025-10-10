@@ -130,6 +130,7 @@ MonoBehaviour:
   verticalOffset: 0.15
   useRendererBounds: 1
   extraHeight: 0
+  positionOffset: {x: 0, y: 0, z: 0}
   scaleWithDistance: 1
   scaleCurve:
     serializedVersion: 2
@@ -255,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a21990c5326498a977fc8c0b7fec91a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoCount: 30
+  ammoCount: 8
   ammoType: 0
   displayName: "\u3051\u3093\u3058\u3085\u3046\u306E\u3060\u3093\u85AC"
   description: "\u3051\u3093\u3058\u3085\u3046\u306E\u3060\u3093\u85AC\u3002\n\u304A\u305D\u3089\u304F\u3001

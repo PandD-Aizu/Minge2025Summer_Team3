@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Minge2025Summer/Scenes/Title.unity
     guid: df51d147a485cee448d1e313cb1e917e
   - enabled: 1
+    path: Assets/Minge2025Summer/Scenes/Intro.unity
+    guid: 4351f3538c187444fa3e052cffdc9b62
+  - enabled: 1
     path: Assets/Minge2025Summer/Scenes/InGame.unity
     guid: e61d1f1222b4c4b4da29d57892eef199
   m_configObjects:
