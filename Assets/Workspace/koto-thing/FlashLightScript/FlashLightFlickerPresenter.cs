@@ -36,6 +36,8 @@ namespace Workspace.koto_thing
             {
                 if (model.GetCurrentState == FlickerState.STABLE) model.SetFlickerState(FlickerState.OFF, view.GetFlashLight);
                 else if (model.GetCurrentState == FlickerState.OFF) model.SetFlickerState(FlickerState.STABLE, view.GetFlashLight);
+                
+                emitter.PlaySwitchSound();
             }
         }
 

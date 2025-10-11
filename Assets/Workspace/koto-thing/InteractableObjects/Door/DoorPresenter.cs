@@ -8,6 +8,7 @@ namespace Workspace.koto_thing
     {
         [SerializeField] private DoorModel model;
         [SerializeField] private DoorView view;
+        [SerializeField] private DoorEmitter emitter;
 
         private readonly CompositeDisposable disposables = new();
 
@@ -27,6 +28,7 @@ namespace Workspace.koto_thing
                 .Subscribe(_ =>
                 {
                     view.PlayOpen(model);
+                    emitter.PlayDoorSound();
                 })
                 .AddTo(disposables);
 
@@ -34,6 +36,7 @@ namespace Workspace.koto_thing
                 .Subscribe(_ =>
                 {
                     view.PlayClose(model.OpenDuration);
+                    emitter.PlayDoorSound();
                 })
                 .AddTo(disposables);
         }

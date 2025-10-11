@@ -22,9 +22,9 @@ namespace Workspace.koto_thing
         /// <summary>
         /// バッテリーを減らす
         /// </summary>
-        public void DrainBattery()
+        public void DrainBattery(FlickerState currentFlickerState)
         {
-            if (batteryLevel > 0)
+            if (batteryLevel > 0 && currentFlickerState != FlickerState.OFF)
             {
                 batteryLevel -= drainRate * Time.deltaTime;
                 batteryLevel = Mathf.Clamp(batteryLevel, 0, maxBatteryLevel);

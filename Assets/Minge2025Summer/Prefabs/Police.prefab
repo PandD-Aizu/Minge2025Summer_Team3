@@ -47,8 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   policeTransform: {fileID: 6568026565561502795}
   visionAngle: 180
-  closeDistance: 3
-  farDistance: 5
+  closeDistance: 5
+  farDistance: 8
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 384
@@ -251,8 +251,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3606022845152031569}
   - {fileID: 2284510910643270288}
+  - {fileID: 3606022845152031569}
   - {fileID: 3925793804665295022}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -290,7 +290,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 854875069414108594}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.15
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50

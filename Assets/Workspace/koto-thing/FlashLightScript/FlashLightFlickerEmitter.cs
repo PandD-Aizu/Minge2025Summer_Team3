@@ -6,6 +6,7 @@ namespace Workspace.koto_thing
     public class FlashLightFlickerEmitter : MonoBehaviour
     {
         [SerializeField] private StudioEventEmitter flickerEmitter;
+        [SerializeField] private StudioEventEmitter switchEmitter;
 
         public void PlayFlickerSound()
         {
@@ -17,6 +18,12 @@ namespace Workspace.koto_thing
         {
             if (flickerEmitter != null && flickerEmitter.IsPlaying())
                 flickerEmitter.Stop();
+        }
+        
+        public void PlaySwitchSound()
+        {
+            if (switchEmitter != null)
+                switchEmitter.Play();
         }
     }
 }

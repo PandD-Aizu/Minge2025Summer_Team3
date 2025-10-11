@@ -74,10 +74,14 @@ namespace Workspace.koto_thing
         /// </summary>
         public void ApplyMovement()
         {
-            if (characterController == null) return;
+            if (characterController == null) 
+                return;
+            
             Vector3 displacement = (planarVelocity + Vector3.up * verticalVelocity) * Time.deltaTime;
             characterController.Move(displacement);
-            if (agent != null) agent.nextPosition = agent.transform.position;
+            
+            if (agent != null) 
+                agent.nextPosition = agent.transform.position;
         }
 
         /// <summary>

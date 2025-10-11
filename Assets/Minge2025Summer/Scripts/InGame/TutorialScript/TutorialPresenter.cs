@@ -25,7 +25,7 @@ namespace Minge2025Summer.Main.InGame
                 .Subscribe(type =>
                 {
                     var text = model.GetText(type);
-                    view.Show(text);
+                    view.Show(text, 3.0f);
                 })
                 .AddTo(disposables);
 
