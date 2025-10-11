@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2160659587395056020}
   - component: {fileID: 2127112733122386144}
   - component: {fileID: 4241190083548858615}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HintMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 1210201870591878342}
   - component: {fileID: 5455172658943437018}
   - component: {fileID: 2358179204230786552}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pill
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -354,6 +354,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 186a9fc6e3b518e44a74b8a4da289110, type: 3}
       propertyPath: m_Name
       value: PillModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 186a9fc6e3b518e44a74b8a4da289110, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 186a9fc6e3b518e44a74b8a4da289110, type: 3}
       propertyPath: m_StaticEditorFlags

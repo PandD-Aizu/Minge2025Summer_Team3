@@ -5,6 +5,12 @@
         FLASHLIGHT,
         MOVE,
         DASH,
-        RELOAD
+        RELOAD,
+        CROUCH,
+        INTERACT,
+        SHOOT,
+        ASCEND,
+        INVENTORY,
+        INFO,
     }
 }

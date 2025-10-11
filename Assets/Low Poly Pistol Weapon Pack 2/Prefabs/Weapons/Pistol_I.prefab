@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1070983368871459423}
   - component: {fileID: 7875008677615519063}
   - component: {fileID: 2424836438402626737}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_I_Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 370815096673006270}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_I
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 523545316237786646}
   - component: {fileID: 3425136118907214884}
   - component: {fileID: 2660808036280436630}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_I_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 5637494972981823689}
   - component: {fileID: 7163440671254373650}
   - component: {fileID: 8600117814404662237}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_I_Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   - component: {fileID: 2382840852095459895}
   - component: {fileID: 484388832241658002}
   - component: {fileID: 6258734461189570073}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_I_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +393,7 @@ GameObject:
   - component: {fileID: 453658886597711274}
   - component: {fileID: 3283623922896235600}
   - component: {fileID: 2702970840855102542}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_I_BarrelGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ GameObject:
   - component: {fileID: 3050515311981873139}
   - component: {fileID: 3454508418305081976}
   - component: {fileID: 1981331898477841463}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_I_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -565,7 +565,7 @@ GameObject:
   - component: {fileID: 3084820820876227711}
   - component: {fileID: 1856680453382315145}
   - component: {fileID: 8048444284964674339}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_I_Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}

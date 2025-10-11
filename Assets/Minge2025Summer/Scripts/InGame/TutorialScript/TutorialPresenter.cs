@@ -13,9 +13,10 @@ namespace Minge2025Summer.Main.InGame
 
         private void Start()
         {
-            model.Initialize();
-            
             SubscribeEvents();
+            
+            model.Initialize();
+            model.RaiseShow(TutorialType.MOVE);
         }
 
         private void SubscribeEvents()

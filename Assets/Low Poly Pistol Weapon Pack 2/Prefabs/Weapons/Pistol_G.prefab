@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 176263739381900503}
   - component: {fileID: 1362380233129138132}
   - component: {fileID: 1120843967257867494}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G_BarrelGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 6301123779744093548}
   - component: {fileID: 3767962676716294821}
   - component: {fileID: 3254064103279829130}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 250486339077245253}
   - component: {fileID: 6866774178688045426}
   - component: {fileID: 3851027021668361105}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 4658008228934406645}
   - component: {fileID: 9204010168697345089}
   - component: {fileID: 7197842547418799271}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G_Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 951307392929072162}
   - component: {fileID: 6863123569314621066}
   - component: {fileID: 6761378631641702851}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G_Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 7058350726562729315}
   - component: {fileID: 312181793172487943}
   - component: {fileID: 2736896066900898066}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +527,7 @@ GameObject:
   - component: {fileID: 3661324898838363780}
   - component: {fileID: 3907435573751095316}
   - component: {fileID: 2671186576822086404}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G_Grip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7778961149720055044}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -651,7 +651,7 @@ GameObject:
   - component: {fileID: 3530098771048915136}
   - component: {fileID: 1263228552830503943}
   - component: {fileID: 5169102344507237142}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_G_Receiver_Part
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5464397179367304561}
   - component: {fileID: 3199664023849108694}
   - component: {fileID: 5055545039615718652}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HintMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 8752697064685633981}
   - component: {fileID: 322395540967508523}
   - component: {fileID: 1703803950028220170}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Battery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,12 +348,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5568371526223589888, guid: 0daaa8a8d168a4a4aaea27f336652c0e, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -5568371526223589888, guid: 0daaa8a8d168a4a4aaea27f336652c0e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0daaa8a8d168a4a4aaea27f336652c0e, type: 3}
       propertyPath: m_Name
       value: BatteryModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0daaa8a8d168a4a4aaea27f336652c0e, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0daaa8a8d168a4a4aaea27f336652c0e, type: 3}
       propertyPath: m_StaticEditorFlags

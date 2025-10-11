@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4168986417626011351}
   - component: {fileID: 2955554130151360432}
   - component: {fileID: 1918362689132407129}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 7675267884821228083}
   - component: {fileID: 7566844343045050939}
   - component: {fileID: 1957580082298713042}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HintMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,6 +341,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 90c2db7462032414897259f5f5b6fc62, type: 3}
       propertyPath: m_Name
       value: KeyModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 90c2db7462032414897259f5f5b6fc62, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 90c2db7462032414897259f5f5b6fc62, type: 3}
       propertyPath: m_StaticEditorFlags

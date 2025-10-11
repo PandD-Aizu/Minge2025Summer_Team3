@@ -10,6 +10,9 @@ namespace Workspace.koto_thing
     {
         [Header("インタラクト可能な最大距離")]
         [SerializeField] private float maxDistance;
+
+        [Header("レイキャストのバッファ")]
+        [SerializeField] private LayerMask layerMask;
         
         private Dictionary<IItem, int> itemList = new ();                     // アイテムとその数量の辞書
         private Dictionary<IItem, IDisposable> appliedSubscriptions = new (); // IAppliableの購読管理用辞書
@@ -25,8 +28,9 @@ namespace Workspace.koto_thing
         public void GetItem()
         {
             var cam = Camera.main;
-            if (cam == null) return;
-            Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, maxDistance);
+            if (cam == null) return; 
+            Physics.Raycast(cam.transform.position, cam.transform.forward, out var hit, maxDistance, layerMask);
+            
             if (hit.collider != null && hit.collider.TryGetComponent<IItem>(out var picked))
             {
                 picked.SetIsGet = true;

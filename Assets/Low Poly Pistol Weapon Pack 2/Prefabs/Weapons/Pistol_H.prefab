@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1915492395702498}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 1917733201780321414}
   - component: {fileID: 8245623428438398037}
   - component: {fileID: 4471694340005461656}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_H_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 6006391214589512947}
   - component: {fileID: 5575429573437151568}
   - component: {fileID: 2606813275820669410}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_H_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 3423244899193390927}
   - component: {fileID: 4669775191282299623}
   - component: {fileID: 6453113759668504898}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_H_Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 1267482985611205802}
   - component: {fileID: 1100956677721126986}
   - component: {fileID: 5782812039926908799}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_H_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 915025127986144082}
   - component: {fileID: 4939413929368160334}
   - component: {fileID: 2815326611913965460}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_H_BarrelGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,7 +478,7 @@ GameObject:
   - component: {fileID: 4329581730964966817}
   - component: {fileID: 7914538415148176561}
   - component: {fileID: 7224083428070410539}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pistol_H_Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

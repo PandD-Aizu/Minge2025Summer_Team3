@@ -39,6 +39,13 @@ namespace Minge2025Summer.Main.InGame
             textTable[TutorialType.FLASHLIGHT] = flashLightTutorialText;
             textTable[TutorialType.DASH] = dashTutorialText;
             textTable[TutorialType.RELOAD] = reloadTutorialText;
+            textTable[TutorialType.MOVE] = moveTutorialText;
+            textTable[TutorialType.CROUCH] = crouchTutorialText;
+            textTable[TutorialType.INTERACT] = interactTutorialText;
+            textTable[TutorialType.SHOOT] = shootTutorialText;
+            textTable[TutorialType.ASCEND] = ascendTutorialText;
+            textTable[TutorialType.INVENTORY] = inventoryTutorialText;
+            textTable[TutorialType.INFO] = infoTutorialText;
             
             initialized = true;
         }

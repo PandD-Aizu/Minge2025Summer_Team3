@@ -8,7 +8,8 @@ namespace Workspace.koto_thing
     public class PlayerGunModel : MonoBehaviour
     {
         [Header("取得関係")] 
-        [SerializeField] private float interactionRange = 20.0f;
+        [SerializeField] private float interactionRange = 40.0f;
+        [SerializeField] private LayerMask interactionLayerMask = ~0; // 全レイヤー
         [SerializeField, Tooltip("拾った銃を保持する親")] private Transform gunHoldPoint;
         [SerializeField, Tooltip("取得時にデバッグRayを表示")] private bool debugRay = true;
         
@@ -36,7 +37,7 @@ namespace Workspace.koto_thing
             if (debugRay)
                 Debug.DrawRay(origin, dir * interactionRange, Color.cyan, 1.0f);
 
-            if (!Physics.Raycast(origin, dir, out RaycastHit hit, interactionRange))
+            if (!Physics.Raycast(origin, dir, out RaycastHit hit, interactionRange, interactionLayerMask))
                 return false;
 
             if (!TryResolveGun(hit.collider, out var gun))
