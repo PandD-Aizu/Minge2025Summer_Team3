@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 114f682e76f84fb69d5b56fdbe28b420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  policeParentObject: {fileID: 0}
+  policeParentObject: {fileID: 854875069414108594}
   hp: 1000
   hitColliderObjectParent: {fileID: 0}
   hitCollider: []

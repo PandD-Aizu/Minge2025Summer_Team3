@@ -12,7 +12,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerInputControllerScript
             if (model.IsLocked)
             {
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = true;
+                Cursor.visible = false;
             }
         }
 
