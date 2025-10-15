@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Minge2025Summer.Scripts.InGame.TutorialScript.Enum;
+using UnityEngine;
 
-namespace Minge2025Summer.Main.InGame
+namespace Minge2025Summer.Scripts.InGame.TutorialScript
 {
     public class TutorialEventFireStarter : MonoBehaviour
     {

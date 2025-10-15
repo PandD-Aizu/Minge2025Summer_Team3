@@ -8,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace Minge2025Summer.Main.Intro
+namespace Minge2025Summer.Scripts.Intro
 {
     public class IntroController : MonoBehaviour
     {

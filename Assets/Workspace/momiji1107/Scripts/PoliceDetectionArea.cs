@@ -1,6 +1,6 @@
+using Minge2025Summer.Scripts.InGame.EnemyScript;
 using UnityEngine;
 using Workspace.koto_thing;
-using Workspace.momiji1107;
 
 public class PoliceDetectionArea : MonoBehaviour
 {

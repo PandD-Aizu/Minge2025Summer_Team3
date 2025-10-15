@@ -3,11 +3,8 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-#if TMP_PRESENT
-using TMPro;
-#endif
 
-namespace Minge2025Summer.Main.InGame
+namespace Minge2025Summer.Scripts.InGame.TutorialScript
 {
     public class TutorialView : MonoBehaviour
     {

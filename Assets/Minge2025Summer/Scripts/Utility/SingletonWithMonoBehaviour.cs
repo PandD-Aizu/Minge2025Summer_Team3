@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 
-namespace Utility
+namespace Minge2025Summer.Scripts.Utility
 {
     public abstract class SingletonWithMonoBehaviour<TYpe> : MonoBehaviour, IDisposable where TYpe : MonoBehaviour
     {

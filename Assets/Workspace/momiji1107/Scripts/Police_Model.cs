@@ -1,8 +1,11 @@
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
+using Minge2025Summer.Scripts.InGame;
+using Minge2025Summer.Scripts.InGame.EnemyScript.Enum;
+using Minge2025Summer.Scripts.InGame.EnemyScript.Interface;
+using Minge2025Summer.Scripts.InGame.PlayerStatusScript;
 using Workspace.koto_thing;
-using Workspace.momiji1107;
 
 public class Police_Model : MonoBehaviour, IEnemyHP, IEnemyPartHitReceiver
 {
@@ -134,7 +137,7 @@ public class Police_Model : MonoBehaviour, IEnemyHP, IEnemyPartHitReceiver
     /// <summary>
     /// 部位被弾コールバック (足に当たったらスロー)
     /// </summary>
-    public void OnPartHit(Workspace.koto_thing.EnemyBodyParts part, float finalDamage)
+    public void OnPartHit(EnemyBodyParts part, float finalDamage)
     {
         if (part == EnemyBodyParts.LEFT_LEG || part == EnemyBodyParts.RIGHT_LEG)
         {

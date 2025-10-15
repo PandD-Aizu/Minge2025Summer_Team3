@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameSetting
+namespace Minge2025Summer.Scripts.GameSetting
 {
     [System.Serializable]
     public class GameSettings

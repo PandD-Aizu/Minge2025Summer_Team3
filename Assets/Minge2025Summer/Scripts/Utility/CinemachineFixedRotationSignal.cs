@@ -1,6 +1,7 @@
+using Unity.Cinemachine;
 using UnityEngine;
 
-namespace Unity.Cinemachine
+namespace Minge2025Summer.Scripts.Utility
 {
     public class CinemachineFixedRotationSignal : CinemachineFixedSignal
     {

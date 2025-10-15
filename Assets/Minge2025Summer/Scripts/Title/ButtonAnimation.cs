@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Title
+namespace Minge2025Summer.Scripts.Title
 {
     public class ButtonAnimation : MonoBehaviour
     {

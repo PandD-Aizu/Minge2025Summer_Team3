@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 6568026565561502795}
   - component: {fileID: 3000077402215070843}
   - component: {fileID: 8714944254943516129}
+  - component: {fileID: 8852442532310192993}
   m_Layer: 9
   m_Name: Police
   m_TagString: EnemyShootable
@@ -303,6 +304,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8852442532310192993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854875069414108594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 114f682e76f84fb69d5b56fdbe28b420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  policeParentObject: {fileID: 0}
+  hp: 1000
+  hitColliderObjectParent: {fileID: 0}
+  hitCollider: []
 --- !u!1 &953324852590407928
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,54 +668,6 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
---- !u!1 &3127704998724420497
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6366480638593306415}
-  - component: {fileID: 8145492477941251515}
-  m_Layer: 0
-  m_Name: EnemyHPController
-  m_TagString: EnemyShootable
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &6366480638593306415
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3127704998724420497}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3606022845152031569}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8145492477941251515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3127704998724420497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 114f682e76f84fb69d5b56fdbe28b420, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  policeParentObject: {fileID: 854875069414108594}
-  hp: 1000
-  hitColliderObjectParent: {fileID: 0}
-  hitCollider: []
 --- !u!1 &3229764658798123242
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +736,7 @@ MonoBehaviour:
   model: {fileID: 9066763600808646829}
   emitter: {fileID: 2215557161484921379}
   detectionModel: {fileID: 5954432168722894968}
-  hpModel: {fileID: 8145492477941251515}
+  hpModel: {fileID: 0}
   aiBehaviourModel: {fileID: 4622321304609071981}
   battleBGMController: {fileID: 0}
   attackModel: {fileID: 4068258161037177638}
@@ -1400,7 +1369,6 @@ Transform:
   - {fileID: 6280906096027403038}
   - {fileID: 1758414814524606047}
   - {fileID: 256959538581771354}
-  - {fileID: 6366480638593306415}
   - {fileID: 7459831273535659156}
   - {fileID: 5908059238570268743}
   - {fileID: 4005554962439611858}

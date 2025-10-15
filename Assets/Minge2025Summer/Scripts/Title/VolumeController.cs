@@ -1,10 +1,10 @@
 ﻿using FMOD.Studio;
 using FMODUnity;
-using GameSetting;
+using Minge2025Summer.Scripts.GameSetting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Title
+namespace Minge2025Summer.Scripts.Title
 {
     public class VolumeController : MonoBehaviour
     {

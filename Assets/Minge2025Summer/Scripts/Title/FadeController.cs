@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Title
+namespace Minge2025Summer.Scripts.Title
 {
     public class FadeController : MonoBehaviour
     {

@@ -1,9 +1,8 @@
 ﻿using System;
-using Minge2025Summer.Main.InGame;
 using UniRx;
 using UnityEngine;
 
-namespace Minge2025Summer.Scripts.InGame
+namespace Minge2025Summer.Scripts.InGame.CaptionScript
 {
     public class CaptionModel : MonoBehaviour
     {
