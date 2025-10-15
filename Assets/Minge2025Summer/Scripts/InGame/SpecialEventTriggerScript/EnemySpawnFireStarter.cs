@@ -2,8 +2,9 @@
 using FMODUnity;
 using UnityEngine;
 using UnityEngine.AI;
+using Minge2025Summer.Scripts.InGame.EnemyScript;
 
-namespace Minge2025Summer.Scripts.InGame
+namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
 {
     public class EnemySpawnFireStarter : MonoBehaviour
     {
@@ -45,6 +46,15 @@ namespace Minge2025Summer.Scripts.InGame
 
             // プレイヤーを検知 & 発覚状態にする
             var playerTransform = other.transform;
+
+            // 検知モデルに強制検知を指示して即追跡に入れる
+            var detection = enemyObject.GetComponentInChildren<PoliceCollisionDetectionModel>();
+            if (detection != null)
+            {
+                detection.ForceDetect(playerTransform, 2.0f);
+            }
+
+            // 既存のメッセージ経由の目的地設定(対応実装があれば併用)
             var alertMethods = new[] { "SetDestination" };
             foreach (var method in alertMethods)
                 enemyObject.BroadcastMessage(method, playerTransform.position, SendMessageOptions.DontRequireReceiver);

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Minge2025Summer.Scripts.InGame
+namespace Minge2025Summer.Scripts.InGame.CaptionScript
 {
     public class CaptionEventFireStarter : MonoBehaviour
     {

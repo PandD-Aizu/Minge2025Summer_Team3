@@ -1,6 +1,6 @@
-﻿using Utility;
+﻿using Minge2025Summer.Scripts.Utility;
 
-namespace GameSetting
+namespace Minge2025Summer.Scripts.GameSetting
 {
     public class GameController : SingletonWithMonoBehaviour<GameController>
     {

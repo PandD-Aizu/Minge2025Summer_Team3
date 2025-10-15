@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using DG.Tweening;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Title
+namespace Minge2025Summer.Scripts.Title
 {
     public class ButtonController : MonoBehaviour
     {

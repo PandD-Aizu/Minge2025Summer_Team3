@@ -1,8 +1,8 @@
 ﻿using System.Collections;
+using Minge2025Summer.Scripts.Sample;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UniRxTest;
 using UniRx;
 
 namespace Minge2025Summer.Scripts.Tests

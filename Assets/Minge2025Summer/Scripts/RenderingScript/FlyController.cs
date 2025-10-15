@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace RenderingScript
+namespace Minge2025Summer.Scripts.RenderingScript
 {
     public class FlyController : MonoBehaviour
     {

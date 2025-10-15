@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace Minge2025Summer.Main.Intro
+namespace Minge2025Summer.Scripts.Intro
 {
     public class IntroTextJSONParser
     {

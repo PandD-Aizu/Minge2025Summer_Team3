@@ -1,8 +1,9 @@
 ﻿using System;
+using Minge2025Summer.Scripts.InGame.TutorialScript.Enum;
 using UniRx;
 using UnityEngine;
 
-namespace Minge2025Summer.Main.InGame
+namespace Minge2025Summer.Scripts.InGame.TutorialScript
 {
     public class TutorialPresenter : MonoBehaviour, IDisposable
     {
