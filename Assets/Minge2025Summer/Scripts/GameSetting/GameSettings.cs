@@ -25,6 +25,9 @@ namespace Minge2025Summer.Scripts.GameSetting
         public KeyCode keyReload;       // リロードキー
         public KeyCode keyInteract;     // インタラクトキー
         public KeyCode keySprint ;      // 走るキー
+        public KeyCode keyCrouch;       // しゃがむキー
+        public KeyCode keyInventory;    // インベントリキー
+        public KeyCode keyImportant;    // 重要アイテムキー
         
         // CAMERA
         public bool cameraInvert;           // カメラ操作反転
