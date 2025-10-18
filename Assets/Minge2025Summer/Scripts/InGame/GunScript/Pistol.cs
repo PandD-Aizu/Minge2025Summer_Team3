@@ -52,10 +52,15 @@ namespace Minge2025Summer.Scripts.InGame.GunScript
 
         private float aimTimer;
         private float nextFireTime;
-
-        // Presenterから毎フレーム呼び出す
+        private bool IsAiming { get; set; }
+        
         public void Tick(float deltaTime)
         {
+            // 覗き込みの進行をフレームで補間
+            float targetTime = IsAiming ? timeToAim : 0.0f;
+            aimTimer = Mathf.MoveTowards(aimTimer, targetTime, Time.deltaTime);
+            
+            // 発砲ペナルティの回復
             if (spreadPenalty > 0f)
                 spreadPenalty = Mathf.Max(0f, spreadPenalty - spreadRecoverSpeed * deltaTime);
         }
@@ -111,16 +116,15 @@ namespace Minge2025Summer.Scripts.InGame.GunScript
         
         public void Aim()
         {
-            aimTimer += Time.deltaTime;
+            IsAiming = true;
         }
 
         public void ResetAccuracy()
         {
-            aimTimer = 0f;
+            IsAiming = false;
         }
         
-        /* 以下ヘルパー関数 */
-
+        # region Helper Functions
         private Vector3 GetShootDirection()
         {
             Vector3 forward = Camera.main.transform.forward;
@@ -134,24 +138,43 @@ namespace Minge2025Summer.Scripts.InGame.GunScript
         public int GetMagCapacity() => magCapacity;
         public int GetAmmoInMag() => ammoInMag;
 
+        /// <summary>
+        /// 現在の命中精度を返す (0.0〜1.0)
+        /// </summary>
+        /// <returns>現在の命中精度</returns>
         public float CurrentAccuracy()
         {
             return Mathf.Clamp01(aimTimer / timeToAim);
         }
 
+        /// <summary>
+        /// 現在の拡散角度を返す
+        /// </summary>
+        /// <returns>現在の拡散角度</returns>
         public float GetCurrentSpreadAngleDeg()
         {
             return Mathf.Lerp(maxSpreadAngle, 0.0f, CurrentAccuracy());
         }
 
+        /// <summary>
+        /// 拡散ペナルティを加味した最終的な拡散角度を返す
+        /// </summary>
+        /// <returns>拡散角度</returns>
         public float GetFinalSpreadAngleDeg()
         {
-            return GetCurrentSpreadAngleDeg() + spreadPenalty;
+            float penalty = spreadPenalty * (1.0f - CurrentAccuracy());
+            return Mathf.Max(0.0f, GetCurrentSpreadAngleDeg() + penalty);
         }
 
+        /// <summary>
+        /// 腰撃ち時の最大拡散角度を返す
+        /// </summary>
+        /// <returns></returns>
         public float GetHipFireSpreadAngleDeg()
         {
             return maxSpreadAngle;
         }
+        
+        # endregion
     }
 }

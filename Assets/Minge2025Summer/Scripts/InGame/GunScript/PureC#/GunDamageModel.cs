@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Minge2025Summer.Scripts.InGame.EnemyScript.ColliderInfo;
 using Minge2025Summer.Scripts.InGame.EnemyScript.Enum;
 using Minge2025Summer.Scripts.InGame.EnemyScript.Interface;
+using Minge2025Summer.Scripts.InGame.FX;
 using UnityEngine;
 
 namespace Minge2025Summer.Scripts.InGame.GunScript.PureC_
@@ -80,6 +81,15 @@ namespace Minge2025Summer.Scripts.InGame.GunScript.PureC_
                 
                 damagedEnemies.Add(enemyHP);
                 penetratedEnemies++;
+                
+                BloodSplatterSpawner.Spawn(
+                    "BloodSplatter",
+                    hit.point,
+                    hit.normal,
+                    speed: 5.0f,
+                    lifetime: 2.0f,
+                    surfaceOffset: 0.01f
+                    );
             }
         }
         
