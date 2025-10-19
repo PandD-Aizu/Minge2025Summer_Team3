@@ -1,4 +1,5 @@
 ﻿using System;
+using Minge2025Summer.Scripts.InGame.FlashLightScript;
 using Minge2025Summer.Scripts.InGame.PlayerStatusScript;
 using UniRx;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Minge2025Summer.Scripts.InGame.GameOverScript
         [SerializeField] private GameOverView view;
 
         [SerializeField] private PlayerHpModel playerHpModel;
+        [SerializeField] private BatteryLevelModel batteryLevelModel;
 
         private CompositeDisposable disposables = new ();
 
@@ -33,6 +35,13 @@ namespace Minge2025Summer.Scripts.InGame.GameOverScript
                 {
                     playerHpModel.CurrentHp = playerHpModel.GetMaxHp;
                     view.HideGameOverPanel();
+                })
+                .AddTo(disposables);
+            
+            batteryLevelModel.OnBatteryDepleted
+                .Subscribe(_ =>
+                {
+                    view.ShowGameOverPanel();
                 })
                 .AddTo(disposables);
             

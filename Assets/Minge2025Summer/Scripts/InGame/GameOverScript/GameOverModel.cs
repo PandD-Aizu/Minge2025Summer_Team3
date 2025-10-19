@@ -7,8 +7,8 @@ namespace Minge2025Summer.Scripts.InGame.GameOverScript
     public class GameOverModel : MonoBehaviour
     {
         [SerializeField, Tooltip("タイトル画面のシーン名")] private string titleSceneAddress;
-
-        private Subject<Unit> onContinueGame = new ();
+        
+        private readonly Subject<Unit> onContinueGame = new ();
         public IObservable<Unit> OnContinueGame => onContinueGame.AsObservable();
 
         /// <summary>

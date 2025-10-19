@@ -24,9 +24,12 @@ namespace Minge2025Summer.Scripts.InGame.FlashLightScript
         {
             model.DrainBattery(lightFlicker.GetCurrentState);
             model.CheckFlicker();
-            
-            if (model.GetBatteryLevel <= 0) 
+
+            if (model.GetBatteryLevel <= 0)
+            {
                 lightFlicker.SetFlickerState(FlickerState.OFF, view.GetFlashLight);
+            }
+                
             
             view.UpdateSegments(model.GetMaxBatteryLevel, model.GetBatteryLevel);
         }
