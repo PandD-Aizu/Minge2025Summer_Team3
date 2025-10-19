@@ -1,7 +1,7 @@
 #pragma kernel CSMain
 #pragma kernel CSCull
 
-struct Boid
+struct FlyData
 {
     float3 position;
     float3 velocity;
@@ -15,11 +15,11 @@ struct ObstacleData
     float radius;
 };
 
-RWStructuredBuffer<Boid> boidDataBuffer;
+RWStructuredBuffer<FlyData> boidDataBuffer;
 StructuredBuffer<ObstacleData> obstacleDataBuffer;
-AppendStructuredBuffer<Boid> visibleBoidBuffer;
+AppendStructuredBuffer<FlyData> visibleBoidBuffer;
 
-int boidCount;
+uint boidCount;
 float deltaTime;
 
 float perceptionRadius;
@@ -33,7 +33,7 @@ float3 boundsSize;
 float3 boundsCenter;
 float boundsWeight;
 float noiseStrength;
-int obstacleCount;
+uint obstacleCount;
 float obstacleAvoidanceWeight;
 float obstacleAvoidanceRadius;
 
@@ -70,6 +70,16 @@ float4x4 CreateMatrix(float3 pos, float3 vel)
     return mat;
 }
 
+/// 零ベクトルを正規化しないようにする
+float3 SafeNormalize(float3 v)
+{
+    float len = length(v);
+    if (len > 0.0001)
+        return v / len;
+    
+    return float3(0, 0, 0);
+}
+
 /// シンプルな乱数生成関数
 float rand(float2 co)
 {
@@ -83,7 +93,7 @@ float3 noise(float3 pos)
     float y = rand(pos.xz + deltaTime) * 2.0 - 1.0;
     float z = rand(pos.xy + deltaTime) * 2.0 - 1.0;
     
-    return normalize(float3(x, y, z));
+    return SafeNormalize(float3(x, y, z));
 }
 
 [numthreads(64, 1, 1)]
@@ -93,7 +103,7 @@ void CSMain (uint3 id : SV_DispatchThreadID)
         return;
 
     // 現在のボイドデータ
-    Boid currentBoid = boidDataBuffer[id.x];
+    FlyData currentBoid = boidDataBuffer[id.x];
 
     // 近傍のボイドに基づく力
     float3 separationSum = float3(0, 0, 0);
@@ -102,10 +112,10 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     int neighborCount = 0;
 
     // 近傍のボイドを調べる
-    for (int i = 0 ; i < boidCount ; i++)
+    for (uint i = 0 ; i < boidCount ; i++)
     {
         if (id.x == i) continue;
-        Boid otherBoid = boidDataBuffer[i];
+        FlyData otherBoid = boidDataBuffer[i];
         float dist = distance(currentBoid.position, otherBoid.position);
         if (dist > 0 && dist < perceptionRadius)
         {
@@ -117,28 +127,28 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     }
 
     // フォース計算
-    float3 force = 0;
+    float3 force = float3(0, 0, 0);
     if (neighborCount > 0)
     {
         alignmentSum /= neighborCount;
         cohesionSum  /= neighborCount;
-        float3 cohesionForce = normalize(cohesionSum - currentBoid.position);
-        force += normalize(separationSum) * separationWeight;
-        force += normalize(alignmentSum)  * alignmentWeight;
+        float3 cohesionForce = SafeNormalize(cohesionSum - currentBoid.position);
+        force += SafeNormalize(separationSum) * separationWeight;
+        force += SafeNormalize(alignmentSum)  * alignmentWeight;
         force += cohesionForce            * cohesionWeight;
     }
 
     // 目標
     float3 toTarget = targetPosition - currentBoid.position;
     float lenT = length(toTarget);
-    float3 targetForce = lenT > 0 ? (toTarget / lenT) * targetWeight : 0;
+    float3 targetForce = lenT > 0 ? (toTarget / lenT) * targetWeight : float3(0, 0, 0);
 
     // 境界
     float3 relPos = currentBoid.position - boundsCenter;
     float3 halfBounds = boundsSize * 0.5;
     float3 normPos = relPos / halfBounds;
     const float threshold = 0.8;
-    float3 boundsForce = 0;
+    float3 boundsForce = float3(0, 0, 0);
     if (abs(normPos.x) > threshold)
         boundsForce.x = -normPos.x;
     if (abs(normPos.y) > threshold)
@@ -148,13 +158,13 @@ void CSMain (uint3 id : SV_DispatchThreadID)
     boundsForce *= boundsWeight;
 
     // 障害物回避
-    float3 obstacleAvoidanceForce = 0;
-    for (int j = 0 ; j < obstacleCount ; j++)
+    float3 obstacleAvoidanceForce = float3(0, 0, 0);
+    for (uint j = 0 ; j < obstacleCount ; j++)
     {
         ObstacleData obs = obstacleDataBuffer[j];
         float distToObs = distance(currentBoid.position, obs.position);
         if (distToObs < (obs.radius + obstacleAvoidanceRadius) && distToObs > 0.0001)
-            obstacleAvoidanceForce += normalize(currentBoid.position - obs.position) / distToObs;
+            obstacleAvoidanceForce += SafeNormalize(currentBoid.position - obs.position) / distToObs;
     }
     obstacleAvoidanceForce *= obstacleAvoidanceWeight;
 
@@ -195,7 +205,7 @@ void CSCull(uint3 id : SV_DispatchThreadID)
     if (id.x >= boidCount)
         return;
     
-    Boid b = boidDataBuffer[id.x];
+    FlyData b = boidDataBuffer[id.x];
     float4 clip = mul(viewProjMatrix, float4(b.position, 1));
     // w が 0 以下は後ろ側
     if (clip.w <= 0)

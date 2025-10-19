@@ -6,32 +6,36 @@ Shader "Unlit/FlyInstanced"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Opaque" "RenderPipeline"="UniversalPipeline" }
         LOD 100
 
         Pass
         {
-            CGPROGRAM
+            Tags { "LightMode" = "SRPDefaultUnlit" }
+            Cull Off
+            ZWrite On
+            Blend Off
+
+            HLSLPROGRAM
+            #pragma target 4.5
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile_instancing // インスタンシングを有効化
+            #pragma multi_compile_instancing
+            #pragma instancing_options procedural:setup
 
-            #include "UnityCG.cginc"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-            // 頂点シェーダーへの入力構造体
             struct appdata
             {
-                float4 vertex : POSITION;
-                // 修正点: マクロの代わりに、SV_InstanceIDセマンティクスでIDを直接受け取る
-                uint instanceID : SV_InstanceID; 
+                float4 positionOS : POSITION;
+                uint instanceID : SV_InstanceID;
             };
 
             struct v2f
             {
                 float4 vertex : SV_POSITION;
             };
-            
-            // Compute Shaderから渡されるデータ構造体（変更なし）
+
             struct FlyData
             {
                 float3 position;
@@ -40,31 +44,38 @@ Shader "Unlit/FlyInstanced"
                 int state;
             };
 
+            #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
             StructuredBuffer<FlyData> boidDataBuffer;
-            fixed4 _Color;
+            #endif
+
+            half4 _Color;
+
+            void setup()
+            {
+                #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
+                #endif
+            }
 
             v2f vert (appdata v)
             {
                 v2f o;
-                
-                // 修正点: UNITY_SETUP_INSTANCE_ID(v); は不要になります
 
-                // 修正点: v.instanceID を使ってバッファにアクセスする
-                FlyData data = boidDataBuffer[v.instanceID];
+                #ifdef UNITY_PROCEDURAL_INSTANCING_ENABLED
+                    FlyData data = boidDataBuffer[v.instanceID];
+                    float4 worldPos = mul(data.mat, v.positionOS);
+                    o.vertex = TransformWorldToHClip(worldPos.xyz);
+                #else
+                    o.vertex = TransformObjectToHClip(v.positionOS.xyz);
+                #endif
 
-                // 頂点位置を行列で変換
-                o.vertex = mul(data.mat, v.vertex);
-                // ビュープロジェクション変換
-                o.vertex = mul(UNITY_MATRIX_VP, o.vertex);
-                
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
+            half4 frag (v2f i) : SV_Target
             {
                 return _Color;
             }
-            ENDCG
+            ENDHLSL
         }
     }
 }

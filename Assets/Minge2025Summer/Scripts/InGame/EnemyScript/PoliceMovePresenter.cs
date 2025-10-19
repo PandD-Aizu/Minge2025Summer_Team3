@@ -8,6 +8,7 @@ using UnityEngine.AI;
 
 namespace Minge2025Summer.Scripts.InGame.EnemyScript
 {
+    [DefaultExecutionOrder(-10000)]
     public class PoliceMovePresenter : MonoBehaviour, IDisposable
     {
         [SerializeField] private PoliceMoveModel model;

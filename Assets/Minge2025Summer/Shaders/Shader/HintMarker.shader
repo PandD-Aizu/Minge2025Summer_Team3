@@ -12,6 +12,7 @@ Shader "Unlit/PickupHintMarkerSprite"
         _Scale ("World Scale Multiplier", Float) = 1
         _DisplayMode ("Depth Mode (0=Normal 1=ForceFront 2=WriteDepth)", Float) = 0
         _Fade ("Global Alpha Multiplier", Range(0,1)) = 1
+        _AllowBloom ("Allow Bloom (0/1)", Float) = 0
     }
 
     SubShader
@@ -51,6 +52,7 @@ Shader "Unlit/PickupHintMarkerSprite"
             float _Scale;
             float _DisplayMode;
             float _Fade;
+            float _AllowBloom;
 
             struct appdata
             {
@@ -113,6 +115,11 @@ Shader "Unlit/PickupHintMarkerSprite"
                 fixed4 tex = tex2D(_MainTex, i.uv);
                 fixed pulse = 1.0 + _PulseAmplitude * sin(_Time.y * _PulseSpeed);
                 fixed4 col = i.color * tex;
+
+                fixed e = _Emission * pulse;
+                if (_AllowBloom < 0.5)
+                    e = min(e, 1.0f);
+                
                 col.rgb *= (_Emission * pulse);
                 col.a *= _Fade;
                 return col;

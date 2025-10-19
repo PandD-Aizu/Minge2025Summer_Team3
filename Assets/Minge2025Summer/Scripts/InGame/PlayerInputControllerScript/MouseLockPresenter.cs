@@ -9,6 +9,8 @@ namespace Minge2025Summer.Scripts.InGame.PlayerInputControllerScript
 
         private void Start()
         {
+            model.IsLocked = true;
+            
             if (model.IsLocked)
             {
                 Cursor.lockState = CursorLockMode.Locked;
