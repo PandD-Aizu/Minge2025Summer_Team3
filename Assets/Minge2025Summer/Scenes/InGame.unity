@@ -324,6 +324,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ccb9303e420c3a49bf6f86dda656234, type: 3}
+--- !u!4 &10987518 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+  m_PrefabInstance: {fileID: 1833134643}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &22083499
 GameObject:
   m_ObjectHideFlags: 0
@@ -2059,6 +2064,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ea970501dfe067646a089cdbbbc098ff, type: 3}
   m_PrefabInstance: {fileID: 1191191233}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &201219242 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8278126651599714171, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+  m_PrefabInstance: {fileID: 425230654}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &202520537
 GameObject:
@@ -5262,6 +5272,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4695550589098935547, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1083590622}
+    - targetCorrespondingSourceObject: {fileID: -8278126651599714171, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 10987518}
     - targetCorrespondingSourceObject: {fileID: 8852593764285772745, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1345567912}
@@ -9659,6 +9672,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
+--- !u!4 &688147454 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1412834713729532493, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+  m_PrefabInstance: {fileID: 425230654}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &692999107 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 765769925351324512, guid: 3ec70a18fdd03ab44abd320c93f9e4eb, type: 3}
@@ -39303,6 +39321,91 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ee867e6d01c9be44bb6cd60542a55b64, type: 3}
   m_PrefabInstance: {fileID: 1776847619}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1833134643
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 201219242}
+    m_Modifications:
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2481909609129189223, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5561418446534432519, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: m_Name
+      value: FlyController
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417487341156292817, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 201219242}
+    - target: {fileID: 8417487341156292817, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: boundsSize.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417487341156292817, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: boundsSize.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417487341156292817, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: boundsSize.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417487341156292817, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: perceptionRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417487341156292817, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: obstacles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8417487341156292817, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
+      propertyPath: 'obstacles.Array.data[0]'
+      value: 
+      objectReference: {fileID: 688147454}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5bd78a70cdc465d4cb44dddbde1b4806, type: 3}
 --- !u!1 &1837842638 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ea6d34b8651081d449cb90a8f9177bee, type: 3}

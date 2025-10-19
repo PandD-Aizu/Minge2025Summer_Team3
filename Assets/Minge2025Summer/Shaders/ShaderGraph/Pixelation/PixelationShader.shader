@@ -62,7 +62,7 @@ Shader "Unlit/PixelationEffect"
                 };
 
                 float2 screenPos = i.texcoord * _ScreenParams.xy;
-                int ditherIndex = (int(screenPos.x) % 8) + (int(screenPos.y) % 8) * 8;
+                uint ditherIndex = (int(screenPos.x) % 8) + (int(screenPos.y) % 8) * 8;
 
                 float ditherAmount = (dither[ditherIndex] / 64.0 - 0.5) / _PosterizationLevels;
 

@@ -42,21 +42,25 @@ namespace Minge2025Summer.Scripts.RenderingScript
         private ComputeBuffer flyDataBuffer;
         private ComputeBuffer obstacleDataBuffer;
         private ComputeBuffer argsBuffer;
-        private GameObject[] flies;
-        private uint[] args = new uint[5] {0, 0, 0, 0, 0};
-        
         private ComputeBuffer visibleBoidBuffer; // AppendStructuredBuffer用
         private ComputeBuffer countBuffer;       // 1uintのRawカウンタ読み出し
         
+        private GameObject[] flies;
+        private uint[] args = new uint[5] {0, 0, 0, 0, 0};
         private int lastObstacleCount = -1;
+
+        private Material runtimeMaterial;
+
+        private int boidDataBufferID;
         #endregion
 
         #region Structures
+        [StructLayout(LayoutKind.Sequential)]
         struct FlyData
         {
             public Vector3 position;
             public Vector3 velocity;
-            public Matrix4x4 matrix;
+            public Matrix4x4 mat;
             public int state;
         }
 
@@ -70,101 +74,94 @@ namespace Minge2025Summer.Scripts.RenderingScript
 
         private void Start()
         {
+            boidDataBufferID = Shader.PropertyToID("boidDataBuffer");
+            runtimeMaterial = new Material(flyMaterial) { enableInstancing = true };
+
             InitializeFlies();
             InitializeObstacles();
-            
+
             // 間接描画用のバッファを設定
             argsBuffer = new ComputeBuffer(1, args.Length * sizeof(uint), ComputeBufferType.IndirectArguments);
             args[0] = (flyMesh != null) ? flyMesh.GetIndexCount(0) : 0;
-            args[1] = (uint)flyCount;
+            args[1] = (uint)flyCount; // インスタンス数
             args[2] = (flyMesh != null) ? flyMesh.GetIndexStart(0) : 0;
             args[3] = (flyMesh != null) ? flyMesh.GetBaseVertex(0) : 0;
+            args[4] = 0;
             argsBuffer.SetData(args);
 
-            // カリング用バッファ生成
-            if (enableFrustumCulling)
-            {
-                int stride = Marshal.SizeOf(typeof(FlyData));
-                visibleBoidBuffer = new ComputeBuffer(flyCount, stride, ComputeBufferType.Append);
-                visibleBoidBuffer.SetCounterValue(0);
-                countBuffer = new ComputeBuffer(1, sizeof(uint), ComputeBufferType.Raw);
-            }
+            visibleBoidBuffer = new ComputeBuffer(flyCount, Marshal.SizeOf(typeof(FlyData)), ComputeBufferType.Append);
+            countBuffer = new ComputeBuffer(1, sizeof(uint), ComputeBufferType.Raw);
         }
 
         private void Update()
         {
             EnsureObstacleBuffer();
-            
-            int kernelIndex = computeShader.FindKernel("CSMain");
-            computeShader.SetBuffer(kernelIndex, "boidDataBuffer", flyDataBuffer);
-            computeShader.SetBuffer(kernelIndex, "obstacleDataBuffer", obstacleDataBuffer);
 
-            int obstacleCount = (obstacles == null) ? 0 : obstacles.Length;
-            computeShader.SetInt("obstacleCount", obstacleCount);
-
+            // ComputeShaderの実行
             computeShader.SetFloat("deltaTime", Time.deltaTime);
             computeShader.SetInt("boidCount", flyCount);
+            computeShader.SetFloat("perceptionRadius", perceptionRadius);
             computeShader.SetFloat("separationWeight", separationWeight);
             computeShader.SetFloat("alignmentWeight", alignmentWeight);
             computeShader.SetFloat("cohesionWeight", cohesionWeight);
-            computeShader.SetFloat("perceptionRadius", perceptionRadius);
-            if (target) computeShader.SetVector("targetPosition", target.position);
+
+            Vector3 targetPos = target ? target.position : transform.position;
+            computeShader.SetVector("targetPosition", targetPos);
             computeShader.SetFloat("targetWeight", targetWeight);
             computeShader.SetVector("boundsSize", boundsSize);
             computeShader.SetVector("boundsCenter", transform.position);
             computeShader.SetFloat("boundsWeight", boundsWeight);
             computeShader.SetFloat("noiseStrength", noiseStrength);
+            computeShader.SetInt("obstacleCount", obstacles?.Length ?? 0);
             computeShader.SetFloat("obstacleAvoidanceWeight", obstacleAvoidanceWeight);
             computeShader.SetFloat("obstacleAvoidanceRadius", obstacleAvoidanceRadius);
-            
-            // シミュレーションカーネル実行
+
+            int kernelIndex = computeShader.FindKernel("CSMain");
+            computeShader.SetBuffer(kernelIndex, "boidDataBuffer", flyDataBuffer);
+            computeShader.SetBuffer(kernelIndex, "obstacleDataBuffer", obstacleDataBuffer);
+
             int threadGroups = Mathf.CeilToInt(flyCount / 64.0f);
             computeShader.Dispatch(kernelIndex, threadGroups, 1, 1);
 
-            ComputeBuffer drawBuffer = flyDataBuffer; // デフォルト
+            // マテリアルにバッファをバインド - これが重要!
+            runtimeMaterial.SetBuffer(boidDataBufferID, flyDataBuffer);
 
+            // 描画
+            Bounds drawBounds = new Bounds(transform.position, boundsSize * 2f);
+            
             if (enableFrustumCulling)
             {
-                // 可視リスト用カウンタリセット
-                visibleBoidBuffer.SetCounterValue(0);
+                // カリング処理
+                int cullKernelIndex = computeShader.FindKernel("CSCull");
                 Camera cam = Camera.main;
-                if (cam != null)
-                {
-                    // ViewProjection行列を送る
-                    Matrix4x4 vp = cam.projectionMatrix * cam.worldToCameraMatrix;
-                    computeShader.SetMatrix("viewProjMatrix", vp);
-                    computeShader.SetFloat("frustumMargin", frustumMargin);
-                    
-                    // カリングカーネル
-                    int cullKernel = computeShader.FindKernel("CSCull");
-                    computeShader.SetInt("boidCount", flyCount);
-                    computeShader.SetBuffer(cullKernel, "boidDataBuffer", flyDataBuffer);
-                    computeShader.SetBuffer(cullKernel, "visibleBoidBuffer", visibleBoidBuffer);
-                    computeShader.Dispatch(cullKernel, threadGroups, 1, 1);
-                    
-                    // AppendカウンタをargsBuffeのinstanceCountスロットにコピー
-                    // args: [0] = indexCountPerInstance, [1] = instanceCount, [2] = startIndex, [3] = baseVertex, [4] = startInstance
-                    ComputeBuffer.CopyCount(visibleBoidBuffer, argsBuffer, sizeof(uint));
-                    drawBuffer = visibleBoidBuffer;
-                }
-                else
-                {
-                    // カメラが無い場合は全件描画にフォールバック
-                    args[1] = (uint)flyCount;
-                    argsBuffer.SetData(args);
-                }
+                if (cam == null) return;
+
+                Matrix4x4 vp = cam.projectionMatrix * cam.worldToCameraMatrix;
+                computeShader.SetMatrix("viewProjMatrix", vp);
+                computeShader.SetFloat("frustumMargin", frustumMargin);
+
+                visibleBoidBuffer.SetCounterValue(0);
+                computeShader.SetBuffer(cullKernelIndex, "boidDataBuffer", flyDataBuffer);
+                computeShader.SetBuffer(cullKernelIndex, "visibleBoidBuffer", visibleBoidBuffer);
+                computeShader.Dispatch(cullKernelIndex, threadGroups, 1, 1);
+
+                ComputeBuffer.CopyCount(visibleBoidBuffer, countBuffer, 0);
+
+                uint[] countData = new uint[1];
+                countBuffer.GetData(countData);
+                args[1] = countData[0];
+                argsBuffer.SetData(args);
+
+                // カリング後のバッファをマテリアルに再バインド
+                runtimeMaterial.SetBuffer(boidDataBufferID, visibleBoidBuffer);
+                Graphics.DrawMeshInstancedIndirect(flyMesh, 0, runtimeMaterial, drawBounds, argsBuffer);
             }
             else
             {
-                // カリング無効: インスタンス数固定
                 args[1] = (uint)flyCount;
                 argsBuffer.SetData(args);
+                Graphics.DrawMeshInstancedIndirect(flyMesh, 0, runtimeMaterial, drawBounds, argsBuffer);
             }
-            
-            // GPUで描画
-            flyMaterial.SetBuffer("boidDataBuffer", drawBuffer);
-            var drawBounds = new Bounds(transform.position, boundsSize * 2f);
-            Graphics.DrawMeshInstancedIndirect(flyMesh, 0, flyMaterial, drawBounds, argsBuffer);
         }
 
         /// <summary>
@@ -182,7 +179,8 @@ namespace Minge2025Summer.Scripts.RenderingScript
                 {
                     position = pos,
                     velocity = vel,
-                    matrix = Matrix4x4.TRS(pos, Quaternion.LookRotation(vel), Vector3.one * 0.1f)
+                    mat = Matrix4x4.TRS(pos, Quaternion.LookRotation(vel), Vector3.one * 0.1f),
+                    state = 0
                 };
                 
                 initialFlyData.Add(flyData);
@@ -220,7 +218,7 @@ namespace Minge2025Summer.Scripts.RenderingScript
             
             obstacleDataBuffer = new ComputeBuffer(count, Marshal.SizeOf(typeof(ObstacleData)));
             obstacleDataBuffer.SetData(data);
-            lastObstacleCount = (obstacles == null) ? 0 : obstacles.Length;
+            lastObstacleCount = obstacles?.Length ?? 0;
         }
 
         /// <summary>
@@ -229,7 +227,7 @@ namespace Minge2025Summer.Scripts.RenderingScript
         /// </summary>
         private void EnsureObstacleBuffer()
         {
-            int current = (obstacles == null) ? 0 : obstacles.Length;
+            int current = obstacles?.Length ?? 0;
             if (obstacleDataBuffer == null || current != lastObstacleCount)
                 InitializeObstacles();
         }
@@ -247,6 +245,7 @@ namespace Minge2025Summer.Scripts.RenderingScript
 
             if (visibleBoidBuffer != null)
                 visibleBoidBuffer.Release();
+            
             if (countBuffer != null)
                 countBuffer.Release();
         }
