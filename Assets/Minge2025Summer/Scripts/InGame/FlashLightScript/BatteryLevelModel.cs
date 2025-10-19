@@ -16,6 +16,9 @@ namespace Minge2025Summer.Scripts.InGame.FlashLightScript
         private ReactiveProperty<bool> isFlickering = new (false);
         public IObservable<bool> IsFlickeringObservable => isFlickering;
         public bool IsFlickering { get => isFlickering.Value; set => isFlickering.Value = value; }
+        
+        private Subject<Unit> onBatteryDepleted = new ();
+        public IObservable<Unit> OnBatteryDepleted => onBatteryDepleted.AsObservable();
 
         public float GetBatteryLevel => batteryLevel;
         public float GetMaxBatteryLevel => maxBatteryLevel;
@@ -29,6 +32,11 @@ namespace Minge2025Summer.Scripts.InGame.FlashLightScript
             {
                 batteryLevel -= drainRate * Time.deltaTime;
                 batteryLevel = Mathf.Clamp(batteryLevel, 0, maxBatteryLevel);
+            }
+            
+            if (batteryLevel <= 0)
+            {
+                onBatteryDepleted.OnNext(Unit.Default);
             }
         }
 
