@@ -4,6 +4,7 @@ using Minge2025Summer.Scripts.InGame.EnemyScript.ColliderInfo;
 using Minge2025Summer.Scripts.InGame.EnemyScript.Enum;
 using Minge2025Summer.Scripts.InGame.EnemyScript.Interface;
 using Minge2025Summer.Scripts.InGame.FX;
+using Minge2025Summer.Scripts.InGame.ShootableObject.Interface;
 using UnityEngine;
 
 namespace Minge2025Summer.Scripts.InGame.GunScript.PureC_
@@ -50,9 +51,12 @@ namespace Minge2025Summer.Scripts.InGame.GunScript.PureC_
                 if (col == null) continue;
 
                 // 敵に当たっているかどうかを判定
+               col.TryGetComponent<IShootableObject>(out var shootableObject);
+               shootableObject.Feedback();
+                
                 var enemyHP = col.GetComponentInParent<IEnemyHP>();
                 if (enemyHP == null) continue;
-
+                
                 // 既にダメージを与えた敵はスキップ
                 if (damagedEnemies.Contains(enemyHP)) continue;
 
