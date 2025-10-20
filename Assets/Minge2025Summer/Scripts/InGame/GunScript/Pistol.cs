@@ -10,6 +10,7 @@ namespace Minge2025Summer.Scripts.InGame.GunScript
 {
     public class Pistol : MonoBehaviour, IGun
     {
+        #region Serialized Fields
         [Header("共有ダメージモデル")] 
         [SerializeField] private GunDamageModel gunDamageModel;
         
@@ -44,6 +45,7 @@ namespace Minge2025Summer.Scripts.InGame.GunScript
         private int bufferSize = 32;
         [SerializeField, Tooltip("RaycastNonAlloc用のヒット配列サイズ")] private int raycastBufferSize = 32;
         private RaycastHit[] raycastBuffer;
+        #endregion
 
         private float spreadPenalty;
         
