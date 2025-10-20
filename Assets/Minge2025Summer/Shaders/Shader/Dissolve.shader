@@ -2,6 +2,8 @@ Shader "Custom/Dissolve"
 {
     Properties
     {
+        _MainTex ("Main Texture", 2D) = "white" {}
+        
         [Header(Shape)]
         _NoiseTex ("Noise Texture", 2D) = "white" {}
         _NoiseTiling ("Noise Tiling", Float) = 1.0

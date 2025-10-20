@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Minge2025Summer.Scripts.InGame.EnemyScript;
 using UniRx;
 using Unity.AI.Navigation;
 using UnityEngine;
@@ -107,7 +108,8 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
             InstantiatePrefabs();              // マップデータに基づいてプレハブをインスタンス化
             SpawnReservedSpecialPoint();       // スタート・ゴール以外の外周に特別な地点を配置
             PositionMapBasedOnMarker();        // マーカーの位置に基づいてマップ全体を移動
-            RebuildNavMesh();
+            RebuildNavMesh();                  // NavMeshを再構築
+            SpawnEnemiesInMap();               // マップ内に敵を出現させる
         }
 
         /// <summary>
@@ -455,6 +457,21 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
             navMeshRebuiltSubject.OnNext(Unit.Default); // UniRx通知
         }
 
+        /// <summary>
+        /// 敵を生成する
+        /// </summary>
+        public void SpawnEnemiesInMap()
+        {
+            if (mapContainer == null)
+                return;
+
+            var spawners = mapContainer.GetComponentsInChildren<EnemySpawn>(true);
+            foreach(var area in spawners)
+            {
+                    area.SpawnEnemies();
+            }
+        }
+        
         #region Helper Methods
 
         /// <summary>
