@@ -25,6 +25,9 @@ namespace Minge2025Summer.Scripts.GameSetting
         public KeyCode keyReload;       // リロードキー
         public KeyCode keyInteract;     // インタラクトキー
         public KeyCode keySprint ;      // 走るキー
+        public KeyCode keyCrouch;       // しゃがむキー
+        public KeyCode keyInventory;    // インベントリキー
+        public KeyCode keyImportant;    // 重要アイテムキー
         
         // CAMERA
         public bool cameraInvert;           // カメラ操作反転
@@ -100,6 +103,9 @@ namespace Minge2025Summer.Scripts.GameSetting
             keyReload = KeyCode.R;
             keyInteract = KeyCode.E;
             keySprint = KeyCode.LeftShift;
+            keyCrouch = KeyCode.Space;
+            keyInventory = KeyCode.Tab;
+            keyImportant = KeyCode.V;
             
             cameraInvert = false;
             cameraAimingInvert = false;
@@ -151,6 +157,20 @@ namespace Minge2025Summer.Scripts.GameSetting
             textColor = Color.white;
             textBackground = true;
             showDots = true;
+        }
+        
+        public void ResetKeyBindings()
+        {
+            keyMoveForward = KeyCode.W;
+            keyMoveBackward = KeyCode.S;
+            keyMoveLeft = KeyCode.A;
+            keyMoveRight = KeyCode.D;
+            keyReload = KeyCode.R;
+            keyInteract = KeyCode.E;
+            keySprint = KeyCode.LeftShift;
+            keyCrouch = KeyCode.Space;
+            keyInventory = KeyCode.Tab;
+            keyImportant = KeyCode.V;
         }
     }   
 }
