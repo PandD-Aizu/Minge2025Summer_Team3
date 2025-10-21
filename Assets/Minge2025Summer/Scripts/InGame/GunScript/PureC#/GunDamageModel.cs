@@ -51,8 +51,8 @@ namespace Minge2025Summer.Scripts.InGame.GunScript.PureC_
                 if (col == null) continue;
 
                 // 敵に当たっているかどうかを判定
-               col.TryGetComponent<IShootableObject>(out var shootableObject);
-               shootableObject.Feedback();
+               if (col.TryGetComponent<IShootableObject>(out var shootableObject)) 
+                   shootableObject.Feedback();
                 
                 var enemyHP = col.GetComponentInParent<IEnemyHP>();
                 if (enemyHP == null) continue;
