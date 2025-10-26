@@ -167,7 +167,7 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{6288d7ca-ae72-4276-89b6-cbf24c14bb14}">
 		<relationship name="effects">
-			<destination>{53b0d36a-6e05-43bb-a20d-640949cf003a}</destination>
+			<destination>{477e7101-1e9f-4493-85ac-9fd1a4d26c70}</destination>
 			<destination>{8bc6336f-abcf-46bd-8f77-daa067a42219}</destination>
 			<destination>{c4277a23-5531-4e4a-84ae-695d4bd6c010}</destination>
 		</relationship>
@@ -175,10 +175,10 @@
 	<object class="MixerBusPanner" id="{34a31f31-7356-4b13-a166-6b35e9ef27e1}" />
 	<object class="MixerBusFader" id="{cf3d33b2-dafe-413a-81b6-59b1c565ee28}" />
 	<object class="SpatialiserEffect" id="{9ed168b7-3d8b-4183-9ad2-d5c62aefd42f}" />
-	<object class="DistortionEffect" id="{53b0d36a-6e05-43bb-a20d-640949cf003a}">
-		<property name="level">
-			<value>0.194999993</value>
-		</property>
+	<object class="PluginEffect" id="{477e7101-1e9f-4493-85ac-9fd1a4d26c70}">
+		<relationship name="plugin">
+			<destination>{f8545afc-42d2-4ea2-8980-b25c9c902f29}</destination>
+		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{8bc6336f-abcf-46bd-8f77-daa067a42219}" />
 	<object class="MultibandEqEffect" id="{c4277a23-5531-4e4a-84ae-695d4bd6c010}">
@@ -199,6 +199,37 @@
 		</property>
 		<property name="qualityB">
 			<value>8.79310417</value>
+		</property>
+	</object>
+	<object class="Plugin" id="{f8545afc-42d2-4ea2-8980-b25c9c902f29}">
+		<property name="identifier">
+			<value>BitCrasher</value>
+		</property>
+		<relationship name="pluginParameters">
+			<destination>{a1d138fb-d7ba-4b48-ab87-22d0be42a4e7}</destination>
+			<destination>{356c691b-fcce-40ac-8ace-b3b3ca67ebcc}</destination>
+		</relationship>
+	</object>
+	<object class="FloatPluginParameter" id="{a1d138fb-d7ba-4b48-ab87-22d0be42a4e7}">
+		<property name="name">
+			<value>Bits</value>
+		</property>
+		<property name="value">
+			<value>8</value>
+		</property>
+		<property name="curve">
+			<value>{(0.000000,1.000000)(1.000000,2.000000)(2.000000,5.000000)(3.000000,10.000000)(3.600000,16.000000)}</value>
+		</property>
+	</object>
+	<object class="FloatPluginParameter" id="{356c691b-fcce-40ac-8ace-b3b3ca67ebcc}">
+		<property name="name">
+			<value>Downsampling</value>
+		</property>
+		<property name="value">
+			<value>3</value>
+		</property>
+		<property name="curve">
+			<value>{(0.000000,1.000000)(1.000000,2.000000)(2.000000,5.000000)(3.000000,10.000000)(4.000000,20.000000)(4.400000,32.000000)}</value>
 		</property>
 	</object>
 </objects>
