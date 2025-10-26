@@ -4,9 +4,15 @@ using UnityEngine;
 
 namespace CreditScreen
 {
+    /// <summary>
+    /// クレジット画面のデータを管理するScriptableObject
+    /// </summary>
     [CreateAssetMenu(fileName = "CreditData", menuName = "CreditScreen/CreditData")]
     public class CreditData : ScriptableObject
     {
+        /// <summary>
+        /// クレジットの各セクション情報を保持するクラス
+        /// </summary>
         [Serializable]
         public class CreditSection
         {
@@ -24,5 +30,10 @@ namespace CreditScreen
         public float scrollSpeed = 50f;
         public float delayBeforeStart = 2f;
         public float delayAfterEnd = 3f;
+        
+        // 定数定義
+        public const float DEFAULT_SCROLL_SPEED = 50f;
+        public const float DEFAULT_DELAY_BEFORE_START = 2f;
+        public const float DEFAULT_DELAY_AFTER_END = 3f;
     }
 }
