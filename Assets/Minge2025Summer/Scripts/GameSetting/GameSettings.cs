@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameSetting
+namespace Minge2025Summer.Scripts.GameSetting
 {
     [System.Serializable]
     public class GameSettings
@@ -25,6 +25,9 @@ namespace GameSetting
         public KeyCode keyReload;       // リロードキー
         public KeyCode keyInteract;     // インタラクトキー
         public KeyCode keySprint ;      // 走るキー
+        public KeyCode keyCrouch;       // しゃがむキー
+        public KeyCode keyInventory;    // インベントリキー
+        public KeyCode keyImportant;    // 重要アイテムキー
         
         // CAMERA
         public bool cameraInvert;           // カメラ操作反転
@@ -41,30 +44,12 @@ namespace GameSetting
         public Color crosshairColor;  // クロスヘア色
         
         // GRAPHICS
-        public float brightness;           // 明るさ設定
-        public bool allowHDR;              // HDR許可
-        public int screenMode;             // 画面モード (0: ウィンドウ, 1: フルスクリーン, 2: ボーダーレス)
-        public Vector2 screenResolution;   // 画面解像度
-        public float screenFlashRate;      // 画面更新率
-        public int frameRateLimit;         // フレームレート制限 (-1: 制限なし)
-        public bool allowVSync;            // 垂直同期許可
-        public bool fidelityFX;            // FidelityFX有効化
-        public bool renderingMethod;       // レンダリング方式（false: 通常, true: 軽量）
-        public float renderScale;          // レンダースケール
-        public bool fidelityFXCasting;     // FidelityFXキャスティング有効化
-        public int antiAliasing;           // アンチエイリアス (0: なし, 1: FXAA, 2: SMAA, 3: TAA)
-        public int textureQuality;         // テクスチャ品質 (0: 高, 1: 中, 2: 低)
-        public int shadowQuality;          // 影品質 (0: 高, 1: 中, 2: 低, 3: オフ)
-        public int meshQuality;            // メッシュ品質 (0: 高, 1: 中, 2: 低)
-        public bool ambientOcclusion;      // アンビエントオクルージョン
-        public bool screenSpaceReflection; // スクリーンスペースリフレクション
-        public bool subsurfaceScattering;  // サブサーフェイススキャタリング
-        public bool bloom;                 // ブルーム
-        public bool lensFlare;             // レンズフレア
-        public bool filmGrain;             // フィルム粒子ノイズ
-        public bool depthOfField;          // 被写界深度
-        public bool lensDistortion;        // レンズ歪み
-        public bool chromaticAberration;   // 色収差
+        public int presetIndex;
+        public int textureIndex;
+        public int antiAliasingIndex;
+        public bool shadowsEnabled;
+        public float shadowDistance;
+        public bool ambientOcclusionEnabled;
         
         // AUDIO
         public float masterVolume;  // マスターボリューム
@@ -100,6 +85,9 @@ namespace GameSetting
             keyReload = KeyCode.R;
             keyInteract = KeyCode.E;
             keySprint = KeyCode.LeftShift;
+            keyCrouch = KeyCode.Space;
+            keyInventory = KeyCode.Tab;
+            keyImportant = KeyCode.V;
             
             cameraInvert = false;
             cameraAimingInvert = false;
@@ -113,30 +101,12 @@ namespace GameSetting
             displayCrosshair = true;
             crosshairColor = Color.white;
             
-            brightness = 0.0f;
-            allowHDR = false;
-            screenMode = 0;
-            screenResolution = new Vector2(1920, 1080);
-            screenFlashRate = 60.0f;
-            frameRateLimit = -1;
-            allowVSync = false;
-            fidelityFX = false;
-            renderingMethod = false;
-            renderScale = 1.0f;
-            fidelityFXCasting = false;
-            antiAliasing = 0;
-            textureQuality = 0;
-            shadowQuality = 0;
-            meshQuality = 0;
-            ambientOcclusion = true;
-            screenSpaceReflection = false;
-            subsurfaceScattering = false;
-            bloom = true;
-            lensFlare = true;
-            filmGrain = true;
-            depthOfField = true;
-            lensDistortion = true;
-            chromaticAberration = true;
+            presetIndex = 2;
+            textureIndex = 0;
+            antiAliasingIndex = 2;
+            shadowsEnabled = true;
+            shadowDistance = 50f;
+            ambientOcclusionEnabled = true;
             
             masterVolume = 1.0f;
             bgmVolume = 1.0f;
@@ -151,6 +121,30 @@ namespace GameSetting
             textColor = Color.white;
             textBackground = true;
             showDots = true;
+        }
+        
+        public void ResetKeyBindings()
+        {
+            keyMoveForward = KeyCode.W;
+            keyMoveBackward = KeyCode.S;
+            keyMoveLeft = KeyCode.A;
+            keyMoveRight = KeyCode.D;
+            keyReload = KeyCode.R;
+            keyInteract = KeyCode.E;
+            keySprint = KeyCode.LeftShift;
+            keyCrouch = KeyCode.Space;
+            keyInventory = KeyCode.Tab;
+            keyImportant = KeyCode.V;
+        }
+        
+        public void ResetGraphicsSettings()
+        {
+            presetIndex = 2;
+            textureIndex = 0;
+            antiAliasingIndex = 2;
+            shadowsEnabled = true;
+            shadowDistance = 50f;
+            ambientOcclusionEnabled = true;
         }
     }   
 }

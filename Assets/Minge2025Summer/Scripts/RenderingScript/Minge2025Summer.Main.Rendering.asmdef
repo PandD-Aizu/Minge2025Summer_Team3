@@ -1,0 +1,16 @@
+{
+    "name": "Minge2025Summer.Main.Rendering",
+    "rootNamespace": "",
+    "references": [
+        "GUID:184d7076315558041a3fe567a302c13d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

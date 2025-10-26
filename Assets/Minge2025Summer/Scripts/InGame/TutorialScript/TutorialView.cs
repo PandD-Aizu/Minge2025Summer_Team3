@@ -3,15 +3,9 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-#if TMP_PRESENT
-using TMPro;
-#endif
 
-namespace Minge2025Summer.Main.InGame
+namespace Minge2025Summer.Scripts.InGame.TutorialScript
 {
-    /// <summary>
-    /// チュートリアルテキストのフェード表示/非表示を担うビュー。
-    /// </summary>
     public class TutorialView : MonoBehaviour
     {
         [Header("UIの参照")]
@@ -30,21 +24,30 @@ namespace Minge2025Summer.Main.InGame
         /// テキストを設定しフェードイン表示
         /// </summary>
         /// <param name="text">表示するテキスト</param>
-        public void Show(string text)
+        /// <param name="visibleDuration">表示維持時間、0以下なら無制限</param>
+        public void Show(string text, float visibleDuration = -1f)
         {
             if (tutorialText == null)
                 return;
-            
-            // 動作しているシーケンスを停止
+
             KillSequence();
             tutorialText.text = text;
-            
-            // 即座に透明化してからフェードイン
             PrepareAlpha(0f);
+
+            currentSequence = DOTween.Sequence().SetUpdate(true);
             
-            currentSequence = DOTween.Sequence().SetUpdate(true); // 時間停止中も動作するように
-            AppendFade(1f, fadeInDuration);                 // フェードイン追加
-            currentSequence.OnComplete(() => isVisible = true);   // 完了時に表示中フラグを立てる
+            // フェードイン追加
+            AppendFade(1f, fadeInDuration);
+            
+            // フェードイン完了時典で可視フラグを立てる
+            currentSequence.AppendCallback(() => isVisible = true);
+
+            // 指定時間後に自動で非表示
+            if (visibleDuration > 0f)
+            {
+                currentSequence.AppendInterval(visibleDuration);
+                currentSequence.AppendCallback(() => Hide());
+            }
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace Minge2025Summer.Main.InGame
             currentSequence.OnComplete(() => isVisible = false);  // 完了時に非表示フラグを立てる
         }
         
-        /*以下ヘルパー関数*/
+        /* 以下ヘルパー関数 */
         private void PrepareAlpha(float a)
         {
             if (tutorialText is Graphic tg)

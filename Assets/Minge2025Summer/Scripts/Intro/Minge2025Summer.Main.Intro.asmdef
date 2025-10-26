@@ -1,0 +1,25 @@
+{
+    "name": "Minge2025Summer.Main.Intro",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bd66d80d52c29a84387ea457e6c0c1b3",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:dc47925d1a5fa2946bdd37746b2b5d48",
+        "GUID:593a5b492d29ac6448b1ebf7f035ef33",
+        "GUID:029c1c1b674aaae47a6841a0b89ad80e",
+        "GUID:85a3b073365f7764e8467d317b881c27"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "DOTween.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

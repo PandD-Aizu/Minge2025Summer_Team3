@@ -15,6 +15,7 @@ public class PixelationPass : ScriptableRenderPass
         internal Color pixelationColor;
         internal float intensity;
         internal float pixelSize;
+        internal float posterizationLevel;
     }
     
     private PixelationVolume m_Volume;
@@ -44,6 +45,7 @@ public class PixelationPass : ScriptableRenderPass
         m_Material.SetFloat("_Intensity", m_Volume.intensity.value);
         m_Material.SetColor("_PixelationColor", m_Volume.m_Color.value);
         m_Material.SetFloat("_PixelSize", m_Volume.pixelSize.value);
+        m_Material.SetFloat("_PosterizationLevels", m_Volume.posterizationLevels.value);
 
         var urpResources = frameData.Get<UniversalResourceData>();
         var cameraColor = urpResources.activeColorTexture;

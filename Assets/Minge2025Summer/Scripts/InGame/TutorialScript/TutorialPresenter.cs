@@ -1,8 +1,9 @@
 ﻿using System;
+using Minge2025Summer.Scripts.InGame.TutorialScript.Enum;
 using UniRx;
 using UnityEngine;
 
-namespace Minge2025Summer.Main.InGame
+namespace Minge2025Summer.Scripts.InGame.TutorialScript
 {
     public class TutorialPresenter : MonoBehaviour, IDisposable
     {
@@ -13,9 +14,10 @@ namespace Minge2025Summer.Main.InGame
 
         private void Start()
         {
-            model.Initialize();
-            
             SubscribeEvents();
+            
+            model.Initialize();
+            model.RaiseShow(TutorialType.MOVE);
         }
 
         private void SubscribeEvents()
@@ -24,7 +26,7 @@ namespace Minge2025Summer.Main.InGame
                 .Subscribe(type =>
                 {
                     var text = model.GetText(type);
-                    view.Show(text);
+                    view.Show(text, 3.0f);
                 })
                 .AddTo(disposables);
 

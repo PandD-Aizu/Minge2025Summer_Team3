@@ -1,10 +1,16 @@
-﻿namespace Minge2025Summer.Main.InGame
+﻿namespace Minge2025Summer.Scripts.InGame.TutorialScript.Enum
 {
     public enum TutorialType
     {
         FLASHLIGHT,
         MOVE,
         DASH,
-        RELOAD
+        RELOAD,
+        CROUCH,
+        INTERACT,
+        SHOOT,
+        ASCEND,
+        INVENTORY,
+        INFO,
     }
 }

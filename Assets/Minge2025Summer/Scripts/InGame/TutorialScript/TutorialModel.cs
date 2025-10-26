@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Minge2025Summer.Scripts.InGame.TutorialScript.Enum;
 using UniRx;
 using UnityEngine;
 
-namespace Minge2025Summer.Main.InGame
+namespace Minge2025Summer.Scripts.InGame.TutorialScript
 {
     public class TutorialModel : MonoBehaviour
     {
@@ -39,6 +40,13 @@ namespace Minge2025Summer.Main.InGame
             textTable[TutorialType.FLASHLIGHT] = flashLightTutorialText;
             textTable[TutorialType.DASH] = dashTutorialText;
             textTable[TutorialType.RELOAD] = reloadTutorialText;
+            textTable[TutorialType.MOVE] = moveTutorialText;
+            textTable[TutorialType.CROUCH] = crouchTutorialText;
+            textTable[TutorialType.INTERACT] = interactTutorialText;
+            textTable[TutorialType.SHOOT] = shootTutorialText;
+            textTable[TutorialType.ASCEND] = ascendTutorialText;
+            textTable[TutorialType.INVENTORY] = inventoryTutorialText;
+            textTable[TutorialType.INFO] = infoTutorialText;
             
             initialized = true;
         }

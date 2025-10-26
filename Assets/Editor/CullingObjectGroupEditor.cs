@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Minge2025Summer.Scripts.ScriptableObject;
 using UnityEditor;
 using UnityEditor.VersionControl;
 using UnityEngine;

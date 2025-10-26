@@ -13,6 +13,9 @@ public class PixelationVolume : VolumeComponent, IPostProcessComponent
     
     // ピクセルの大きさを制御するパラメータ
     public ClampedFloatParameter pixelSize = new ClampedFloatParameter(100.0f, 1.0f, 512.0f);
+    
+    // ポスタリゼーション
+    public ClampedFloatParameter posterizationLevels = new ClampedFloatParameter(512.0f, 2.0f, 1024.0f);
 
     // エフェクトがアクティブかどうか
     public bool IsActive() => intensity.value > 0.0f;

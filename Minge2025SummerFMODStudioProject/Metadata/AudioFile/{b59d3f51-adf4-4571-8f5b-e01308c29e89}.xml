@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{b59d3f51-adf4-4571-8f5b-e01308c29e89}">
+		<property name="assetPath">
+			<value>rusty-things-38361.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>9.4040816326530621</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{01266723-8439-451f-9705-0194d15eb5a4}</destination>
+		</relationship>
+	</object>
+</objects>

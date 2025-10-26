@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 845068213052424900}
   - component: {fileID: 175872263942018506}
   - component: {fileID: 8961072019988889667}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Pistol_J_Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 4749380763832793478}
   - component: {fileID: 4003429505720005683}
   - component: {fileID: 3109274845265219476}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Pistol_J
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -307,7 +307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ed0a9fa74447e892909f23cb764fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  address: 
   ammoType: 0
   magCapacity: 12
   ammoInMag: 0
@@ -324,6 +323,9 @@ MonoBehaviour:
   fireSpreadKickAim: 1
   spreadRecoverSpeed: 10
   maxSpreadPenalty: 10
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   bufferSize: 32
   raycastBufferSize: 32
 --- !u!65 &3109274845265219476
@@ -358,7 +360,7 @@ GameObject:
   - component: {fileID: 8301008281633685683}
   - component: {fileID: 3671979412337291192}
   - component: {fileID: 6135931401775688919}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Pistol_J_Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +446,7 @@ GameObject:
   - component: {fileID: 3227842301784419726}
   - component: {fileID: 4768127181654542513}
   - component: {fileID: 1467214341689591193}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Pistol_J_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +532,7 @@ GameObject:
   - component: {fileID: 3666257754257113577}
   - component: {fileID: 7952349000524459280}
   - component: {fileID: 5196844232207182121}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Pistol_J_BarrelGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -617,7 +619,7 @@ GameObject:
   - component: {fileID: 3175229300851210126}
   - component: {fileID: 4965296756925379349}
   - component: {fileID: 8189707235648876394}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -868,7 +870,7 @@ GameObject:
   - component: {fileID: 380960680216028475}
   - component: {fileID: 4028455647066855052}
   - component: {fileID: 8276600302802158658}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: MuzzleFlashVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,7 +984,7 @@ GameObject:
   - component: {fileID: 6078225155731933394}
   - component: {fileID: 4031256337151252114}
   - component: {fileID: 8386175574352247203}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Pistol_J_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1068,7 +1070,7 @@ GameObject:
   - component: {fileID: 7420965119359937839}
   - component: {fileID: 29664848612463983}
   - component: {fileID: 4083707548215495776}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Pistol_J_Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1154,7 +1156,7 @@ GameObject:
   - component: {fileID: 8013893846606646119}
   - component: {fileID: 6874791194615768121}
   - component: {fileID: 2435194463122282298}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Pistol_J_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

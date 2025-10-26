@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-namespace GameSetting
+namespace Minge2025Summer.Scripts.GameSetting
 {
     public class GameSettingsController
     {

@@ -1,7 +1,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace UniRxTest
+namespace Minge2025Summer.Scripts.Sample
 {
     public class PlayerHPModel : MonoBehaviour
     {
