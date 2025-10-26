@@ -4,6 +4,9 @@ using System.Collections;
 
 namespace CreditScreen
 {
+    /// <summary>
+    /// クレジット画面のロジックを制御するプレゼンタークラス
+    /// </summary>
     public class CreditScreenPresenter : MonoBehaviour
     {
         [Header("References")]
@@ -38,6 +41,9 @@ namespace CreditScreen
             Initialize();
         }
         
+        /// <summary>
+        /// クレジット画面を初期化する
+        /// </summary>
         private void Initialize()
         {
             if (creditData == null)
@@ -78,6 +84,9 @@ namespace CreditScreen
             }
         }
         
+        /// <summary>
+        /// クレジットのスクロールが終了したときの処理
+        /// </summary>
         private void OnCreditsEnd()
         {
             model.StopScrolling();
@@ -90,6 +99,10 @@ namespace CreditScreen
             endDelayCoroutine = StartCoroutine(EndDelayCoroutine());
         }
         
+        /// <summary>
+        /// クレジット終了後の遅延処理を行うコルーチン
+        /// </summary>
+        /// <returns>コルーチン</returns>
         private IEnumerator EndDelayCoroutine()
         {
             yield return new WaitForSeconds(creditData.delayAfterEnd);
@@ -104,6 +117,9 @@ namespace CreditScreen
             }
         }
         
+        /// <summary>
+        /// クレジットを最初から再開する
+        /// </summary>
         private void RestartCredits()
         {
             model.ResetScroll();
@@ -111,6 +127,9 @@ namespace CreditScreen
             model.StartScrolling();
         }
         
+        /// <summary>
+        /// クレジットをスキップする
+        /// </summary>
         private void SkipCredits()
         {
             if (endDelayCoroutine != null)
@@ -130,6 +149,9 @@ namespace CreditScreen
             }
         }
         
+        /// <summary>
+        /// 次のシーンをロードする
+        /// </summary>
         private void LoadNextScene()
         {
             if (!string.IsNullOrEmpty(nextSceneName))
@@ -138,17 +160,27 @@ namespace CreditScreen
             }
         }
         
+        /// <summary>
+        /// クレジットデータを設定する
+        /// </summary>
+        /// <param name="data">設定するクレジットデータ</param>
         public void SetCreditData(CreditData data)
         {
             creditData = data;
             Initialize();
         }
         
+        /// <summary>
+        /// クレジットのスクロールを一時停止する
+        /// </summary>
         public void PauseCredits()
         {
             model?.StopScrolling();
         }
         
+        /// <summary>
+        /// クレジットのスクロールを再開する
+        /// </summary>
         public void ResumeCredits()
         {
             model?.StartScrolling();

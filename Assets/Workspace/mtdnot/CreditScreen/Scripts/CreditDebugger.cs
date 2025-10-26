@@ -1,11 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// クレジット画面のデバッグ用クラス（開発時のみ使用）
+/// </summary>
 public class CreditDebugger : MonoBehaviour
 {
     [SerializeField] private Text testText;
     [SerializeField] private ScrollRect scrollRect;
     
+    /// <summary>
+    /// 初期化処理でテストテキストとスクロール設定を行う
+    /// </summary>
     private void Start()
     {
         Debug.Log("CreditDebugger Started");

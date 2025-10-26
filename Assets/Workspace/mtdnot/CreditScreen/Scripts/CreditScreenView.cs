@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace CreditScreen
 {
+    /// <summary>
+    /// クレジット画面のUI表示を管理するビュークラス
+    /// </summary>
     public class CreditScreenView : MonoBehaviour
     {
         [Header("UI Components")]
@@ -25,6 +28,9 @@ namespace CreditScreen
             InitializeVisuals();
         }
         
+        /// <summary>
+        /// ビジュアル要素を初期化する
+        /// </summary>
         private void InitializeVisuals()
         {
             if (backgroundPanel != null)
@@ -49,6 +55,9 @@ namespace CreditScreen
             }
         }
         
+        /// <summary>
+        /// ScrollRectとその関連要素のサイズを画面全体に修正する
+        /// </summary>
         private void FixScrollRectSizes()
         {
             if (scrollRect == null) return;
@@ -93,6 +102,10 @@ namespace CreditScreen
             }
         }
         
+        /// <summary>
+        /// クレジットテキストを設定する
+        /// </summary>
+        /// <param name="creditData">表示するクレジット情報</param>
         public void SetCreditText(CreditData creditData)
         {
             if (creditText == null || creditData == null) return;
@@ -131,6 +144,9 @@ namespace CreditScreen
             
         }
         
+        /// <summary>
+        /// Contentのサイズを強制的に設定する
+        /// </summary>
         private void ForceContentSize()
         {
             if (creditText == null || contentTransform == null) return;
@@ -163,6 +179,9 @@ namespace CreditScreen
             }
         }
         
+        /// <summary>
+        /// スクロール可能な最大位置を計算する
+        /// </summary>
         private void CalculateMaxScrollPosition()
         {
             if (contentTransform == null || scrollRect == null) return;
@@ -172,6 +191,10 @@ namespace CreditScreen
             maxScrollPosition = Mathf.Max(0, contentHeight - viewportHeight);
         }
         
+        /// <summary>
+        /// スクロール位置を更新する
+        /// </summary>
+        /// <param name="normalizedPosition">0～1の正規化された位置</param>
         public void UpdateScrollPosition(float normalizedPosition)
         {
             if (scrollRect == null) return;
@@ -180,11 +203,18 @@ namespace CreditScreen
             scrollRect.verticalNormalizedPosition = 1f - clampedPosition;
         }
         
+        /// <summary>
+        /// スクロール可能な最大位置を取得する
+        /// </summary>
+        /// <returns>最大スクロール位置</returns>
         public float GetMaxScrollPosition()
         {
             return maxScrollPosition;
         }
         
+        /// <summary>
+        /// スクロール位置を初期状態にリセットする
+        /// </summary>
         public void ResetScrollPosition()
         {
             if (scrollRect != null)
@@ -193,6 +223,10 @@ namespace CreditScreen
             }
         }
         
+        /// <summary>
+        /// ユーザー操作の有効/無効を設定する
+        /// </summary>
+        /// <param name="enable">有効にする場合はtrue</param>
         public void EnableInteraction(bool enable)
         {
             if (scrollRect != null)

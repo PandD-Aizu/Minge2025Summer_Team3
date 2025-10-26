@@ -3,8 +3,15 @@ using System.Collections.Generic;
 
 namespace CreditScreen
 {
+    /// <summary>
+    /// クレジットデータのテンプレートを提供するユーティリティクラス
+    /// </summary>
     public static class CreditDataTemplate
     {
+        /// <summary>
+        /// デフォルトのクレジットテンプレートを設定する
+        /// </summary>
+        /// <param name="creditData">設定対象のクレジットデータ</param>
         public static void SetupDefaultTemplate(CreditData creditData)
         {
             if (creditData == null) return;
