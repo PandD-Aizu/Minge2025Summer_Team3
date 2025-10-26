@@ -53,15 +53,38 @@ namespace CreditScreen
         {
             if (scrollRect == null) return;
             
-            // ScrollRectのサイズを修正
+            // ScrollRectを画面全体に拡大
             RectTransform scrollRectTransform = scrollRect.GetComponent<RectTransform>();
-            if (scrollRectTransform.sizeDelta.x == 0 || scrollRectTransform.sizeDelta.y == 0)
+            
+            // アンカーを画面全体に設定
+            scrollRectTransform.anchorMin = Vector2.zero;
+            scrollRectTransform.anchorMax = Vector2.one;
+            scrollRectTransform.offsetMin = Vector2.zero;
+            scrollRectTransform.offsetMax = Vector2.zero;
+            
+            // 親のCanvasも画面全体に設定
+            Canvas parentCanvas = GetComponentInParent<Canvas>();
+            if (parentCanvas != null)
             {
-                scrollRectTransform.sizeDelta = new Vector2(800, 600);
+                RectTransform canvasRect = parentCanvas.GetComponent<RectTransform>();
+                canvasRect.anchorMin = Vector2.zero;
+                canvasRect.anchorMax = Vector2.one;
+                canvasRect.offsetMin = Vector2.zero;
+                canvasRect.offsetMax = Vector2.zero;
             }
             
-            // Viewportのサイズを修正
-            if (scrollRect.viewport != null && scrollRect.viewport.sizeDelta.y < 0)
+            // BackgroundPanelも画面全体に設定
+            if (backgroundPanel != null)
+            {
+                RectTransform bgRect = backgroundPanel.GetComponent<RectTransform>();
+                bgRect.anchorMin = Vector2.zero;
+                bgRect.anchorMax = Vector2.one;
+                bgRect.offsetMin = Vector2.zero;
+                bgRect.offsetMax = Vector2.zero;
+            }
+            
+            // Viewportも画面全体に設定
+            if (scrollRect.viewport != null)
             {
                 scrollRect.viewport.anchorMin = Vector2.zero;
                 scrollRect.viewport.anchorMax = Vector2.one;
