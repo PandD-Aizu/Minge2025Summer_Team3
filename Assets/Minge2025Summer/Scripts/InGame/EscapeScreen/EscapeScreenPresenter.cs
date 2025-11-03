@@ -1,5 +1,6 @@
 ﻿using System;
 using Minge2025Summer.Scripts.InGame.EscapeScreen.Enum;
+using Minge2025Summer.Scripts.InGame.PlayerInputControllerScript;
 using UniRx;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace Minge2025Summer.Scripts.InGame.EscapeScreen
     {
         [SerializeField] private EscapeScreenModel model;
         [SerializeField] private EscapeScreenView view;
+        [SerializeField] private MouseLockModel mouseLockModel;
 
         private CompositeDisposable disposables = new ();
 
@@ -30,6 +32,7 @@ namespace Minge2025Summer.Scripts.InGame.EscapeScreen
             view.ResumeButton.onClick
                 .AddListener(() =>
                 {
+                    mouseLockModel.IsLocked = view.EscapeScreen.activeSelf;
                     view.ToggleEscapeScreen();
                 });
             

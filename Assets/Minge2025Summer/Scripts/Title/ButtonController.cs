@@ -9,20 +9,27 @@ namespace Minge2025Summer.Scripts.Title
 {
     public class ButtonController : MonoBehaviour
     {
-        [Header("依存関係")] 
+        [Header("依存関係")]
         [SerializeField, Tooltip("タイトルのフェードコントローラ")] private FadeController titleFadeController;
         [SerializeField, Tooltip("オプションのフェードコントローラ")] private FadeController optionFadeController;
-        
-        [Header("STARTボタン")] 
+
+        [Header("STARTボタン")]
         [SerializeField] private string gameSceneAddress;
         [SerializeField, Tooltip("画面全体を覆う画像")] private Image screenBackgroundImage;
         [SerializeField, Tooltip("フェード秒数")] private float fadeDuration = 0.5f;
-        
-        [Header("パネル")] 
+
+        [Header("CREDITSボタン")]
+        [SerializeField] private CreditScreenPresenter creditScreenPresenter;
+        [SerializeField, Tooltip("画面全体を覆うパネル")] private GameObject creditsPanel;
+        [SerializeField, Tooltip("フェード秒数")] private float creditsFadeDuration = 0.5f;
+        [SerializeField, Tooltip("Escでスキップ案内テキストのCanvasGroup（パネル外に置いた場合に指定）")]
+        private CanvasGroup creditsSkipHintCanvasGroup;
+
+        [Header("パネル")]
         [SerializeField] private GameObject titlePanel;
         [SerializeField] private GameObject optionPanel;
 
-        [Header("オプションに表示するオブジェクトグループ")] 
+        [Header("オプションに表示するオブジェクトグループ")]
         [SerializeField] private GameObject controlOptionObject;
         [SerializeField] private GameObject cameraOptionObject;
         [SerializeField] private GameObject gameSettingOptionObject;
@@ -39,10 +46,7 @@ namespace Minge2025Summer.Scripts.Title
             optionPanel.SetActive(false);
             screenBackgroundImage.gameObject.SetActive(false);
         }
-        
-        /// <summary>
-        /// STARTボタンを押したときの処理
-        /// </summary>
+
         public void StartGame()
         {
             screenBackgroundImage.gameObject.SetActive(true);
@@ -62,9 +66,36 @@ namespace Minge2025Summer.Scripts.Title
             });
         }
 
-        /// <summary>
-        /// オプション画面を開く
-        /// </summary>
+        // CREDITSのフェードイン（案内テキストも一緒にフェード）
+        public void StartCredits()
+        {
+            creditsPanel.SetActive(true);
+
+            var cg = creditsPanel.GetComponent<CanvasGroup>();
+            if (cg == null) cg = creditsPanel.AddComponent<CanvasGroup>();
+
+            cg.DOKill();
+            cg.alpha = 0f;
+            cg.interactable = false;
+            cg.blocksRaycasts = true;
+
+            // 案内テキストがパネル外にある場合のみ個別フェード
+            if (creditsSkipHintCanvasGroup != null)
+            {
+                creditsSkipHintCanvasGroup.gameObject.SetActive(true);
+                creditsSkipHintCanvasGroup.DOKill();
+                creditsSkipHintCanvasGroup.alpha = 0f;
+                creditsSkipHintCanvasGroup.interactable = false;
+                creditsSkipHintCanvasGroup.blocksRaycasts = false;
+                creditsSkipHintCanvasGroup.DOFade(1f, creditsFadeDuration);
+            }
+
+            creditScreenPresenter.StartCreditsForButton();
+
+            cg.DOFade(1f, creditsFadeDuration)
+              .OnComplete(() => cg.interactable = true);
+        }
+
         public void OpenOptions()
         {
             optionPanel.SetActive(true);
@@ -72,9 +103,6 @@ namespace Minge2025Summer.Scripts.Title
             optionFadeController.Play();
         }
 
-        /// <summary>
-        /// オプション画面を閉じる
-        /// </summary>
         public void CloseOptions()
         {
             optionPanel.SetActive(false);
@@ -82,9 +110,6 @@ namespace Minge2025Summer.Scripts.Title
             titleFadeController.Play();
         }
 
-        /// <summary>
-        /// ゲームを終了する
-        /// </summary>
         public void QuitGame()
         {
             #if UNITY_EDITOR
@@ -93,19 +118,15 @@ namespace Minge2025Summer.Scripts.Title
                 Application.Quit();
             #endif
         }
-        
-        ///<summary>
-        /// シーンをロードしたときの処理
-        /// </summary>> 
+
         private void OnSceneLoaded(AsyncOperationHandle handle)
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
                 Debug.Log("Load Complete");
-            else 
+            else
                 Debug.LogError("Load Failed");
         }
-        
-        /* オプションのボタン関数 */
+
         public void AlignControlOption() => ShowOptionObject(controlOptionObject);
         public void AlignCameraOption() => ShowOptionObject(cameraOptionObject);
         public void AlignGameSettingOption() => ShowOptionObject(gameSettingOptionObject);
@@ -114,9 +135,6 @@ namespace Minge2025Summer.Scripts.Title
         public void AlignLanguageOption() => ShowOptionObject(languageOptionObject);
         public void AlignAccessibilityOption() => ShowOptionObject(accessibilityOptionObject);
 
-        ///<summary>
-        /// オプションボタンの指定パネルを切り替え
-        /// </summary>> 
         private void ShowOptionObject(GameObject targetObject)
         {
             currentOptionObject?.SetActive(false);

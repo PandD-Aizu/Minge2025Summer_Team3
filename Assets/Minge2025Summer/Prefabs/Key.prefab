@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4168986417626011351}
   - component: {fileID: 2955554130151360432}
   - component: {fileID: 1918362689132407129}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Key
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 7675267884821228083}
   - component: {fileID: 7566844343045050939}
   - component: {fileID: 1957580082298713042}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: HintMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,10 +184,10 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c541c8928ea8da047a3dc0f4ebca3d97, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: d8b54e8f24bdff54ea2e2cf0cf54db57, type: 3}
+  m_Color: {r: 0.3137255, g: 0.3137255, b: 0.3137255, a: 1}
   m_FlipX: 0
-  m_FlipY: 1
+  m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1.7066667, y: 1.7066667}
   m_AdaptiveModeThreshold: 0.5
@@ -344,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 90c2db7462032414897259f5f5b6fc62, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 90c2db7462032414897259f5f5b6fc62, type: 3}
       propertyPath: m_StaticEditorFlags

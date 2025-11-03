@@ -29,16 +29,20 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AllowBloom: 0
     - _AlwaysOnTop: 1
     - _DisplayMode: 0
-    - _Emission: 1000
+    - _Emission: 100
     - _Fade: 1
     - _KeepScreenSize: 1
-    - _PulseAmplitude: 0.35
+    - _PulseAmplitude: 0.25
     - _PulseSpeed: 2
     - _Scale: 1
     - _ScreenSize: 64
+    - _TargetScreenSize: 64
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 0, a: 0}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
