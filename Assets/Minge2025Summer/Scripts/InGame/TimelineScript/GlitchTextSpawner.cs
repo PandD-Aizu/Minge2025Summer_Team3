@@ -7,7 +7,7 @@ namespace Minge2025Summer.Scripts.InGame.TimelineScript
     {
         [Header("生成設定")]
         [Tooltip("生成するグリッチテキストのプレハブ")]
-        public GameObject glitchyTextPrefab; // ステップ2で作成したプレハブ
+        public GameObject glitchyTextPrefab;
 
         [Tooltip("テキストを生成する範囲（このRectTransformの範囲内）")]
         public RectTransform spawnArea;
@@ -36,7 +36,7 @@ namespace Minge2025Summer.Scripts.InGame.TimelineScript
 
         void Start()
         {
-            // Spawn Area が設定されていなければ、自分自身の RectTransform を使う
+            // SpawnAreaが設定されていなければ、自分自身のRectTransformを使う
             if (spawnArea == null)
             {
                 spawnArea = GetComponent<RectTransform>();
@@ -82,7 +82,7 @@ namespace Minge2025Summer.Scripts.InGame.TimelineScript
             // プレハブを spawnArea の子としてインスタンス化
             GameObject newTextObject = Instantiate(glitchyTextPrefab, spawnArea.transform);
             
-            // ローカル座標を設定 (アンカーが中央合わせだとこれが一番確実)
+            // ローカル座標を設定
             newTextObject.GetComponent<RectTransform>().anchoredPosition = localPosition;
             
             // テキストの色を設定
