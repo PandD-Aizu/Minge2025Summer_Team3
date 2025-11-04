@@ -22,14 +22,27 @@ namespace Minge2025Summer.Scripts.Intro
         [SerializeField] private GameObject panel;
         [SerializeField, Tooltip("ロード先のアドレス")] private string inGameSceneAddress;
         [SerializeField, Tooltip("右下のプログレスバー")] private UnityEngine.UI.Slider progressBar;
+        
+        private bool introTextSkip = false; //テキストを最後まで飛ばすかどうかのフラグ
 
         private void Start()
         {
             IntroTextJSONParser parser = new IntroTextJSONParser(); 
+            
             parser.ParseAsync(jsonAddress, entries =>
             {
                 StartCoroutine(ShowIntroSequence(entries));
             });
+        }
+
+        private void Update()
+        {
+            //Escapeキーを押すとテキストを最後までスキップできる
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                introTextSkip = true;
+                StartCoroutine(LoadInGameSceneWithAddressables());
+            }
         }
 
         /// <summary>
@@ -39,12 +52,14 @@ namespace Minge2025Summer.Scripts.Intro
         /// <returns></returns>
         private IEnumerator ShowIntroSequence(List<IntroTextJSONParser.IntroTextEntry> entries)
         {
+            if(introTextSkip) yield break;
             introText.alpha = 0.0f;
+
             foreach (var entry in entries)
             {
                 introText.text = entry.text;
                 yield return introText.DOFade(1.0f, 0.5f).WaitForCompletion();
-                yield return new WaitForSeconds(entry.time);
+                yield return StartCoroutine(WaitforClick());
                 yield return introText.DOFade(0.0f, 0.5f).WaitForCompletion();
             }
 
@@ -74,6 +89,11 @@ namespace Minge2025Summer.Scripts.Intro
                 }
                 yield return null;
             }
+        }
+        
+        private IEnumerator WaitforClick()
+        {
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
         }
     }
 }
