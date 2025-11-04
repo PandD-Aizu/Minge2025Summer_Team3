@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 3609607815022290389}
-  minTypeDelay: 0.03
-  maxTypeDelay: 0.15
-  scatterAmount: 5
-  destroyDelay: 1
+  minTypeDelay: 0.001
+  maxTypeDelay: 0.1
+  scatterAmount: 1
+  destroyDelay: 5

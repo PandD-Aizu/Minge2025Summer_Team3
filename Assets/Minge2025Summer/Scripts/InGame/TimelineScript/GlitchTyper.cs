@@ -34,6 +34,7 @@ namespace Minge2025Summer.Scripts.InGame.TimelineScript
             if (textInfo == null || cachedMeshInfo == null)
                 return;
 
+            // 表示されている文字が0なら処理しない
             int currentVisibleChars = textMeshPro.maxVisibleCharacters;
             if (currentVisibleChars == 0) 
                 return;
@@ -52,10 +53,10 @@ namespace Minge2025Summer.Scripts.InGame.TimelineScript
                 int materialIndex = charInfo.materialReferenceIndex;
                 int vertexIndex = charInfo.vertexIndex;
 
-                // キャッシュしておいた「元の」頂点情報を取得
+                // キャッシュしておいた、頂点情報を取得
                 Vector3[] sourceVertices = cachedMeshInfo[materialIndex].vertices;
 
-                // これから変更する「現在の」頂点配列を取得
+                // これから変更する現在の頂点配列を取得
                 Vector3[] destinationVertices = textInfo.meshInfo[materialIndex].vertices;
 
                 // この文字専用のランダムなズレ（オフセット）を計算
@@ -65,17 +66,21 @@ namespace Minge2025Summer.Scripts.InGame.TimelineScript
                     0
                 );
 
-                // 文字を構成する4つの頂点すべてに、(A)の元の位置を基準にオフセットを加える
+                // 文字を構成する4つの頂点すべてに、元の位置を基準にオフセットを加える
                 destinationVertices[vertexIndex + 0] = sourceVertices[vertexIndex + 0] + offset;
                 destinationVertices[vertexIndex + 1] = sourceVertices[vertexIndex + 1] + offset;
                 destinationVertices[vertexIndex + 2] = sourceVertices[vertexIndex + 2] + offset;
                 destinationVertices[vertexIndex + 3] = sourceVertices[vertexIndex + 3] + offset;
             }
             
-            // 変更した頂点データ (destinationVertices) をメッシュに反映させる
+            // 変更した頂点データをメッシュに反映させる
             textMeshPro.UpdateVertexData(TMP_VertexDataUpdateFlags.Vertices);
         }
 
+        /// <summary>
+        /// タイピングを開始する
+        /// </summary>
+        /// <param name="newText">新しくセットする文字列</param>
         public void StartTyping(string newText = null)
         {
             if (newText != null)

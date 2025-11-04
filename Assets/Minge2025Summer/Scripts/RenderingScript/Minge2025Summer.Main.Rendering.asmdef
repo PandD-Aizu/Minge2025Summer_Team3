@@ -2,7 +2,12 @@
     "name": "Minge2025Summer.Main.Rendering",
     "rootNamespace": "",
     "references": [
-        "GUID:184d7076315558041a3fe567a302c13d"
+        "GUID:184d7076315558041a3fe567a302c13d",
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:516a5277b8c3b4f4c8cc86b77b1591ff",
+        "GUID:86bc95e6fdb13ff43aa04316542905ae",
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:b4517ec124862cb4bb3b8b27d72843a6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
