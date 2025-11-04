@@ -1,24 +1,26 @@
-Shader "Unlit/PickupHintMarkerSprite"
+Shader "Custom/PickupHintMarkerSprite"
 {
     Properties
     {
         [PerRendererData]_MainTex ("Sprite Texture", 2D) = "white" {}
+        [PerRendererData]_RendererColor ("Renderer Color", Color) = (1,1,1,1)
+        [PerRendererData]_Flip ("Flip", Vector) = (1,1,0,0)
+
         _Color ("Tint (RGBA)", Color) = (1,1,0,1)
         _Emission ("Emission Intensity", Float) = 2
         _PulseSpeed ("Pulse Speed", Float) = 2
         _PulseAmplitude ("Pulse Amplitude", Float) = 0.35
         _KeepScreenSize ("Keep Screen Size (0/1)", Float) = 1
-        _ScreenSize ("Target Screen Size (px)", Float) = 64
+        _TargetScreenSize ("Target Screen Size (px)", Float) = 64
         _Scale ("World Scale Multiplier", Float) = 1
         _DisplayMode ("Depth Mode (0=Normal 1=ForceFront 2=WriteDepth)", Float) = 0
         _Fade ("Global Alpha Multiplier", Range(0,1)) = 1
         _AllowBloom ("Allow Bloom (0/1)", Float) = 0
     }
-
     SubShader
     {
-        // Transparent より後ろで確実に最後寄りに描く
         Tags{
+            "RenderPipeline"="UniversalPipeline"
             "Queue"="Transparent+400"
             "RenderType"="Transparent"
             "IgnoreProjector"="True"
@@ -26,127 +28,137 @@ Shader "Unlit/PickupHintMarkerSprite"
         }
 
         Cull Off
-        Lighting Off
+        ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass
         {
-            Name "HINTMARKER"
-            // めり込み防止で少し前へ
-            Offset -1,-1
+            Name "HINTMARKER_URP"
+            Tags{ "LightMode"="SRPDefaultUnlit" }
 
-            CGPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+            HLSLPROGRAM
+            #pragma vertex Vert
+            #pragma fragment Frag
+            #pragma target 2.0
             #pragma multi_compile _ PIXELSNAP_ON
-            #include "UnityCG.cginc"
+            #pragma multi_compile_instancing
 
-            sampler2D _MainTex;
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
+
+            #ifndef UnityPixelSnap
+                #define UnityPixelSnap(pos) (pos)
+            #endif
+
+            CBUFFER_START(UnityPerMaterial)
+                float4 _Color;
+                float _Emission;
+                float _PulseSpeed;
+                float _PulseAmplitude;
+                float _KeepScreenSize;
+                float _TargetScreenSize;
+                float _Scale;
+                float _DisplayMode;
+                float _Fade;
+                float _AllowBloom;
+            CBUFFER_END
+
+            TEXTURE2D(_MainTex);
+            SAMPLER(sampler_MainTex);
             float4 _MainTex_ST;
-            fixed4 _Color;
-            float _Emission;
-            float _PulseSpeed;
-            float _PulseAmplitude;
-            float _KeepScreenSize;
-            float _ScreenSize;
-            float _Scale;
-            float _DisplayMode;
-            float _Fade;
-            float _AllowBloom;
 
-            struct appdata
+            #if defined(UNITY_INSTANCING_ENABLED)
+            UNITY_INSTANCING_BUFFER_START(UnityPerDrawSprite)
+                UNITY_DEFINE_INSTANCED_PROP(float4, _RendererColor)
+                UNITY_DEFINE_INSTANCED_PROP(float4, _Flip) // xy: scale(1|-1), zw: offset(0|1)
+            UNITY_INSTANCING_BUFFER_END(UnityPerDrawSprite)
+            #else
+            float4 _RendererColor;
+            float4 _Flip;
+            #endif
+
+            struct Attributes
             {
-                float4 vertex : POSITION;
-                float4 color  : COLOR;
-                float2 uv     : TEXCOORD0;
+                float3 positionOS : POSITION;
+                float2 uv         : TEXCOORD0;
+                float4 color      : COLOR;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
-            struct v2f
+            struct Varyings
             {
-                float2 uv : TEXCOORD0;
-                fixed4 color : COLOR;
-                float4 pos : SV_POSITION;
+                float4 positionHCS : SV_POSITION;
+                float2 uv          : TEXCOORD0;
+                float4 color       : COLOR;
+                UNITY_VERTEX_OUTPUT_STEREO
             };
 
-            v2f vert(appdata v)
+            Varyings Vert (Attributes IN)
             {
-                v2f o;
+                UNITY_SETUP_INSTANCE_ID(IN);
+                Varyings OUT;
+                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
 
-                // 中心
-                float3 worldCenter = mul(unity_ObjectToWorld, float4(0,0,0,1)).xyz;
+                const float4 rc   = UNITY_ACCESS_INSTANCED_PROP(UnityPerDrawSprite, _RendererColor);
+                const float4 flip = UNITY_ACCESS_INSTANCED_PROP(UnityPerDrawSprite, _Flip);
 
-                // uv を -0.5..0.5
-                float2 quad = v.uv * 2 - 1;
+                // ST の符号を Flip に吸収して、反転は flip のみで制御
+                float2 stScale  = _MainTex_ST.xy;
+                float2 stOffset = _MainTex_ST.zw;
+                float2 scale = flip.xy;
+                float2 offs  = flip.zw;
+                if (stScale.x < 0) { scale.x *= -1; offs.x = 1.0 - offs.x; }
+                if (stScale.y < 0) { scale.y *= -1; offs.y = 1.0 - offs.y; }
 
-                // カメラ面ビルボード
-                float3 camPos = _WorldSpaceCameraPos;
+                // クアッドは ST 符号反映後のUVから生成
+                float2 uvFlip = IN.uv * scale + offs;
+                float2 quad   = uvFlip * 2.0 - 1.0;
+
+                float3 worldCenter = TransformObjectToWorld(float3(0,0,0));
+
+                float3 camPos = GetCameraPositionWS();
                 float3 toCam = normalize(worldCenter - camPos);
                 float3 upDir = float3(0,1,0);
                 if (abs(dot(upDir, toCam)) > 0.95) upDir = float3(0,0,1);
                 float3 right = normalize(cross(upDir, toCam));
                 upDir = normalize(cross(toCam, right));
 
-                // 距離
-                float3 camForward = UNITY_MATRIX_V[2].xyz * -1.0;
+                float3 camForward = -UNITY_MATRIX_V[2].xyz;
                 float dist = dot(worldCenter - camPos, camForward);
                 dist = max(dist, 0.0001);
 
-                // 目標スクリーンサイズ
                 float fovFactor = UNITY_MATRIX_P[1][1];
-                float targetWorld = (_ScreenSize / max(_ScreenParams.y,1)) * (dist / fovFactor);
+                float targetWorld = (_TargetScreenSize / max(_ScreenParams.y, 1.0)) * (dist / fovFactor);
                 float size = lerp(1.0, targetWorld, saturate(_KeepScreenSize)) * _Scale;
 
                 float3 worldPos = worldCenter
                     + right * (quad.x * size)
                     + upDir  * (quad.y * size);
 
-                o.pos = UnityWorldToClipPos(worldPos);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.color = v.color * _Color;
-
+                OUT.positionHCS = TransformWorldToHClip(worldPos);
                 #ifdef PIXELSNAP_ON
-                o.pos = UnityPixelSnap(o.pos);
+                OUT.positionHCS = UnityPixelSnap(OUT.positionHCS);
                 #endif
-                return o;
+
+                // サンプリングは ST の絶対値スケール＋オフセット
+                float2 stScaleAbs  = abs(stScale);
+                float2 stOffsetPos = stOffset + min(0, stScale);
+                
+                OUT.uv    = uvFlip * stScaleAbs + stOffsetPos;
+                OUT.color = IN.color * _Color * rc;
+                return OUT;
             }
 
-            fixed4 frag(v2f i) : SV_Target
+            half4 Frag (Varyings IN) : SV_Target
             {
-                fixed4 tex = tex2D(_MainTex, i.uv);
-                fixed pulse = 1.0 + _PulseAmplitude * sin(_Time.y * _PulseSpeed);
-                fixed4 col = i.color * tex;
-
-                fixed e = _Emission * pulse;
-                if (_AllowBloom < 0.5)
-                    e = min(e, 1.0f);
-                
+                half4 tex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv);
+                half pulse = 1.0h + _PulseAmplitude * sin(_TimeParameters.y * _PulseSpeed);
+                half4 col = IN.color * tex;
                 col.rgb *= (_Emission * pulse);
-                col.a *= _Fade;
+                col.a   *= _Fade;
                 return col;
             }
-            ENDCG
-        }
-        
-        Pass
-        {
-            Name "HINTMARKER_FORCE_FRONT"
-            Tags{ "LightMode"="Always" }
-            Cull Off
-            Lighting Off
-            ZTest Always
-            ZWrite Off
-            Blend SrcAlpha OneMinusSrcAlpha
-            ColorMask 0
-        }
-        
-        Pass
-        {
-            Name "HINTMARKER_WRITE_DEPTH"
-            Tags{ "LightMode"="DepthOnly" }
-            Cull Off
-            ZTest LEqual
-            ZWrite On
-            ColorMask 0
+            ENDHLSL
         }
     }
 

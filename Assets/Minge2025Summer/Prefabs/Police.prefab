@@ -717,7 +717,7 @@ MonoBehaviour:
   characterController: {fileID: 3000077402215070843}
   animator: {fileID: 5283877147660298474}
   agent: {fileID: 8714944254943516129}
-  speed: 0.5
+  speed: 0.7
   speedChangeRate: 8
   rotationSpeed: 2
   currentSlowMultiplier: 1
@@ -736,7 +736,7 @@ MonoBehaviour:
   model: {fileID: 9066763600808646829}
   emitter: {fileID: 2215557161484921379}
   detectionModel: {fileID: 5954432168722894968}
-  hpModel: {fileID: 0}
+  hpModel: {fileID: 8852442532310192993}
   aiBehaviourModel: {fileID: 4622321304609071981}
   battleBGMController: {fileID: 0}
   attackModel: {fileID: 4068258161037177638}
@@ -900,7 +900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMoanEmitter: {fileID: 5295632185098758438}
   footStepEmitter: {fileID: 4400406920577474989}
-  closeEnemyEmitter: {fileID: 0}
+  closeEnemyEmitter: {fileID: 6557878343860164395}
   minMoanInterval: 2
   maxMoanInterval: 5
   referenceSpeed: 0.9

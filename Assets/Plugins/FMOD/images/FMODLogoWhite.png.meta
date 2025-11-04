@@ -4,9 +4,9 @@ AssetOrigin:
   serializedVersion: 1
   productId: 161631
   packageName: FMOD for Unity (2.02)
-  packageVersion: 2.02.29
+  packageVersion: 2.02.31
   assetPath: Assets/Plugins/FMOD/images/FMODLogoWhite.png
-  uploadId: 778158
+  uploadId: 812106
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -76,7 +76,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -140,7 +140,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WindowsStoreApps
+    buildTarget: WebGL
     maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
@@ -154,29 +154,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: FMODLogoWhite_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 728
-        height: 192
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a12dc265cedfaf14cb87582f5b939657
-      internalID: -576561945
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     customData: 
     physicsShape: []
@@ -190,8 +168,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      FMODLogoWhite_0: -576561945
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

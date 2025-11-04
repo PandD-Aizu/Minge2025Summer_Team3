@@ -23,7 +23,9 @@ namespace Minge2025Summer.Scripts.InGame.EscapeScreen
         [SerializeField] private Button cancelButton;
 
         private ConfirmState currentConfirmState;
-        
+
+        public GameObject EscapeScreen => escapeScreen;
+
         public Button ResumeButton => resumeButton;
         public Button OptionButton => optionButton;
         public Button BackToTitleButton => backToTitleButton;

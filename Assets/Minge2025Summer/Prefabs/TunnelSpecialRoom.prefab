@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7868e756509d4ec1b9eb00e9d10f2e1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 854875069414108594, guid: d6df1fe72472c5148b5394501968eadb, type: 3}
   spawnPoint: {fileID: 4685771682880804435}
   spawnSoundEmitters:
   - {fileID: 6410372923234031100}
