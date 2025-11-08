@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Minge2025Summer.Scripts.InGame.ReiScript
 {
-    public class ReiItemController : MonoBehaviour, IDisposable
+    public class ConsumableItemController : MonoBehaviour, IDisposable
     {
         [SerializeField] private ConsumableItem model;
         

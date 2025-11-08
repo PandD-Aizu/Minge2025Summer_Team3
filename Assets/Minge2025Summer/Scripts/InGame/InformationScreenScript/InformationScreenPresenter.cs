@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using Unity.Cinemachine;
+using UnityEngine;
 
 namespace Minge2025Summer.Scripts.InGame.InformationScreenScript
 {

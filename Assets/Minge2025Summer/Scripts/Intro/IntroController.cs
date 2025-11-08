@@ -59,7 +59,7 @@ namespace Minge2025Summer.Scripts.Intro
             {
                 introText.text = entry.text;
                 yield return introText.DOFade(1.0f, 0.5f).WaitForCompletion();
-                yield return StartCoroutine(WaitforClick());
+                yield return StartCoroutine(WaitForClickOrTime(entry.time));
                 yield return introText.DOFade(0.0f, 0.5f).WaitForCompletion();
             }
 
@@ -91,9 +91,24 @@ namespace Minge2025Summer.Scripts.Intro
             }
         }
         
-        private IEnumerator WaitforClick()
+        /// <summary>
+        /// クリックまたは指定時間経過まで待機
+        /// </summary>
+        /// <param name="maxWaitTime">最大待機時間(秒)</param>
+        private IEnumerator WaitForClickOrTime(float maxWaitTime)
         {
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+            float elapsedTime = 0f;
+    
+            while (elapsedTime < maxWaitTime)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    yield break; // クリックされたら即座に終了
+                }
+        
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
         }
     }
 }

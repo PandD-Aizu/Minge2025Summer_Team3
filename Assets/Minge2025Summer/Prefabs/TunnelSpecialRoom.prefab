@@ -218,11 +218,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 223126757
-      Data2: 1145994092
-      Data3: 1727674763
-      Data4: -1256507634
-    Path: event:/EnvironmentSE/RustyDoorSlammed
+      Data1: -1577350183
+      Data2: 1084552049
+      Data3: 593160879
+      Data4: -2125850340
+    Path: event:/EnvironmentSE/DoorBroken
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0
