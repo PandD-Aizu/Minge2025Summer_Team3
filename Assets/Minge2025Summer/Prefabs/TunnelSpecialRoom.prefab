@@ -1215,6 +1215,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Diary
       objectReference: {fileID: 0}
+    - target: {fileID: 6041008166496643374, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: json
+      value: 
+      objectReference: {fileID: 4900000, guid: 7f05b04481bf420ea617b73728031dc6, type: 3}
+    - target: {fileID: 6041008166496643374, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: jsonReference.m_AssetGUID
+      value: 7f05b04481bf420ea617b73728031dc6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

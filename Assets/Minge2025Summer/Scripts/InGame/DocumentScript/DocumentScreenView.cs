@@ -19,7 +19,7 @@ namespace Minge2025Summer.Scripts.InGame.DocumentScript
         [SerializeField, Tooltip("ページグリッドのプレハブ")] private GameObject pageGridPrefab;
 
         private readonly List<PageGridView> pageGrids = new ();
-
+        
         /// <summary>
         /// ドキュメント画面の表示・非表示を切り替える
         /// </summary>
