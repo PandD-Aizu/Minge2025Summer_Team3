@@ -78,9 +78,16 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
         private Vector3? reservedSpecialPosition;
         private float reservedSpecialRotation;
 
-        void Start()
+        public Transform StartMarker
         {
-            GenerateMap();
+            get => startMarker;
+            set => startMarker = value;
+        }
+        
+        public NavMeshSurface NavMeshSurface 
+        {
+            get => navMeshSurface;
+            set => navMeshSurface = value;
         }
 
         /// <summary>

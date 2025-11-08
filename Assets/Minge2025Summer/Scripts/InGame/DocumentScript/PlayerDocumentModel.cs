@@ -7,6 +7,7 @@ namespace Minge2025Summer.Scripts.InGame.DocumentScript
     public class PlayerDocumentModel : MonoBehaviour
     {
         [SerializeField, Tooltip("ドキュメントにインタラクトできる距離")] private float interactionDistance = 50.0f;
+        [SerializeField] private LayerMask interactionLayerMask = ~0;
         
         public readonly Subject<DocumentData> OnOpenDocument = new();
 
@@ -18,7 +19,7 @@ namespace Minge2025Summer.Scripts.InGame.DocumentScript
         
         public void TryInteract()
         {
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, interactionDistance, interactionLayerMask))
             {
                 if (hit.collider.TryGetComponent<DocumentSource>(out var documentSource))
                 {

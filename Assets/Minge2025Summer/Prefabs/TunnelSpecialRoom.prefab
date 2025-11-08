@@ -218,11 +218,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 223126757
-      Data2: 1145994092
-      Data3: 1727674763
-      Data4: -1256507634
-    Path: event:/EnvironmentSE/RustyDoorSlammed
+      Data1: -1577350183
+      Data2: 1084552049
+      Data3: 593160879
+      Data4: -2125850340
+    Path: event:/EnvironmentSE/DoorBroken
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0
@@ -1214,6 +1214,14 @@ PrefabInstance:
     - target: {fileID: 5781462214003724341, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
       propertyPath: m_Name
       value: Diary
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041008166496643374, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: json
+      value: 
+      objectReference: {fileID: 4900000, guid: 7f05b04481bf420ea617b73728031dc6, type: 3}
+    - target: {fileID: 6041008166496643374, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: jsonReference.m_AssetGUID
+      value: 7f05b04481bf420ea617b73728031dc6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
