@@ -38,6 +38,10 @@ namespace Minge2025Summer.Scripts.InGame.ItemScript
             if (hit.collider != null && hit.collider.TryGetComponent<IItem>(out var picked))
             {
                 picked.SetIsGet = true;
+                
+                // 獲得したアイテムの名前を表示
+                // ここにViewのPickUpItemTextコルーチンを呼び出したい
+                
                 if (picked is MonoBehaviour pickedMb)
                 {
                     var view = pickedMb.GetComponentInChildren<IItemView>();

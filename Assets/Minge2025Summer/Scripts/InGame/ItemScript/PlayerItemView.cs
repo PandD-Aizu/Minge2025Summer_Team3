@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Minge2025Summer.Scripts.InGame.GunScript;
 using Minge2025Summer.Scripts.InGame.GunScript.Enum;
 using Minge2025Summer.Scripts.InGame.ItemScript.Ammo;
@@ -13,6 +14,8 @@ namespace Minge2025Summer.Scripts.InGame.ItemScript
     {
         [SerializeField] private GameObject inventoryScreen;
         [SerializeField] private ItemSlotUI[] itemSlots;
+
+        [SerializeField] private TextMeshProUGUI captionText; // 獲得したアイテムの名前を表示する
 
         [Header("アイテムプレビュースロット")] 
         [SerializeField] private Image selectedItemIcon;
@@ -233,6 +236,13 @@ namespace Minge2025Summer.Scripts.InGame.ItemScript
             {
                 RemoveItemSlot(ammoItem); // 既存のスロット削除処理
             }
+        }
+
+        public async void PickUpItemText(float seconds, string itemName)
+        {
+            captionText.text = itemName + "を手に入れた";
+            await UniTask.WaitForSeconds(seconds);
+            captionText.text = "";
         }
     }
 }

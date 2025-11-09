@@ -49,6 +49,8 @@ namespace Minge2025Summer.Scripts.InGame.ItemScript
             model.OnItemChanged
                 .Subscribe(itemChangeEvent =>
                 {
+
+                    view.PickUpItemText(3.0f, itemChangeEvent.Item.GetDisplayName);
                     // 特殊アイテムは通常インベントリスロットに表示しない
                     if (itemChangeEvent.Item is ISpecialItem)
                     {
