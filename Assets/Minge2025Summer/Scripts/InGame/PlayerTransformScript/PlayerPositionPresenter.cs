@@ -11,8 +11,6 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
         [SerializeField] private PlayerPositionModel model;
         [SerializeField] private PlayerPositionView view;
         [SerializeField] private PlayerPositionEmitter emitter;
-        [SerializeField] private PlayerItemView itemView;
-        [SerializeField] private PlayerDocumentModel documentModel;
 
         private CompositeDisposable disposables = new ();
 
@@ -30,9 +28,6 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
                 model.IsCrouching = true;
             else
                 model.IsCrouching = Input.GetKey(KeyCode.Space);
-
-            if (itemView != null && itemView.IsOpen) return;
-            if (documentModel != null && documentModel.IsDocumentOpen) return;
             
             if (Input.GetKey(KeyCode.W)) 
                 input.y += 1.0f;

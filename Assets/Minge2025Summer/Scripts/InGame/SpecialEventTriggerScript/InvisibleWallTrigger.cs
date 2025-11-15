@@ -1,5 +1,6 @@
 ﻿using Minge2025Summer.Scripts.InGame.CaptionScript;
 using Minge2025Summer.Scripts.InGame.GunScript;
+using Minge2025Summer.Scripts.InGame.ReiScript.GunScript;
 using UnityEngine;
 
 namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
@@ -25,8 +26,8 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
             if (other.transform.CompareTag("Player") && !isAlreadyTriggered)
             {
                 // プレイヤーが銃を持っているかどうかを確認
-                var playerGunModel = other.transform.GetComponentInChildren<PlayerGunModel>();
-                if (playerGunModel.CurrentGun != null)
+                var playerGunModel = other.transform.GetComponentInChildren<WeaponModel>();
+                if (playerGunModel.CurrentEquippedWeapon != null)
                 {
                     // 持っている場合、不可視の壁を消す
                     var collision = transform.GetChild(0);

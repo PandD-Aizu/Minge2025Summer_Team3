@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 845068213052424900}
   - component: {fileID: 175872263942018506}
   - component: {fileID: 8961072019988889667}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pistol_J_Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,13 +95,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 752686323466385708}
+  - component: {fileID: 3109274845265219476}
+  - component: {fileID: -4282327658672186130}
   - component: {fileID: 4448266801417444181}
   - component: {fileID: 1514541999781228791}
-  - component: {fileID: 8696344151736423004}
-  - component: {fileID: 4749380763832793478}
-  - component: {fileID: 4003429505720005683}
-  - component: {fileID: 3109274845265219476}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pistol_J
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,6 +130,61 @@ Transform:
   - {fileID: 5344206855992293224}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3109274845265219476
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88317814946030486}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09806401, y: 0.19598638, z: 0.24664307}
+  m_Center: {x: 0.073856026, y: -0.072536245, z: -0.079639435}
+--- !u!114 &-4282327658672186130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88317814946030486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f96d76ad5bc47b8ada36c003e1bae67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoType: 1
+  magCapacity: 12
+  ammoInMag: 0
+  maxSpreadAngle: 5
+  timeToAim: 0.5
+  range: 1000
+  fireRate: 3
+  attackPower: 100
+  penetrationCount: 1
+  pointBlankDistance: 3
+  pointBlankMultiplier: 0.2
+  impulseSource: {fileID: 4448266801417444181}
+  gunSoundHearingDistance: 10
+  fireSpreadKickHip: 3
+  fireSpreadKickAim: 1
+  spreadRecoverSpeed: 10
+  maxSpreadPenalty: 10
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  bufferSize: 32
+  raycastBufferSize: 32
 --- !u!114 &4448266801417444181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,148 +260,6 @@ MonoBehaviour:
     FrequencyGain: 1
     Duration: 1
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
---- !u!108 &8696344151736423004
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88317814946030486}
-  m_Enabled: 1
-  serializedVersion: 11
-  m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 1
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ForceVisible: 0
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
-  m_LightUnit: 1
-  m_LuxAtDistance: 1
-  m_EnableSpotReflector: 1
---- !u!114 &4749380763832793478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88317814946030486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
---- !u!114 &4003429505720005683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88317814946030486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9ed0a9fa74447e892909f23cb764fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ammoType: 0
-  magCapacity: 12
-  ammoInMag: 0
-  maxSpreadAngle: 5
-  timeToAim: 0.5
-  range: 1000
-  fireRate: 3
-  attackPower: 100
-  penetrationCount: 1
-  pointBlankDistance: 3
-  pointBlankMultiplier: 1.2
-  impulseSource: {fileID: 4448266801417444181}
-  fireSpreadKickHip: 3
-  fireSpreadKickAim: 1
-  spreadRecoverSpeed: 10
-  maxSpreadPenalty: 10
-  raycastLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  bufferSize: 32
-  raycastBufferSize: 32
---- !u!65 &3109274845265219476
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88317814946030486}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1710318766370853210
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +271,7 @@ GameObject:
   - component: {fileID: 8301008281633685683}
   - component: {fileID: 3671979412337291192}
   - component: {fileID: 6135931401775688919}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pistol_J_Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +357,7 @@ GameObject:
   - component: {fileID: 3227842301784419726}
   - component: {fileID: 4768127181654542513}
   - component: {fileID: 1467214341689591193}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pistol_J_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +443,7 @@ GameObject:
   - component: {fileID: 3666257754257113577}
   - component: {fileID: 7952349000524459280}
   - component: {fileID: 5196844232207182121}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pistol_J_BarrelGuard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -619,7 +530,7 @@ GameObject:
   - component: {fileID: 3175229300851210126}
   - component: {fileID: 4965296756925379349}
   - component: {fileID: 8189707235648876394}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -870,7 +781,7 @@ GameObject:
   - component: {fileID: 380960680216028475}
   - component: {fileID: 4028455647066855052}
   - component: {fileID: 8276600302802158658}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: MuzzleFlashVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +895,7 @@ GameObject:
   - component: {fileID: 6078225155731933394}
   - component: {fileID: 4031256337151252114}
   - component: {fileID: 8386175574352247203}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pistol_J_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1070,7 +981,7 @@ GameObject:
   - component: {fileID: 7420965119359937839}
   - component: {fileID: 29664848612463983}
   - component: {fileID: 4083707548215495776}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pistol_J_Sight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1156,7 +1067,7 @@ GameObject:
   - component: {fileID: 8013893846606646119}
   - component: {fileID: 6874791194615768121}
   - component: {fileID: 2435194463122282298}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Pistol_J_Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

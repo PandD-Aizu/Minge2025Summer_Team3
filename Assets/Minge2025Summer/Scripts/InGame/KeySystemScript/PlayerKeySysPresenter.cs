@@ -1,4 +1,5 @@
 ﻿using Minge2025Summer.Scripts.InGame.ItemScript;
+using Minge2025Summer.Scripts.InGame.ReiScript.ItemScript;
 using UniRx;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Minge2025Summer.Scripts.InGame.KeySystemScript
     {
         [SerializeField] private PlayerKeySysModel model;
         [SerializeField] private PlayerKeySysView view;
-        [SerializeField] private PlayerItemModel playerItemModel;
+        [SerializeField] private ReiItemInventoryModel inventoryModel;
 
         private CompositeDisposable disposables = new ();
 
@@ -21,7 +22,7 @@ namespace Minge2025Summer.Scripts.InGame.KeySystemScript
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                model.TryInteractKey(playerItemModel);
+                model.TryInteractKey(inventoryModel);
             }   
         }
         
