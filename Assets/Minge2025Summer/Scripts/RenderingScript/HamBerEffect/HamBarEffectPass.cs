@@ -13,7 +13,6 @@ namespace Minge2025Summer.Scripts.RenderingScript.HamBarEffect
             internal Material material;
             internal float amplitude;
             internal float frequency;
-            internal float speed;
         }
 
         private HamBarEffectVolume m_Volume;
@@ -39,7 +38,6 @@ namespace Minge2025Summer.Scripts.RenderingScript.HamBarEffect
             // マテリアルプロパティの設定
             m_Material.SetFloat("_Amplitude", m_Volume.amplitude.value);
             m_Material.SetFloat("_Frequency", m_Volume.frequency.value);
-            m_Material.SetFloat("_Speed", m_Volume.speed.value);
 
             var urpResources = frameData.Get<UniversalResourceData>();
             var cameraColor = urpResources.activeColorTexture;
@@ -54,18 +52,15 @@ namespace Minge2025Summer.Scripts.RenderingScript.HamBarEffect
                 // パスデータの設定
                 passData.material = m_Material;
                 passData.source = cameraColor;
-                passData.amplitude = m_Volume.amplitude.value;
-                passData.frequency = m_Volume.frequency.value;
-                passData.speed = m_Volume.speed.value;
                 
                 // リソースの使用を宣言
                 builder.UseTexture(passData.source, AccessFlags.Read);
                 builder.SetRenderAttachment(tempTexture, 0, AccessFlags.Write);
                 
                 // レンダリング関数の設定
-                builder.SetRenderFunc((PassData passData, RasterGraphContext ctx) =>
+                builder.SetRenderFunc((PassData data, RasterGraphContext ctx) =>
                 {
-                    Blitter.BlitTexture(ctx.cmd, passData.source, new Vector4(1, 1, 0, 0), passData.material, 0);
+                    Blitter.BlitTexture(ctx.cmd, data.source, new Vector4(1, 1, 0, 0), data.material, 0);
                 });
             }
             

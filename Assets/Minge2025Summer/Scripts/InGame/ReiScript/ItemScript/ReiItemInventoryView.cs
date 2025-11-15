@@ -1,25 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using Minge2025Summer.Scripts.InGame.ItemScript;
+using Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Interface;
+using Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Struct;
 using TMPro;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace Minge2025Summer.Scripts.InGame.ReiScript
+namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
 {
     public class ReiItemInventoryView : MonoBehaviour
     {
+        [Header("インベントリパネルとアイテムスロット")]
         [SerializeField] private GameObject inventoryPanel;
         [SerializeField] private List<ReiItemSlotUI> itemSlots;
+        [SerializeField] private Image selectedSlotIcon;
+        [SerializeField] private TextMeshProUGUI mainItemNameText;
+        [SerializeField] private TextMeshProUGUI mainItemDescText;
 
+        [Header("列と行の設定")]
         [SerializeField] private int gridRows = 2;
         [SerializeField] private int gridColumns = 6;
 
+        [Header("システムメッセージ表示用テキスト")]
         [SerializeField] private TextMeshProUGUI systemText;
 
+        private Subject<Unit> onInventorySelected = new Subject<Unit>();
         private int currentSelectedIndex = 0;
 
+        public IObservable<Unit> OnInventorySelected => onInventorySelected;
         public GameObject GetInventoryPanel=> inventoryPanel;
 
+        /// <summary>
+        /// インベントリパネルの表示・非表示を切り替える
+        /// </summary>
         public void ToggleInventoryPanel()
         {
             inventoryPanel.SetActive(!inventoryPanel.activeSelf);
@@ -33,14 +47,22 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript
             }
         }
 
+        /// <summary>
+        /// アイテムを使用したことを通知する
+        /// </summary>
+        /// <param name="item">使用したアイテム</param>
         public void NotifyItemUsed(IReiItem item)
         {
             systemText.text = $"{item.GetItemName} を使った。";
         }
 
+        /// <summary>
+        /// インベントリの内容を更新する
+        /// </summary>
+        /// <param name="slotDatas">スロットのデータ</param>
         public void UpdateInventory(List<ItemSlotData> slotDatas)
         {
-            for (int i = 0; i < slotDatas.Count; i++)
+            for (int i = 0; i < itemSlots.Count; i++)
             {
                 if (i < slotDatas.Count)
                 {
@@ -54,6 +76,10 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript
             }
         }
 
+        /// <summary>
+        /// アイテムスロットのナビゲーション
+        /// </summary>
+        /// <param name="direction">WASDの方向</param>
         public void NavigateSlot(int direction)
         {
             int newIndex = currentSelectedIndex;
@@ -79,6 +105,10 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript
             SelectSlot(newIndex);
         }
 
+        /// <summary>
+        /// 選択されているアイテムのIDとタイプを取得する
+        /// </summary>
+        /// <returns>アイテムIDと型</returns>
         public (string, Type) GetSelectedItemIDAndType()
         {
             if (currentSelectedIndex >= 0 && currentSelectedIndex < itemSlots.Count)
@@ -89,19 +119,36 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript
             return (null, null);
         }
 
+        /// <summary>
+        /// 指定したインデックスのスロットを選択状態にする
+        /// </summary>
+        /// <param name="index">指定するインデックス</param>
         private void SelectSlot(int index)
         {
             ClearSelection();
             currentSelectedIndex = index;
             itemSlots[currentSelectedIndex].SetSelected(true);
+            selectedSlotIcon = itemSlots[currentSelectedIndex].GetItemIcon;
+            mainItemNameText.text = string.Empty;
+            mainItemDescText.text = string.Empty;
+            onInventorySelected.OnNext(Unit.Default);
         }
 
+        /// <summary>
+        /// 全てのスロットの選択状態をクリアする
+        /// </summary>
         private void ClearSelection()
         {
             foreach (var slot in itemSlots)
             {
                 slot.SetSelected(false);
             }
+        }
+        
+        public void SetMainItemText(string name, string description)
+        {
+            mainItemNameText.text = name;
+            mainItemDescText.text = description;
         }
     }
 }

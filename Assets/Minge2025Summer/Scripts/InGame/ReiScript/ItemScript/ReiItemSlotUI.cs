@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Minge2025Summer.Scripts.InGame.ReiScript
+namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
 {
     public class ReiItemSlotUI : MonoBehaviour
     {
@@ -14,6 +14,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript
         private string currentItemID;
         private Type currentItemType;
 
+        public Image GetItemIcon => itemIcon;
         public string GetCurrentItemID => currentItemID;
         public Type GetCurrentItemType => currentItemType;
         

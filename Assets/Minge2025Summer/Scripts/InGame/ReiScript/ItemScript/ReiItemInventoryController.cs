@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Interface;
+using Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Struct;
 using UniRx;
 using UnityEngine;
 
-namespace Minge2025Summer.Scripts.InGame.ReiScript
+namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
 {
     public class ReiItemInventoryController : MonoBehaviour, IDisposable
     {
@@ -45,6 +47,8 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript
                     model.UseItem(IDAndType.Item1, IDAndType.Item2);
                 }
             }
+            
+            
         }
 
         private void SubscribeEvents()
@@ -92,6 +96,15 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript
                 .Subscribe(item =>
                 {
                     view.NotifyItemUsed(item);
+                })
+                .AddTo(disposables);
+
+            view.OnInventorySelected
+                .Subscribe(_ =>
+                {
+                    var (id, type) = view.GetSelectedItemIDAndType();
+                    var item = model.GetItem(id, type);
+                    view.SetMainItemText(item.GetDisplayName, item.GetItemDescription);
                 })
                 .AddTo(disposables);
         }

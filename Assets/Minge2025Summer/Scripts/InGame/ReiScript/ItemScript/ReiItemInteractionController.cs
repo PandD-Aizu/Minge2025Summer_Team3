@@ -2,7 +2,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace Minge2025Summer.Scripts.InGame.ReiScript
+namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
 {
     public class ReiItemInteractionController : MonoBehaviour, IDisposable
     {

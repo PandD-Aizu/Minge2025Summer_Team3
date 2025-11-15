@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Minge2025Summer.Scripts.InGame.ReiScript
+namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Struct
 {
     public struct ItemSlotData
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Interface;
 using UniRx;
 using UnityEngine;
 
-namespace Minge2025Summer.Scripts.InGame.ReiScript
+namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
 {
     public class ReiItemInteractionModel : MonoBehaviour
     {

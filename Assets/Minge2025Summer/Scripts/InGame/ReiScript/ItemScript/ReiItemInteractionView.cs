@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using Minge2025Summer.Scripts.InGame.ItemScript;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-namespace Minge2025Summer.Scripts.InGame.ReiScript
+namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
 {
     public class ReiItemInteractionView : MonoBehaviour
     {
