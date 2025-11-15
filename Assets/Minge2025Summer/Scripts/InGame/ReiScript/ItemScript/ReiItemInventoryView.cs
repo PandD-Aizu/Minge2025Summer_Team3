@@ -26,11 +26,23 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
         [SerializeField] private TextMeshProUGUI systemText;
 
         private Subject<Unit> onInventorySelected = new Subject<Unit>();
-        private int currentSelectedIndex = 0;
+        private int currentSelectedIndex;
+        
+        private Color selectedIconOriginalColor = Color.white;
+        private bool selectedIconColorCached;
 
         public IObservable<Unit> OnInventorySelected => onInventorySelected;
         public GameObject GetInventoryPanel=> inventoryPanel;
 
+        public void Initialize()
+        {
+            if (selectedSlotIcon != null)
+            {
+                selectedIconOriginalColor = selectedSlotIcon.color;
+                selectedIconColorCached = true;
+            }
+        }
+        
         /// <summary>
         /// インベントリパネルの表示・非表示を切り替える
         /// </summary>
@@ -39,7 +51,11 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
             inventoryPanel.SetActive(!inventoryPanel.activeSelf);
             if (inventoryPanel.activeSelf)
             {
-                SelectSlot(0);
+                // スロットが無ければ SelectSlot を呼ばない
+                if (itemSlots != null && itemSlots.Count > 0)
+                    SelectSlot(0);
+                else
+                    ClearSelection();
             }
             else
             {
@@ -53,6 +69,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
         /// <param name="item">使用したアイテム</param>
         public void NotifyItemUsed(IReiItem item)
         {
+            if (systemText == null) return;
             systemText.text = $"{item.GetItemName} を使った。";
         }
 
@@ -62,6 +79,8 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
         /// <param name="slotDatas">スロットのデータ</param>
         public void UpdateInventory(List<ItemSlotData> slotDatas)
         {
+            if (itemSlots == null) return;
+
             for (int i = 0; i < itemSlots.Count; i++)
             {
                 if (i < slotDatas.Count)
@@ -74,6 +93,10 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
                     itemSlots[i].Clear();
                 }
             }
+
+            // 現在の選択インデックスが更新後に範囲外になっていれば修正
+            if (currentSelectedIndex >= itemSlots.Count)
+                currentSelectedIndex = 0;
         }
 
         /// <summary>
@@ -125,12 +148,43 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
         /// <param name="index">指定するインデックス</param>
         private void SelectSlot(int index)
         {
+            // 範囲チェック
+            if (itemSlots == null || itemSlots.Count == 0) return;
+            if (index < 0 || index >= itemSlots.Count) index = 0;
+
             ClearSelection();
             currentSelectedIndex = index;
             itemSlots[currentSelectedIndex].SetSelected(true);
-            selectedSlotIcon = itemSlots[currentSelectedIndex].GetItemIcon;
-            mainItemNameText.text = string.Empty;
-            mainItemDescText.text = string.Empty;
+
+            // 選択アイコンの更新
+            if (selectedSlotIcon != null)
+            {
+                var slotIcon = itemSlots[currentSelectedIndex].GetItemIcon;
+                if (slotIcon != null && slotIcon.sprite != null && slotIcon.enabled)
+                {
+                    selectedSlotIcon.sprite = slotIcon.sprite;
+                    selectedSlotIcon.enabled = true;
+                    // 元色がキャッシュされていれば元のアルファに戻す
+                    if (!selectedIconColorCached)
+                    {
+                        selectedIconOriginalColor = selectedSlotIcon.color;
+                        selectedIconColorCached = true;
+                    }
+                    selectedSlotIcon.color = new Color(selectedIconOriginalColor.r, selectedIconOriginalColor.g, selectedIconOriginalColor.b, selectedIconOriginalColor.a);
+                }
+                else
+                {
+                    selectedSlotIcon.sprite = null;
+                    selectedSlotIcon.enabled = true;
+                    var c = selectedIconOriginalColor;
+                    selectedSlotIcon.color = new Color(c.r, c.g, c.b, 0f);
+                }
+            }
+
+            // メインの説明文は一旦クリア
+            if (mainItemNameText != null) mainItemNameText.text = string.Empty;
+            if (mainItemDescText != null) mainItemDescText.text = string.Empty;
+
             onInventorySelected.OnNext(Unit.Default);
         }
 
@@ -139,16 +193,26 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
         /// </summary>
         private void ClearSelection()
         {
+            if (itemSlots == null) return;
             foreach (var slot in itemSlots)
             {
                 slot.SetSelected(false);
             }
+
+            // 選択アイコンも透明にする（spriteはnull）
+            if (selectedSlotIcon != null)
+            {
+                selectedSlotIcon.sprite = null;
+                selectedSlotIcon.enabled = true; // 表示領域は確保して透明化
+                var c = selectedIconOriginalColor;
+                selectedSlotIcon.color = new Color(c.r, c.g, c.b, 0f);
+            }
         }
         
-        public void SetMainItemText(string name, string description)
+        public void SetMainItemText(string displayName, string description)
         {
-            mainItemNameText.text = name;
-            mainItemDescText.text = description;
+            if (mainItemNameText != null) mainItemNameText.text = displayName;
+            if (mainItemDescText != null) mainItemDescText.text = description;
         }
     }
 }

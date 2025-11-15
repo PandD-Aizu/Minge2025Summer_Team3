@@ -27,13 +27,9 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
 
         private void Update()
         {
-            var gameSettings = GameController.Instance.gameSettingsController.gameSettings;
             var currentEquippedWeapon = model.CurrentEquippedWeapon;
             if (currentEquippedWeapon == null)
-            {
-                Debug.LogError("CurrentEquippedWeapon is null");
                 return;
-            }
 
             if (currentEquippedWeapon != lastEquippedWeapon)
             {
@@ -52,7 +48,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
             
             currentEquippedWeapon.UpdateWeapon(Time.deltaTime);
             
-            if (Input.GetKeyDown(gameSettings.keyReload) && model.CurrentEquippedWeapon.GetAmmoInMag < model.CurrentEquippedWeapon.GetMagCapacity)
+            if (Input.GetKeyDown(KeyCode.R) && currentEquippedWeapon.GetAmmoInMag < currentEquippedWeapon.GetMagCapacity)
                 model.PreReloadAction(inventoryModel);
             
             if (Input.GetMouseButtonDown(1))
@@ -68,6 +64,10 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
                     currentEquippedWeapon.Fire();
                 else
                     emitter.PlayEmptyFireSound();
+            
+            model.CheckReload();
+            view.UpdateAmmoText(currentEquippedWeapon.GetAmmoInMag, inventoryModel.GetAmmoCount(currentEquippedWeapon.GetAmmoType), currentEquippedWeapon.GetMagCapacity);
+            view.UpdateReticle(currentEquippedWeapon, Input.GetMouseButton(1));
         }
 
         private void SubscribeEvents()

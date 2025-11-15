@@ -16,6 +16,8 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
 
         private void Start()
         {
+            view.Initialize();
+            
             SubscribeEvents();
         }
 
@@ -41,10 +43,10 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
             if (Input.GetKeyDown(KeyCode.E))
             {
                 // キーアイテムはインベントリから使用できないようにする
-                var IDAndType = view.GetSelectedItemIDAndType();
-                if (!string.IsNullOrEmpty(IDAndType.Item1) && IDAndType.Item2 != typeof(IKeyItem))
+                var idAndType = view.GetSelectedItemIDAndType();
+                if (!string.IsNullOrEmpty(idAndType.Item1) && idAndType.Item2 != typeof(IKeyItem))
                 {
-                    model.UseItem(IDAndType.Item1, IDAndType.Item2);
+                    model.UseItem(idAndType.Item1, idAndType.Item2);
                 }
             }
             
@@ -56,18 +58,38 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
             model.OnInventoryChanged
                 .Subscribe(_ =>
                 {
+                    Debug.Log("[ReiItemInventoryController] Inventory changed, updating view.");
                     var slotDataList = new List<ItemSlotData>();
 
                     foreach (var kvp in model.GetConsumableItemInventory)
                     {
                         var itemID = kvp.Key;
                         var amount = kvp.Value;
-                        var icon = model.GetItem(itemID, typeof(IConsumableItem)).GetIcon;
-                        
+                        if (amount <= 0) continue;
+                        var item = model.GetItem(itemID, typeof(IConsumableItem));
+                        var icon = item != null ? item.GetIcon : null;
+
                         slotDataList.Add(new ItemSlotData
                         {
                             ItemID = itemID,
                             ItemType = typeof(IConsumableItem),
+                            Icon = icon,
+                            Amount = amount
+                        });
+                    }
+                    
+                    foreach (var kvp in model.GetAmmoItemInventory)
+                    {
+                        var itemID = kvp.Key;
+                        var amount = kvp.Value;
+                        if (amount <= 0) continue;
+                        var item = model.GetItem(itemID, typeof(IAmmoItem));
+                        var icon = item != null ? item.GetIcon : null;
+
+                        slotDataList.Add(new ItemSlotData
+                        {
+                            ItemID = itemID,
+                            ItemType = typeof(IAmmoItem),
                             Icon = icon,
                             Amount = amount
                         });
@@ -77,8 +99,10 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
                     {
                         var itemID = kvp.Key;
                         var amount = kvp.Value;
-                        var icon = model.GetItem(itemID, typeof(IKeyItem)).GetIcon;
-                        
+                        if (amount <= 0) continue;
+                        var item = model.GetItem(itemID, typeof(IKeyItem));
+                        var icon = item != null ? item.GetIcon : null;
+
                         slotDataList.Add(new ItemSlotData
                         {
                             ItemID = itemID,
@@ -87,7 +111,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
                             Amount = amount
                         });
                     }
-                    
+
                     view.UpdateInventory(slotDataList);
                 })
                 .AddTo(disposables);
@@ -102,9 +126,31 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
             view.OnInventorySelected
                 .Subscribe(_ =>
                 {
+                    if (view == null || model == null)
+                    {
+                        Debug.LogError("[ReiItemInventoryController] View or Model is null in OnInventorySelected");
+                        return;
+                    }
+
                     var (id, type) = view.GetSelectedItemIDAndType();
+
+                    if (string.IsNullOrEmpty(id) || type == null)
+                    {
+                        view.SetMainItemText(string.Empty, string.Empty);
+                        return;
+                    }
+
                     var item = model.GetItem(id, type);
-                    view.SetMainItemText(item.GetDisplayName, item.GetItemDescription);
+                    if (item == null)
+                    {
+                        Debug.LogWarning("[ReiItemInventoryController] Selected item not found in model: " + id);
+                        view.SetMainItemText(string.Empty, string.Empty);
+                        return;
+                    }
+
+                    var displayName = item.GetDisplayName ?? string.Empty;
+                    var desc = item.GetItemDescription ?? string.Empty;
+                    view.SetMainItemText(displayName, desc);
                 })
                 .AddTo(disposables);
         }

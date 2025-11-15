@@ -9,6 +9,8 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Interface
         public string GetItemDescription { get; }
         public Sprite GetIcon { get; }
         public int GetItemAmount { get; }
+
+        public void GetItem();
         public bool ApplyItem();
     }
 }

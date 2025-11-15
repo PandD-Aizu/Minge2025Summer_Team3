@@ -24,12 +24,17 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Item
         private Subject<Unit> onApplyItem = new ();
         public IObservable<Unit> OnApplyItem => onApplyItem;
         
+        public void GetItem()
+        {
+            onGetItem.OnNext(Unit.Default);
+        }
+        
         public bool ApplyItem()
         {
             return true;
         }
 
-        private void HideItem()
+        public void HideItem()
         {
             gameObject.SetActive(false);
         }

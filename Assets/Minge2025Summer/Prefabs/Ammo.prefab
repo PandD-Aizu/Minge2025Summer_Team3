@@ -196,9 +196,8 @@ GameObject:
   m_Component:
   - component: {fileID: 765769925351324512}
   - component: {fileID: 4781958506105773190}
-  - component: {fileID: 7585278773030584744}
-  - component: {fileID: 2403302968195707985}
-  - component: {fileID: 3560996412706137370}
+  - component: {fileID: -3089899779542844975}
+  - component: {fileID: -3800889481444901138}
   m_Layer: 9
   m_Name: Ammo
   m_TagString: Interactable
@@ -244,7 +243,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.46, y: 0.26, z: 0.37}
   m_Center: {x: -0.05, y: 0, z: 0.05}
---- !u!114 &7585278773030584744
+--- !u!114 &-3089899779542844975
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,18 +252,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7059367617782556598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a21990c5326498a977fc8c0b7fec91a, type: 3}
+  m_Script: {fileID: 11500000, guid: d5eca85e4c5a4872995026145627a44b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoCount: 8
-  ammoType: 0
-  displayName: "\u3051\u3093\u3058\u3085\u3046\u306E\u3060\u3093\u85AC"
-  description: "\u3051\u3093\u3058\u3085\u3046\u306E\u3060\u3093\u85AC\u3002\n\u304A\u305D\u3089\u304F\u3001
-    \u8B66\u5B98\u304C\u6301\u3063\u3066\u3044\u305F\u3082\u306E\u3060\u308D\u3046\u3002"
-  isGet: 0
-  isApplied: 0
-  ammoSprite: {fileID: 21300000, guid: ef11f1b5928b5754db689f6c3e5dc1b3, type: 3}
---- !u!114 &2403302968195707985
+  itemName: "\u30D4\u30B9\u30C8\u30EB\u5F3E"
+  displayName: "\u30D4\u30B9\u30C8\u30EB\u5F3E"
+  itemDescription: "\u30D4\u30B9\u30C8\u30EB\u306E\u5F3E\u85AC\n\u304A\u305D\u3089\u304F\u8B66\u5B98\u304C\u6301\u3063\u3066\u3044\u305F\u3082\u306E\u3060\u308D\u3046"
+  amount: 8
+  icon: {fileID: 21300000, guid: ef11f1b5928b5754db689f6c3e5dc1b3, type: 3}
+  ammoType: 1
+--- !u!114 &-3800889481444901138
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,25 +270,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7059367617782556598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 133610365de24c9a91fdee552911b39d, type: 3}
+  m_Script: {fileID: 11500000, guid: 01e768f207b94766abeb74f51926fb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 7585278773030584744}
-  view: {fileID: 3560996412706137370}
-  gunModel: {fileID: 0}
---- !u!114 &3560996412706137370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7059367617782556598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ef9740a5d714152906a24366b962619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentObject: {fileID: 7059367617782556598}
+  model: {fileID: -3089899779542844975}
 --- !u!1001 &8564832377873110189
 PrefabInstance:
   m_ObjectHideFlags: 0

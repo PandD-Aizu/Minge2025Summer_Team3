@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Minge2025Summer.Scripts.InGame.GunScript.Interface;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,8 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
         [Header("マズルフラッシュ")] 
         [SerializeField] private VisualEffect muzzleFlashVFX;
         [SerializeField] private Light muzzleFlashLight;
+
+        public Light MuzzleFlashLight { get => muzzleFlashLight; set => muzzleFlashLight = value; }
         
         /// <summary>
         /// 現在の弾薬数を表示する
@@ -29,6 +32,9 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
         /// <param name="magCapacity">マガジンの容量</param>
         public void UpdateAmmoText(int currentAmmo, int maxAmmo, int magCapacity)
         {
+            if (ammoText == null)
+                return;
+
             if (currentAmmo == 0)
             {
                 ammoText.text = $"<color=red>{currentAmmo}</color> / {maxAmmo}";
@@ -46,10 +52,13 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
         /// <summary>
         /// 照準の描画を更新する
         /// </summary>
-        /// <param name="gun">現在装備している銃</param>
+        /// <param name="weapon">現在装備している銃（IWeapon）</param>
         /// <param name="isAiming">覗き込み状態か</param>
         public void UpdateReticle(IWeapon weapon, bool isAiming)
         {
+            if (dotReticle == null || circleReticle == null)
+                return;
+
             if (weapon == null)
             {
                 dotReticle.SetActive(false);
@@ -68,8 +77,9 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
 
             if (showDot)
             {
-                if (dotReticle)
-                    dotReticle.GetComponent<RectTransform>().sizeDelta = new Vector2(dotSizePx, dotSizePx);
+                var rt = dotReticle.GetComponent<RectTransform>();
+                if (rt != null)
+                    rt.sizeDelta = new Vector2(dotSizePx, dotSizePx);
                 return;
             }
 
@@ -79,8 +89,9 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
             float radiusPx = Mathf.Tan(spreadRad) / Mathf.Tan(fovRad * 0.5f) * (Screen.height * 0.5f);
             float diameterPx = Mathf.Max(minCirclePx, radiusPx * 2.0f);
             
-            if (circleReticle)
-                circleReticle.GetComponent<RectTransform>().sizeDelta = new Vector2(diameterPx, diameterPx);
+            var crt = circleReticle.GetComponent<RectTransform>();
+            if (crt != null)
+                crt.sizeDelta = new Vector2(diameterPx, diameterPx);
         }
         
         /// <summary>
@@ -88,18 +99,75 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
         /// </summary>
         public void PlayMuzzleFlash()
         {
-            muzzleFlashVFX.SendEvent("OnPlay");
+            if (muzzleFlashVFX == null)
+                return;
+            try
+            {
+                muzzleFlashVFX.SendEvent("OnPlay");
+            }
+            catch
+            {
+                // 保護: VFX 設定異常でも落とさない
+            }
         }
 
         /// <summary>
         /// マズルフラッシュのライトを一瞬だけ点灯させる
         /// </summary>
-        /// <returns></returns>
         public async UniTask PlayMuzzleFlashLight()
         {
-            muzzleFlashLight.enabled = true;
-            await UniTask.Delay(50);
-            muzzleFlashLight.enabled = false;
+            try
+            {
+                if (muzzleFlashLight == null)
+                {
+                    muzzleFlashLight = GetComponentInChildren<Light>(true);
+                    if (muzzleFlashLight == null)
+                        return;
+                }
+
+                // 保存して復元
+                bool originalEnabled = muzzleFlashLight.enabled;
+                float originalIntensity = muzzleFlashLight.intensity;
+                float originalRange = muzzleFlashLight.range;
+                bool originalActive = muzzleFlashLight.gameObject.activeSelf;
+
+                // 非アクティブなら一時的に有効化
+                if (!originalActive)
+                    muzzleFlashLight.gameObject.SetActive(true);
+
+                // ベイク専用ではないか確認（サイレント）
+                #if UNITY_2018_1_OR_NEWER
+                try
+                {
+                    var bakeType = muzzleFlashLight.lightmapBakeType;
+                    if (bakeType != LightmapBakeType.Realtime)
+                    {
+                        // silent: 動作に影響するがログは削除済み
+                    }
+                }
+                catch { }
+                #endif
+
+                if (muzzleFlashLight.intensity <= 0f)
+                    muzzleFlashLight.intensity = Mathf.Max(1f, originalIntensity);
+                if (muzzleFlashLight.range <= 0f)
+                    muzzleFlashLight.range = Mathf.Max(1f, originalRange);
+
+                muzzleFlashLight.enabled = true;
+
+                await UniTask.Delay(80);
+
+                // 復元
+                muzzleFlashLight.enabled = originalEnabled;
+                muzzleFlashLight.intensity = originalIntensity;
+                muzzleFlashLight.range = originalRange;
+                if (!originalActive)
+                    muzzleFlashLight.gameObject.SetActive(false);
+            }
+            catch
+            {
+                // 保護: 例外は無視して動作継続
+            }
         }
     }
 }

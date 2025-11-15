@@ -1,4 +1,5 @@
 ﻿using System;
+using Minge2025Summer.Scripts.InGame.ReiScript.GunScript;
 using UniRx;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Minge2025Summer.Scripts.InGame.GunScript
     {
         [SerializeField] private GunCaptionModel model;
         [SerializeField] private GunCaptionView view;
-        [SerializeField] private GunModel gunModel;
+        [SerializeField] private WeaponModel weaponModel;
 
         private CompositeDisposable disposables = new ();
 
@@ -24,7 +25,7 @@ namespace Minge2025Summer.Scripts.InGame.GunScript
 
         private void SubscribeEvents()
         {
-            gunModel.NotifyReload
+            weaponModel.OnNotifyReload
                 .Subscribe(_ =>
                 {
                     view.ShowCaption(model.GetRandomReloadText());

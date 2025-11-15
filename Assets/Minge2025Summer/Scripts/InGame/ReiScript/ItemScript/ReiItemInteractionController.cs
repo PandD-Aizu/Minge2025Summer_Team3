@@ -9,6 +9,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
         [SerializeField] private ReiItemInteractionModel model;
         [SerializeField] private ReiItemInventoryModel inventoryModel;
         [SerializeField] private ReiItemInteractionView view;
+        [SerializeField] private ReiItemInteractionEmitter emitter;
 
         private readonly CompositeDisposable disposables = new CompositeDisposable();
 
@@ -31,6 +32,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
                 .Subscribe(itemName =>
                 {
                     view.Notify(itemName);
+                    emitter.PlayItemGetSound();
                 })
                 .AddTo(disposables);
         }

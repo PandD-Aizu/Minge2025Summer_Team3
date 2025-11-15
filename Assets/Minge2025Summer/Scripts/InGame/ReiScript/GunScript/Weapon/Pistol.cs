@@ -103,11 +103,12 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript.Weapon
             // 向きと発射元を決定
             Vector3 shootDirection = GetShootDirection();
             Vector3 origin = Camera.main.transform.position;
-            
+
             // レイキャストしてヒットを処理
             int hitCount = Physics.RaycastNonAlloc(origin, shootDirection, raycastBuffer, range, raycastLayerMask);
             if (hitCount > 0)
             {
+                Debug.DrawRay(origin, shootDirection * range, Color.red, 1.0f);
                 weaponDamageModel.ProcessHits(
                     raycastBuffer,
                     hitCount,

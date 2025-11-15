@@ -89,9 +89,11 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
                         item.ApplyItem();
                         consumableItemInventory[itemID]--;
 
-                        if (consumableItemInventory[itemID] < 0)
+                        // 在庫が0以下になったら在庫とデータベースから削除
+                        if (consumableItemInventory[itemID] <= 0)
                         {
                             consumableItemInventory.Remove(itemID);
+                            consumableItemDatabase.Remove(itemID);
                         }
                         
                         onInventoryChanged.OnNext(Unit.Default);
@@ -214,6 +216,8 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
             if (consumed > 0)
                 onInventoryChanged.OnNext(Unit.Default);
 
+            // 通知は既に上で行っているためここでは二重呼び出しをしない
+             
             return consumed;
         }
         
@@ -239,6 +243,25 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript
                 ammoItemInventory[targetId] = amount;
 
             onInventoryChanged.OnNext(Unit.Default);
+        }
+        #endregion
+        
+        #region Function For KeyManagement
+        public bool TryConsumeKey(string itemID)
+        {
+            if (keyItemInventory.ContainsKey(itemID) && keyItemInventory[itemID] > 0)
+            {
+                keyItemInventory[itemID]--;
+                if (keyItemInventory[itemID] <= 0)
+                {
+                    keyItemInventory.Remove(itemID);
+                }
+                
+                onInventoryChanged.OnNext(Unit.Default);
+                return true;
+            }
+
+            return false;
         }
         #endregion
     }

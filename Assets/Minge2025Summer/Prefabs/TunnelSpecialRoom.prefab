@@ -1723,6 +1723,10 @@ PrefabInstance:
       propertyPath: keyID
       value: goal
       objectReference: {fileID: 0}
+    - target: {fileID: 8267597158730831732, guid: 5192375f5b3e4f4458e6ce727b90f37d, type: 3}
+      propertyPath: itemName
+      value: Goal
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
