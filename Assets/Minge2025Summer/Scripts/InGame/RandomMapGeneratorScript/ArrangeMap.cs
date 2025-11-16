@@ -12,6 +12,7 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
     {
         private static readonly Subject<Unit> navMeshRebuiltSubject = new Subject<Unit>();
         public static bool NavMeshReady { get; private set; }
+        public int NumberOfSpecialRoom { get; set; } //生成する特殊部屋の数
         public static IObservable<Unit> NavMeshReadyAsObservable()
         {
             // 既に完了しているなら即値を返し、未完了なら完了時のストリームを返す

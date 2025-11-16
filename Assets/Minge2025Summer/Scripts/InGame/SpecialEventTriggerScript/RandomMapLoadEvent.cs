@@ -11,6 +11,7 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
         [SerializeField] private int mapRow;
         [SerializeField] private int mapCol;
         [SerializeField] private int mapSize;
+        [SerializeField,Tooltip("生成する特殊部屋の数")] private int numberOfSpecialRoom;
         [SerializeField] private GameObject mapStartMarker;
         [SerializeField] private NavMeshSurface mapSurface;
         
@@ -36,6 +37,7 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
             var generator = map.GetComponent<MapGenerator>();
             generator.StartMarker = mapStartMarker.transform;
             generator.NavMeshSurface = mapSurface;
+            generator.NumberOfSpecialRoom = numberOfSpecialRoom;
             generator.GenerateMap();
         }
     }
