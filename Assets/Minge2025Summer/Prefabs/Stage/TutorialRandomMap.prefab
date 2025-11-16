@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4513738293730937789, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: m_Name
-      value: RandomMap
+      value: TutorialRandomMap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

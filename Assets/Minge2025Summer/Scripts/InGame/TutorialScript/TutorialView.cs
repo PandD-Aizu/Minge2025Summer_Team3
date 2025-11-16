@@ -19,6 +19,12 @@ namespace Minge2025Summer.Scripts.InGame.TutorialScript
 
         private Sequence currentSequence;
         private bool isVisible;
+        
+        public void ActivateTextComponent(bool active)
+        {
+            if (tutorialText != null)
+                tutorialText.gameObject.SetActive(active);
+        }
 
         /// <summary>
         /// テキストを設定しフェードイン表示
