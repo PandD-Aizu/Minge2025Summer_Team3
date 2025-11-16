@@ -86,12 +86,17 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
             pendingReloadCount = 0;
         }
 
-        public void CheckReload()
+        public void CheckReload(ReiItemInventoryModel inventoryModel)
         {
             if (CurrentEquippedWeapon == null)
                 return;
-            
-            if (CurrentEquippedWeapon.GetAmmoInMag >= 0)
+
+            int ammoInMag = CurrentEquippedWeapon.GetAmmoInMag;
+            var ammoType = CurrentEquippedWeapon.GetAmmoType;
+            int ammoInInventory = inventoryModel.GetAmmoCount(ammoType);
+
+            // マガジンが空で、かつインベントリに弾薬がある場合のみ通知
+            if (ammoInMag <= 0 && ammoInInventory > 0)
             {
                 notifyReload.OnNext(Unit.Default);
             }

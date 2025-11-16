@@ -13,6 +13,11 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
 
         private bool hasTriggered; // 実行は一度だけ
 
+        private void Start()
+        {
+            unloadStageList.Add(GameObject.FindGameObjectWithTag("RandomMap"));
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (hasTriggered)

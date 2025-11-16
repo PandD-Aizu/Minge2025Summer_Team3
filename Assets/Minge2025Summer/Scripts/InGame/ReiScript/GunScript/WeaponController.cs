@@ -65,7 +65,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
                 else
                     emitter.PlayEmptyFireSound();
             
-            model.CheckReload();
+            model.CheckReload(inventoryModel);
             view.UpdateAmmoText(currentEquippedWeapon.GetAmmoInMag, inventoryModel.GetAmmoCount(currentEquippedWeapon.GetAmmoType), currentEquippedWeapon.GetMagCapacity);
             view.UpdateReticle(currentEquippedWeapon, Input.GetMouseButton(1));
         }

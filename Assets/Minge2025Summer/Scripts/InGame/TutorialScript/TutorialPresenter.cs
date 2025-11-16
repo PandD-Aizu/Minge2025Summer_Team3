@@ -25,6 +25,7 @@ namespace Minge2025Summer.Scripts.InGame.TutorialScript
             model.OnShow
                 .Subscribe(type =>
                 {
+                    view.ActivateTextComponent(true);
                     var text = model.GetText(type);
                     view.Show(text, 3.0f);
                 })
