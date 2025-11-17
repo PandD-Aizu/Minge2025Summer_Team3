@@ -60,6 +60,46 @@ PrefabInstance:
       propertyPath: mapHeight
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: cornerPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: deadEndPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: straightPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'cornerPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 4032933333824334568, guid: 88049b698caafa947a11a5918ae3c2df, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: tJunctionPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: crossroadsPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'deadEndPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3069755458414252835, guid: fe613d3163921924e93f41cfd321d52d, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'straightPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1945730471248051787, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'tJunctionPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7944251422906933406, guid: 4520eeca262748f42add4cc9c13dba8a, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'crossroadsPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 5380714960930156110, guid: bf1ab433ad56b8b458aba8381032df24, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

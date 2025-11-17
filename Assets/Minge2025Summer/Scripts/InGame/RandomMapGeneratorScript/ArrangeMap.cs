@@ -64,6 +64,10 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
         [SerializeField] private NavMeshSurface navMeshSurface;
 
         #endregion
+        
+        #region FOR TESTING PURPOSES ONLY
+        [SerializeField] private bool generateOnStart = false;
+        #endregion
 
         // 各エリアの接続情報などを保持する内部クラス
         private class Area
@@ -88,6 +92,12 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
         {
             get => navMeshSurface;
             set => navMeshSurface = value;
+        }
+
+        private void Start()
+        {
+            if (generateOnStart == true)
+                GenerateMap();
         }
 
         /// <summary>

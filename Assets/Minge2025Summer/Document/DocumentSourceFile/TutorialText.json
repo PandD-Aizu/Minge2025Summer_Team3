@@ -1,0 +1,13 @@
+﻿{
+  "title": "警察手帳",
+  "pages": [
+    "警察官の心得",
+    "一、移動中は常に周囲に注意を払うこと。\\n<color=red>WASDキー</color>で移動し、\\nマウスで視点を操作せよ。",
+    "二、危険を感じたらすぐに退避すること。\\n<color=red>Shiftキー</color>でダッシュできる。\\n狭い場所は<color=red>Spaceキー</color>でしゃがめる。",
+    "三、常に周囲の状況を把握すること、\\n怪しいものがあったら<color=red>Eキー</color>で報告せよ。",
+    "四、収集した証拠は必ず持ち帰ること。\\n<color=red>TABキー</color>で<color=red>インベントリ</color>から物品を確認できる。\\n五、消耗品は適切に使用すること。\\n<color=red>インベントリ画面でWASDキーを使って物品を選択し、Eキーで使用できる</color>。",
+    "六、銃は常に携帯し、必要に応じて使用すること。\\n<color=red>右クリックで照準を合わせ、<color=red>左クリック</color>で発砲できる。\\n<color=red>Rキー</color>で弾をこめよ。</color>",
+    "七、懐中電灯は暗所での必需品である。\\n<color=red>Fキー</color>で点灯・消灯を切り替えよ。",
+    "八、手帳を常に携帯し、必要に応じてメモをとること。\\n<color=red>手帳は<color=red>Vキー</color>で開ける</color>。"
+  ]
+}
