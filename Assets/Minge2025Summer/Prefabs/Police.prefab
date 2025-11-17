@@ -721,6 +721,11 @@ MonoBehaviour:
   speedChangeRate: 8
   rotationSpeed: 2
   currentSlowMultiplier: 1
+  enableOccasionalSpeedBoost: 1
+  minBoostInterval: 5
+  maxBoostInterval: 20
+  boostDuration: 3
+  boostMultiplier: 3
 --- !u!114 &903786157567820599
 MonoBehaviour:
   m_ObjectHideFlags: 0

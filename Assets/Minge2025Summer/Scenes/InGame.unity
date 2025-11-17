@@ -15,7 +15,7 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
+  m_FogColor: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.01
   m_LinearFogStart: 0
@@ -1355,6 +1355,7 @@ GameObject:
   - component: {fileID: 50260474}
   - component: {fileID: 50260473}
   - component: {fileID: 50260472}
+  - component: {fileID: 50260478}
   m_Layer: 0
   m_Name: RoomCollisionMesh05
   m_TagString: Untagged
@@ -1503,6 +1504,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &50260478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50260470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &53251783
 GameObject:
   m_ObjectHideFlags: 0
@@ -2366,6 +2380,7 @@ GameObject:
   - component: {fileID: 72499169}
   - component: {fileID: 72499168}
   - component: {fileID: 72499167}
+  - component: {fileID: 72499173}
   m_Layer: 0
   m_Name: RoomCollisionMesh12
   m_TagString: Untagged
@@ -2514,6 +2529,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &72499173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72499165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &76550781
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,6 +2763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 79706754}
   - component: {fileID: 79706755}
+  - component: {fileID: 79706756}
   m_Layer: 0
   m_Name: WallCollisionMesh01
   m_TagString: Untagged
@@ -2778,6 +2807,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.58, y: 4.1, z: 1.66}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &79706756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79706753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &79759623
 GameObject:
   m_ObjectHideFlags: 0
@@ -3439,6 +3481,7 @@ GameObject:
   - component: {fileID: 119085699}
   - component: {fileID: 119085698}
   - component: {fileID: 119085697}
+  - component: {fileID: 119085703}
   m_Layer: 0
   m_Name: RoomCollisionMesh11
   m_TagString: Untagged
@@ -3587,6 +3630,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &119085703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119085695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &119334105
 GameObject:
   m_ObjectHideFlags: 0
@@ -3981,6 +4037,7 @@ GameObject:
   - component: {fileID: 138885791}
   - component: {fileID: 138885790}
   - component: {fileID: 138885789}
+  - component: {fileID: 138885795}
   m_Layer: 0
   m_Name: RoomCollisionMesh06
   m_TagString: Untagged
@@ -4129,6 +4186,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &138885795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138885787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &143568874
 GameObject:
   m_ObjectHideFlags: 0
@@ -6534,6 +6604,7 @@ GameObject:
   - component: {fileID: 243761208}
   - component: {fileID: 243761207}
   - component: {fileID: 243761206}
+  - component: {fileID: 243761212}
   m_Layer: 0
   m_Name: RoomCollisionMesh07
   m_TagString: Untagged
@@ -6682,6 +6753,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &243761212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243761204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &243961588
 GameObject:
   m_ObjectHideFlags: 0
@@ -12544,6 +12628,7 @@ GameObject:
   - component: {fileID: 504960848}
   - component: {fileID: 504960847}
   - component: {fileID: 504960846}
+  - component: {fileID: 504960852}
   m_Layer: 0
   m_Name: RoomCollisionMesh01
   m_TagString: Untagged
@@ -12692,6 +12777,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &504960852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504960844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1001 &506378046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18941,7 +19039,7 @@ MonoBehaviour:
     FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 5000
+    FarClipPlane: 50
     Dutch: 0
     ModeOverride: 0
     PhysicalProperties:
@@ -22015,6 +22113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 828790230}
   - component: {fileID: 828790231}
+  - component: {fileID: 828790232}
   m_Layer: 0
   m_Name: WallCollisionMesh03
   m_TagString: Untagged
@@ -22058,6 +22157,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.43, y: 4.1, z: 0.11}
   m_Center: {x: 1.88, y: 0, z: 0}
+--- !u!114 &828790232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828790229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &829297146
 GameObject:
   m_ObjectHideFlags: 0
@@ -32459,6 +32571,7 @@ GameObject:
   - component: {fileID: 1099083933}
   - component: {fileID: 1099083932}
   - component: {fileID: 1099083931}
+  - component: {fileID: 1099083937}
   m_Layer: 0
   m_Name: RoomCollisionMesh08
   m_TagString: Untagged
@@ -32607,6 +32720,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &1099083937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099083929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &1100566722
 GameObject:
   m_ObjectHideFlags: 0
@@ -34368,7 +34494,7 @@ Light:
   serializedVersion: 11
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 8
+  m_Intensity: 5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -43242,6 +43368,7 @@ GameObject:
   - component: {fileID: 1361767814}
   - component: {fileID: 1361767813}
   - component: {fileID: 1361767812}
+  - component: {fileID: 1361767818}
   m_Layer: 0
   m_Name: RoomCollisionMesh10
   m_TagString: Untagged
@@ -43390,6 +43517,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &1361767818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361767810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &1362725603
 GameObject:
   m_ObjectHideFlags: 0
@@ -44694,6 +44834,7 @@ GameObject:
   - component: {fileID: 1413206296}
   - component: {fileID: 1413206295}
   - component: {fileID: 1413206294}
+  - component: {fileID: 1413206300}
   m_Layer: 0
   m_Name: RoomCollisionMesh09
   m_TagString: Untagged
@@ -44842,6 +44983,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &1413206300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413206292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!4 &1416402815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2110785895062162861, guid: 5758b9fc6f64df14498b47c7d99a87e2, type: 3}
@@ -45714,6 +45868,7 @@ GameObject:
   - component: {fileID: 1438275191}
   - component: {fileID: 1438275190}
   - component: {fileID: 1438275189}
+  - component: {fileID: 1438275195}
   m_Layer: 0
   m_Name: RoomCollisionMesh02
   m_TagString: Untagged
@@ -45862,6 +46017,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &1438275195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438275187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1 &1440377519
 GameObject:
   m_ObjectHideFlags: 0
@@ -46134,6 +46302,7 @@ GameObject:
   - component: {fileID: 1445758796}
   - component: {fileID: 1445758795}
   - component: {fileID: 1445758794}
+  - component: {fileID: 1445758800}
   m_Layer: 0
   m_Name: RoomCollisionMesh04
   m_TagString: Untagged
@@ -46282,6 +46451,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &1445758800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445758792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!4 &1447920782 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ea970501dfe067646a089cdbbbc098ff, type: 3}
@@ -47646,7 +47828,7 @@ MonoBehaviour:
     FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 100
+    FarClipPlane: 50
     Dutch: 0
     ModeOverride: 0
     PhysicalProperties:
@@ -52015,6 +52197,7 @@ GameObject:
   - component: {fileID: 1687694237}
   - component: {fileID: 1687694236}
   - component: {fileID: 1687694235}
+  - component: {fileID: 1687694241}
   m_Layer: 0
   m_Name: RoomCollisionMesh03
   m_TagString: Untagged
@@ -52163,6 +52346,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.284672, y: 4, z: 0.81997544}
   m_Center: {x: 0.042333603, y: 0, z: -0.09001233}
+--- !u!114 &1687694241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687694233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!1001 &1689017142
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57814,7 +58010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  size: {x: 78.236404, y: 41.16758, z: 171.11337}
+  size: {x: 78.236404, y: 41.16758, z: 171.11336}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -57823,7 +58019,7 @@ MonoBehaviour:
   lowestSubdivLevelOverride: 0
   highestSubdivLevelOverride: 3
   overridesSubdivLevels: 0
-  mightNeedRebaking: 1
+  mightNeedRebaking: 0
   cachedTransform:
     e00: 1
     e01: 0
@@ -57854,7 +58050,7 @@ Transform:
   m_GameObject: {fileID: 1728089114}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.4783745, y: 10.816214, z: 70.07286}
+  m_LocalPosition: {x: -10.4783745, y: 10.816214, z: 70.07285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -60202,6 +60398,8 @@ MonoBehaviour:
   unloadStageList:
   - {fileID: 1642241264}
   - {fileID: 1061330698}
+  unloadStageTagList:
+  - RandomMap
   disableAfterUnload: 1
 --- !u!1 &1816829754 stripped
 GameObject:
@@ -61518,8 +61716,8 @@ Camera:
   m_GameObject: {fileID: 1875742316}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -61541,7 +61739,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 100
+  far clip plane: 50
   field of view: 60
   orthographic: 0
   orthographic size: 10
@@ -66553,6 +66751,71 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!1001 &2091061620
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.713
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.085
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 33.069
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99200577
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.068063036
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.0072738365
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.10601479
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 7.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657557727281895455, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -12.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5781462214003724341, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: m_Name
+      value: Diary
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041008166496643374, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: json
+      value: 
+      objectReference: {fileID: 4900000, guid: 23c1d1efb01a4e21b4904f9c32fb3ec2, type: 3}
+    - target: {fileID: 6041008166496643374, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
+      propertyPath: jsonReference.m_AssetGUID
+      value: 23c1d1efb01a4e21b4904f9c32fb3ec2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2fbb1a4abbd422d4f896f19a74bb7bf6, type: 3}
 --- !u!1 &2093192000
 GameObject:
   m_ObjectHideFlags: 0
@@ -66825,6 +67088,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2104848909}
   - component: {fileID: 2104848910}
+  - component: {fileID: 2104848911}
   m_Layer: 0
   m_Name: WallCollisionMesh02
   m_TagString: Untagged
@@ -66868,6 +67132,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.43, y: 4.1, z: 0.11}
   m_Center: {x: -1.8, y: 0, z: 0}
+--- !u!114 &2104848911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104848908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e640b9fc469f4589b68ba684fc8c9e88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reverbMaterialType: 3
 --- !u!4 &2115492742 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 26469471d9addea4798d090a3cc03640, type: 3}
@@ -67568,3 +67845,4 @@ SceneRoots:
   - {fileID: 1806860237}
   - {fileID: 1063676301}
   - {fileID: 1673120330}
+  - {fileID: 2091061620}
