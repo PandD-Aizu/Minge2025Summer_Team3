@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 2958520541251426796}
   m_Layer: 7
   m_Name: Wall07
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 5866490720352405620}
   m_Layer: 7
   m_Name: Step01
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 2364237327431061692}
   m_Layer: 7
   m_Name: Wall05
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 758020405189846038}
   m_Layer: 7
   m_Name: Wall04
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 1163239486854809632}
   m_Layer: 7
   m_Name: Wall06
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -448,7 +448,7 @@ GameObject:
   - component: {fileID: 3474725097631183562}
   m_Layer: 7
   m_Name: Step03
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -515,7 +515,7 @@ GameObject:
   - component: {fileID: 357091762962297319}
   m_Layer: 7
   m_Name: Step05
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -581,6 +581,7 @@ GameObject:
   - component: {fileID: 9014802001364833647}
   - component: {fileID: 5812199609999632735}
   - component: {fileID: 521280429053805178}
+  - component: {fileID: 2859319184207313198}
   m_Layer: 0
   m_Name: EventCollider
   m_TagString: Untagged
@@ -655,6 +656,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   captionText: "\u30AF\u30BD\u3063"
   model: {fileID: 0}
+--- !u!114 &2859319184207313198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476298447775243308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 6410372923234031100}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  smoothing: 10
+  materials: []
 --- !u!1 &6992342435116320753
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +734,7 @@ GameObject:
   - component: {fileID: 3262230843079859999}
   m_Layer: 7
   m_Name: Step04
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -779,7 +801,7 @@ GameObject:
   - component: {fileID: 1776291553350672338}
   m_Layer: 7
   m_Name: Step02
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -846,7 +868,7 @@ GameObject:
   - component: {fileID: 35479774464186973}
   m_Layer: 7
   m_Name: Wall01
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -913,7 +935,7 @@ GameObject:
   - component: {fileID: 4937771599823368996}
   m_Layer: 7
   m_Name: Wall03
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -980,7 +1002,7 @@ GameObject:
   - component: {fileID: 6101313636598127504}
   m_Layer: 7
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1047,7 +1069,7 @@ GameObject:
   - component: {fileID: 1755273922681322608}
   m_Layer: 7
   m_Name: Wall02
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

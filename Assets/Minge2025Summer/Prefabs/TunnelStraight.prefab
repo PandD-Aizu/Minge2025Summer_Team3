@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7287076832412953401}
   m_Layer: 7
   m_Name: TunnelWall01
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 5174205021729815366}
   m_Layer: 7
   m_Name: TunnelRoad
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -384,7 +384,7 @@ GameObject:
   - component: {fileID: 3888378970821011219}
   m_Layer: 7
   m_Name: TunnelWall02
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -625,6 +625,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1229988218057321028, guid: 1f673291885126449b20802cb829c7c0, type: 3}
       propertyPath: m_Layer
@@ -932,6 +940,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1229988218057321028, guid: 1f673291885126449b20802cb829c7c0, type: 3}
       propertyPath: m_Layer
@@ -2083,6 +2099,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 1229988218057321028, guid: 1f673291885126449b20802cb829c7c0, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -2265,6 +2289,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f673291885126449b20802cb829c7c0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1229988218057321028, guid: 1f673291885126449b20802cb829c7c0, type: 3}
       propertyPath: m_Layer

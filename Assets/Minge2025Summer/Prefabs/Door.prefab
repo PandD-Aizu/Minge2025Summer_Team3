@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7165880355184816992}
   - component: {fileID: 615473314574240871}
   - component: {fileID: 755508279874330203}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,6 +370,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 598a9ebe598651747a42df6eeb7f7724, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 598a9ebe598651747a42df6eeb7f7724, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Medium
       objectReference: {fileID: 0}
     - target: {fileID: 3461037726116187412, guid: 598a9ebe598651747a42df6eeb7f7724, type: 3}
       propertyPath: m_StaticShadowCaster

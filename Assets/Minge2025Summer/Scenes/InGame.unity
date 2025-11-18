@@ -1358,7 +1358,7 @@ GameObject:
   - component: {fileID: 50260478}
   m_Layer: 0
   m_Name: RoomCollisionMesh05
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2383,7 +2383,7 @@ GameObject:
   - component: {fileID: 72499173}
   m_Layer: 0
   m_Name: RoomCollisionMesh12
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2766,7 +2766,7 @@ GameObject:
   - component: {fileID: 79706756}
   m_Layer: 0
   m_Name: WallCollisionMesh01
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3030,7 +3030,7 @@ GameObject:
   - component: {fileID: 86652228}
   m_Layer: 0
   m_Name: Collision01
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3484,7 +3484,7 @@ GameObject:
   - component: {fileID: 119085703}
   m_Layer: 0
   m_Name: RoomCollisionMesh11
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3813,7 +3813,7 @@ GameObject:
   - component: {fileID: 123436690}
   m_Layer: 0
   m_Name: Collision01 (9)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4040,7 +4040,7 @@ GameObject:
   - component: {fileID: 138885795}
   m_Layer: 0
   m_Name: RoomCollisionMesh06
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4661,7 +4661,7 @@ GameObject:
   - component: {fileID: 164779989}
   m_Layer: 0
   m_Name: Collision01 (39)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5504,7 +5504,7 @@ GameObject:
   - component: {fileID: 197651721}
   m_Layer: 0
   m_Name: Collision01 (1)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6607,7 +6607,7 @@ GameObject:
   - component: {fileID: 243761212}
   m_Layer: 0
   m_Name: RoomCollisionMesh07
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7312,7 +7312,7 @@ GameObject:
   - component: {fileID: 269105845}
   m_Layer: 0
   m_Name: Collision01 (6)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7621,7 +7621,7 @@ GameObject:
   - component: {fileID: 281999231}
   m_Layer: 0
   m_Name: Collision01 (43)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9296,7 +9296,7 @@ GameObject:
   - component: {fileID: 354744410}
   m_Layer: 0
   m_Name: Collision01 (37)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9349,7 +9349,7 @@ GameObject:
   - component: {fileID: 357637945}
   m_Layer: 0
   m_Name: Collision01 (30)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9878,7 +9878,7 @@ GameObject:
   - component: {fileID: 383840681}
   m_Layer: 0
   m_Name: Collision01 (20)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10778,6 +10778,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 1061330699}
     m_Modifications:
     - target: {fileID: -9042734598084814363, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -9042734598084814363, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
+      objectReference: {fileID: 0}
+    - target: {fileID: -9042734598084814363, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -10826,6 +10834,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3385918423174131345, guid: 26469471d9addea4798d090a3cc03640, type: 3}
     - target: {fileID: -7921954276207858558, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -7921954276207858558, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Medium
+      objectReference: {fileID: 0}
+    - target: {fileID: -7921954276207858558, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -10833,6 +10849,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 2653df7b8d951a447ba384beb1e292ed, type: 2}
+    - target: {fileID: -7606308064723956113, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -7606308064723956113, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -10866,6 +10886,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -5517506029578742068, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
+      objectReference: {fileID: 0}
+    - target: {fileID: -5517506029578742068, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -10882,6 +10906,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -4672270328938633013, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
+      objectReference: {fileID: 0}
+    - target: {fileID: -4672270328938633013, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -10892,6 +10920,10 @@ PrefabInstance:
     - target: {fileID: -3106838580205107308, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -3106838580205107308, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
       objectReference: {fileID: 0}
     - target: {fileID: -3106838580205107308, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -10906,20 +10938,40 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1255982633427224767, guid: 0ec23a8aac2e36146a7cfc802b533de7, type: 3}
     - target: {fileID: -2205292759292857631, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2205292759292857631, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2205292759292857631, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
       objectReference: {fileID: 0}
     - target: {fileID: -2205292759292857631, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -2108571714321484952, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2108571714321484952, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -2023265802888549766, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2023265802888549766, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -1888184379699117609, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -1888184379699117609, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -10958,6 +11010,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 924459407158366654, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
+      objectReference: {fileID: 0}
+    - target: {fileID: 924459407158366654, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -10966,20 +11022,48 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1094559010302358929, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094559010302358929, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1672321122804280793, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1672321122804280793, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1825017371266806698, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825017371266806698, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 2280989046779287720, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2280989046779287720, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
+      objectReference: {fileID: 0}
+    - target: {fileID: 2280989046779287720, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303365343930339534, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303365343930339534, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
       objectReference: {fileID: 0}
     - target: {fileID: 2303365343930339534, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -10990,6 +11074,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 78989dc8e4025e54780f53a97c8304c0, type: 2}
     - target: {fileID: 3154369279922689429, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3154369279922689429, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3154369279922689429, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -10998,12 +11090,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: e22f55de8ca3c8c49bb9bfb95192e967, type: 2}
     - target: {fileID: 4884075364734891059, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884075364734891059, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5128959269915512070, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5128959269915512070, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5128959269915512070, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5412516172126080085, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5412516172126080085, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11014,12 +11122,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 2653df7b8d951a447ba384beb1e292ed, type: 2}
     - target: {fileID: 5953543770168848957, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953543770168848957, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 6053127398420472154, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6053127398420472154, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
       objectReference: {fileID: 0}
     - target: {fileID: 6053127398420472154, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11030,12 +11146,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: d0387f50695c98643a16456850ebe0ae, type: 2}
     - target: {fileID: 6885722145002513037, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6885722145002513037, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 7278296574646308181, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7278296574646308181, guid: 26469471d9addea4798d090a3cc03640, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Soft
       objectReference: {fileID: 0}
     - target: {fileID: 7278296574646308181, guid: 26469471d9addea4798d090a3cc03640, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11263,7 +11387,7 @@ GameObject:
   - component: {fileID: 428729517}
   m_Layer: 0
   m_Name: Collision01 (18)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11828,7 +11952,7 @@ GameObject:
   - component: {fileID: 471875724}
   m_Layer: 0
   m_Name: Collision01 (7)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11881,7 +12005,7 @@ GameObject:
   - component: {fileID: 472994829}
   m_Layer: 0
   m_Name: Collision01 (19)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12631,7 +12755,7 @@ GameObject:
   - component: {fileID: 504960852}
   m_Layer: 0
   m_Name: RoomCollisionMesh01
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16822,7 +16946,7 @@ GameObject:
   - component: {fileID: 676143317}
   m_Layer: 0
   m_Name: Collision01 (3)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21600,7 +21724,7 @@ GameObject:
   - component: {fileID: 812706987}
   m_Layer: 0
   m_Name: Collision01 (14)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22116,7 +22240,7 @@ GameObject:
   - component: {fileID: 828790232}
   m_Layer: 0
   m_Name: WallCollisionMesh03
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22659,7 +22783,7 @@ GameObject:
   - component: {fileID: 850622291}
   m_Layer: 0
   m_Name: Collision01 (41)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28880,7 +29004,7 @@ GameObject:
   - component: {fileID: 922161817}
   m_Layer: 0
   m_Name: Collision01 (4)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31669,7 +31793,7 @@ GameObject:
   - component: {fileID: 1065437375}
   m_Layer: 0
   m_Name: Collision01 (38)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32552,7 +32676,9 @@ MonoBehaviour:
   TriggerOnce: 0
   Preload: 0
   NonRigidbodyVelocity: 0
-  Params: []
+  Params:
+  - Name: Occlusion
+    Value: 1
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
@@ -32574,7 +32700,7 @@ GameObject:
   - component: {fileID: 1099083937}
   m_Layer: 0
   m_Name: RoomCollisionMesh08
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32745,7 +32871,7 @@ GameObject:
   - component: {fileID: 1100566724}
   m_Layer: 0
   m_Name: Collision01 (29)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32851,7 +32977,7 @@ GameObject:
   - component: {fileID: 1104534319}
   m_Layer: 0
   m_Name: Collision01 (17)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33046,7 +33172,7 @@ GameObject:
   - component: {fileID: 1109676386}
   m_Layer: 0
   m_Name: Collision01 (10)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33392,7 +33518,7 @@ GameObject:
   - component: {fileID: 1135402171}
   m_Layer: 0
   m_Name: Collision01 (27)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33677,7 +33803,7 @@ GameObject:
   - component: {fileID: 1150968591}
   m_Layer: 0
   m_Name: Collision01 (12)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34073,7 +34199,7 @@ GameObject:
   - component: {fileID: 1169125596}
   m_Layer: 0
   m_Name: Collision01 (35)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34126,7 +34252,7 @@ GameObject:
   - component: {fileID: 1177481341}
   m_Layer: 0
   m_Name: Collision01 (15)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34570,7 +34696,7 @@ GameObject:
   - component: {fileID: 1203828632}
   m_Layer: 0
   m_Name: Collision01 (34)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42725,7 +42851,7 @@ GameObject:
   - component: {fileID: 1344894843}
   m_Layer: 0
   m_Name: Collision01 (16)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43371,7 +43497,7 @@ GameObject:
   - component: {fileID: 1361767818}
   m_Layer: 0
   m_Name: RoomCollisionMesh10
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43600,7 +43726,7 @@ GameObject:
   - component: {fileID: 1372040038}
   m_Layer: 0
   m_Name: Collision01 (8)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43650,6 +43776,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1372987662}
+  - component: {fileID: 1372987664}
+  - component: {fileID: 1372987663}
   m_Layer: 0
   m_Name: EnemySpawnPoint
   m_TagString: Untagged
@@ -43674,6 +43802,60 @@ Transform:
   - {fileID: 1748550859}
   m_Father: {fileID: 518152463}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1372987663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372987661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 1748550860}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  smoothing: 10
+  materials:
+  - tag: Acoustics_Soft
+    weight: 0.3
+  - tag: Acoustics_Medium
+    weight: 0.6
+  - tag: Acoustics_Hard
+    weight: 1
+--- !u!114 &1372987664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372987661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 1084329544}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  smoothing: 10
+  materials:
+  - tag: Acoustics_Soft
+    weight: 0.3
+  - tag: Acoustics_Medium
+    weight: 0.6
+  - tag: Acoustics_Hard
+    weight: 1
 --- !u!1001 &1377744983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44276,7 +44458,7 @@ GameObject:
   - component: {fileID: 1392284481}
   m_Layer: 0
   m_Name: Collision01 (42)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44637,6 +44819,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d0c43b95f2e0b38488af04d4b6aea726, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
+      objectReference: {fileID: 0}
     - target: {fileID: 9122674328707991985, guid: d0c43b95f2e0b38488af04d4b6aea726, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -44837,7 +45023,7 @@ GameObject:
   - component: {fileID: 1413206300}
   m_Layer: 0
   m_Name: RoomCollisionMesh09
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45505,7 +45691,7 @@ GameObject:
   - component: {fileID: 1433218637}
   m_Layer: 0
   m_Name: Collision01 (31)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45694,7 +45880,7 @@ GameObject:
   - component: {fileID: 1435344655}
   m_Layer: 0
   m_Name: Collision01 (25)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45871,7 +46057,7 @@ GameObject:
   - component: {fileID: 1438275195}
   m_Layer: 0
   m_Name: RoomCollisionMesh02
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46305,7 +46491,7 @@ GameObject:
   - component: {fileID: 1445758800}
   m_Layer: 0
   m_Name: RoomCollisionMesh04
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47226,7 +47412,7 @@ GameObject:
   - component: {fileID: 1473465293}
   m_Layer: 0
   m_Name: Collision01 (24)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47669,7 +47855,7 @@ GameObject:
   - component: {fileID: 1486413065}
   m_Layer: 0
   m_Name: Collision01 (36)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48119,7 +48305,7 @@ GameObject:
   - component: {fileID: 1510411834}
   m_Layer: 0
   m_Name: Collision01 (5)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48565,7 +48751,7 @@ GameObject:
   - component: {fileID: 1528853533}
   m_Layer: 0
   m_Name: Collision01 (21)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49168,6 +49354,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e86300e233d1fcc4b83a0370a85b3887, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e86300e233d1fcc4b83a0370a85b3887, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -49966,7 +50156,7 @@ GameObject:
   - component: {fileID: 1587137374}
   m_Layer: 0
   m_Name: Collision01 (26)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50646,7 +50836,7 @@ GameObject:
   - component: {fileID: 1603487035}
   m_Layer: 0
   m_Name: Collision01 (13)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51526,7 +51716,7 @@ GameObject:
   - component: {fileID: 1651305134}
   m_Layer: 0
   m_Name: Collision01 (22)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52200,7 +52390,7 @@ GameObject:
   - component: {fileID: 1687694241}
   m_Layer: 0
   m_Name: RoomCollisionMesh03
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57408,6 +57598,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -3852341972610935857, guid: 702fca1d1202da04e935d74ea160cd8e, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
+      objectReference: {fileID: 0}
     - target: {fileID: -3599986134760704129, guid: 702fca1d1202da04e935d74ea160cd8e, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -57455,6 +57649,10 @@ PrefabInstance:
     - target: {fileID: 4423045620967985251, guid: 702fca1d1202da04e935d74ea160cd8e, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4423045620967985251, guid: 702fca1d1202da04e935d74ea160cd8e, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Hard
       objectReference: {fileID: 0}
     - target: {fileID: 4980811650917513928, guid: 702fca1d1202da04e935d74ea160cd8e, type: 3}
       propertyPath: m_Layer
@@ -58010,7 +58208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 1
-  size: {x: 78.236404, y: 41.16758, z: 171.11336}
+  size: {x: 78.236404, y: 41.16758, z: 171.11337}
   overrideRendererFilters: 0
   minRendererVolumeSize: 0.1
   objectLayerMask:
@@ -58050,7 +58248,7 @@ Transform:
   m_GameObject: {fileID: 1728089114}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.4783745, y: 10.816214, z: 70.07285}
+  m_LocalPosition: {x: -10.4783745, y: 10.816214, z: 70.07286}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59388,7 +59586,7 @@ GameObject:
   - component: {fileID: 1772140637}
   - component: {fileID: 1772140636}
   - component: {fileID: 1772140638}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GreenLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59530,7 +59728,7 @@ GameObject:
   - component: {fileID: 1775454413}
   m_Layer: 0
   m_Name: Collision01 (2)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60186,7 +60384,7 @@ GameObject:
   - component: {fileID: 1811593808}
   m_Layer: 0
   m_Name: Collision01 (32)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61386,7 +61584,7 @@ GameObject:
   - component: {fileID: 1858084971}
   m_Layer: 0
   m_Name: Collision01 (40)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62473,7 +62671,7 @@ GameObject:
   - component: {fileID: 1916734622}
   m_Layer: 0
   m_Name: Collision01 (23)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63628,7 +63826,7 @@ GameObject:
   - component: {fileID: 1963392719}
   m_Layer: 0
   m_Name: Collision01 (11)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63681,7 +63879,7 @@ GameObject:
   - component: {fileID: 1964253456}
   m_Layer: 0
   m_Name: Collision01 (33)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65089,6 +65287,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 24e478d9aef40e5468a55274f622a813, type: 2}
+    - target: {fileID: 262459332836584559, guid: 32708a6eb7a33334da6bf68db0757d6e, type: 3}
+      propertyPath: m_TagString
+      value: Acoustics_Medium
+      objectReference: {fileID: 0}
     - target: {fileID: 415059134719850254, guid: 32708a6eb7a33334da6bf68db0757d6e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -67091,7 +67293,7 @@ GameObject:
   - component: {fileID: 2104848911}
   m_Layer: 0
   m_Name: WallCollisionMesh02
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67503,7 +67705,7 @@ GameObject:
   - component: {fileID: 2140121719}
   m_Layer: 0
   m_Name: Collision01 (28)
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

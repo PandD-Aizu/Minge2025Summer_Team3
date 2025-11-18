@@ -126,6 +126,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3925793804665295022}
+  - component: {fileID: 2060508203799011569}
+  - component: {fileID: 79880274031500011}
   m_Layer: 0
   m_Name: FMODEmitter
   m_TagString: Untagged
@@ -150,6 +152,48 @@ Transform:
   - {fileID: 2895686194535033633}
   m_Father: {fileID: 6568026565561502795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2060508203799011569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475510842397578420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 6557878343860164395}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  smoothing: 10
+  materials: []
+--- !u!114 &79880274031500011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475510842397578420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 5195001894645449396}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  smoothing: 10
+  materials: []
 --- !u!1 &639711335077327068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,6 +1103,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8995318694525388730}
+  - component: {fileID: 3750231174899823616}
+  - component: {fileID: 8156157037927104758}
   m_Layer: 0
   m_Name: FMODEmitters
   m_TagString: Untagged
@@ -1083,6 +1129,60 @@ Transform:
   - {fileID: 3279441148387430422}
   m_Father: {fileID: 5908059238570268743}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3750231174899823616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5297448330901997671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 5295632185098758438}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  smoothing: 10
+  materials:
+  - tag: Acoustics_Soft
+    weight: 0.3
+  - tag: Acoustics_Medium
+    weight: 0.6
+  - tag: Acoustics_Hard
+    weight: 1
+--- !u!114 &8156157037927104758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5297448330901997671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 4400406920577474989}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  smoothing: 10
+  materials:
+  - tag: Acoustics_Soft
+    weight: 0.3
+  - tag: Acoustics_Medium
+    weight: 0.6
+  - tag: Acoustics_Hard
+    weight: 1
 --- !u!1 &5653795967719168127
 GameObject:
   m_ObjectHideFlags: 0

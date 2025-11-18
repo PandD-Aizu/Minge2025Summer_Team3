@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6513936225513591819}
   - component: {fileID: 5343215200295266889}
   - component: {fileID: 3400131344701280659}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TunnelSmallWall
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
