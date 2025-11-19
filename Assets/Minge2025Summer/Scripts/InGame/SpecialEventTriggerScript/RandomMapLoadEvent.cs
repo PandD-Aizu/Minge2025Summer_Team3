@@ -1,4 +1,5 @@
-﻿using Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript;
+﻿using System.Collections.Generic;
+using Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -12,7 +13,7 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
         [SerializeField] private int mapCol;
         [SerializeField] private int mapSize;
         [SerializeField] private GameObject mapStartMarker;
-        [SerializeField] private NavMeshSurface mapSurface;
+        [SerializeField] private List<NavMeshSurface> mapSurfaces;
         
         private bool isAlreadyLoaded = false;
         
@@ -35,7 +36,7 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
             
             var generator = map.GetComponent<MapGenerator>();
             generator.StartMarker = mapStartMarker.transform;
-            generator.NavMeshSurface = mapSurface;
+            generator.NavMeshSurfaces = mapSurfaces;
             generator.GenerateMap();
         }
     }

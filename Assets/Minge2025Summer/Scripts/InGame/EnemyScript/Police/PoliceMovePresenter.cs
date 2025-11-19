@@ -108,7 +108,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
                 if (agent != null && agent.isOnNavMesh && !agent.pathPending)
                 {
                     float arriveThreshold = Mathf.Max(agent.stoppingDistance, 0.2f);
-                    if (agent.remainingDistance <= arriveThreshold)
+                    if (!agent.pathPending && agent.hasPath && agent.remainingDistance <= arriveThreshold)
                     {
                         detectionModel.ClearLastKnownPosition();
                         aiBehaviourModel.CurrentState = AIState.Idle;
@@ -145,7 +145,6 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
             aiBehaviourModel.CurrentStateObservable
                 .Subscribe(nextState =>
                 {
-                    Debug.Log("Next PoliceState: " + nextState);
                     switch (nextState)
                     {
                         case AIState.Idle:

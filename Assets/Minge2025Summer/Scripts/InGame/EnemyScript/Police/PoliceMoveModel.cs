@@ -236,7 +236,13 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
         {
             if (agent != null && agent.isOnNavMesh)
             {
-                agent.SetDestination(worldPosition);
+                if (agent.hasPath && Vector3.Distance(agent.destination, worldPosition) < 0.5f)
+                    return;
+                
+                if (NavMesh.SamplePosition(worldPosition, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
+                    agent.SetDestination(hit.position);
+                else
+                    agent.SetDestination(worldPosition);
             }
         }
 

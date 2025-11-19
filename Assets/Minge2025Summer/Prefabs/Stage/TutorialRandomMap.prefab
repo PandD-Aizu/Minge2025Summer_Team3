@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialRandomMap
       objectReference: {fileID: 0}
+    - target: {fileID: 5299025325806631076, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: bossSpawnOffset.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: bossAddressReference.m_AssetGUID
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

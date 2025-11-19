@@ -19,23 +19,27 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
         private float farDistance = 100.0f;
         
         [Header("レイヤーマスク")]
-        [SerializeField, Tooltip("障害物のレイヤーマスク")]
+        [SerializeField, Tooltip("障害物のレイヤーマスク(Default, Wallなど。Playerは含めない)")]
         private LayerMask obstacleLayerMask;
+
+        [SerializeField, Tooltip("検知対象(Player)のレイヤーマスク")] // ★追加
+        private LayerMask targetLayerMask;
         
-        private Collider[] overlapBuffer = new Collider[32];
+        private readonly Collider[] overlapBuffer = new Collider[32];
 
         // 最終目撃情報
         private bool hasLastKnownPosition;
         private Vector3 lastKnownPosition;
         public bool HasLastKnownPosition => hasLastKnownPosition;
         public Vector3 LastKnownPosition => lastKnownPosition;
-        public void ClearLastKnownPosition() { hasLastKnownPosition = false; }
-        public Transform PlayerTransform { get; set; }
+        public Transform PlayerTransform { get; private set; }
 
-        /// <summary>
-        /// 最後に目撃した位置を設定する（聴覚イベント等からの更新用）
-        /// </summary>
-        /// <param name="position">最後に目撃/検知した推定位置</param>
+        public void ClearLastKnownPosition() 
+        { 
+            hasLastKnownPosition = false; 
+            PlayerTransform = null;
+        }
+
         public void SetLastKnownPosition(Vector3 position)
         {
             lastKnownPosition = position;
@@ -45,16 +49,10 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
         private Transform forcedPlayer;
         private float forcedUntilTime;
 
-        /// <summary>
-        /// 一定時間、可視判定をスキップしてプレイヤーを検知済みとして扱う
-        /// </summary>
-        /// <param name="player">プレイヤー Transform</param>
-        /// <param name="durationSeconds">継続時間(秒)</param>
         public void ForceDetect(Transform player, float durationSeconds = 1.5f)
         {
             forcedPlayer = player;
             forcedUntilTime = Time.time + Mathf.Max(0.05f, durationSeconds);
-            // 即時に LKP も更新しておく
             if (player != null)
             {
                 PlayerTransform = player;
@@ -63,12 +61,9 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
             }
         }
 
-        /// <summary>
-        /// 視界内のプレイヤーを検出する
-        /// </summary>
         public void FindPlayerInVision()
         {
-            // 強制検知が有効なら優先して採用
+            // 強制検知
             if (forcedPlayer != null)
             {
                 if (Time.time <= forcedUntilTime && forcedPlayer.gameObject.activeInHierarchy)
@@ -78,19 +73,20 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
                     lastKnownPosition = forcedPlayer.position;
                     return;
                 }
-                else
-                {
-                    // 期限切れ
-                    forcedPlayer = null;
-                }
+                forcedPlayer = null;
             }
 
             PlayerTransform = null;
-            if (policeTransform == null) 
-                return;
+            if (policeTransform == null) return;
 
-            // 敵の周囲にいるプレイヤーを検出
-            int hitCount = Physics.OverlapSphereNonAlloc(policeTransform.position, farDistance, overlapBuffer);
+            // targetLayerMask を使ってプレイヤーだけをバッファに入れる
+            int hitCount = Physics.OverlapSphereNonAlloc(
+                policeTransform.position, 
+                farDistance, 
+                overlapBuffer, 
+                targetLayerMask
+            );
+            
             Transform targetPlayer = null;
             for (int i = 0; i < hitCount; i++)
             {
@@ -102,32 +98,37 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
                 }
             }
 
-            // プレイヤーが範囲内にいなければ処理終了
-            if (targetPlayer == null) 
-                return;
+            if (targetPlayer == null) return;
 
-            // プレイヤーが視野内にいるかどうかをチェックする
+            // 視野角チェック
             Vector3 directionToPlayer = (targetPlayer.position - policeTransform.position).normalized;
-            if (Vector3.Angle(policeTransform.forward, directionToPlayer) < visionAngle / 2)
+            
+            // XZ平面上の角度で判定
+            Vector3 forwardFlat = Vector3.ProjectOnPlane(policeTransform.forward, Vector3.up).normalized;
+            Vector3 dirFlat = Vector3.ProjectOnPlane(directionToPlayer, Vector3.up).normalized;
+
+            if (Vector3.Angle(forwardFlat, dirFlat) < visionAngle / 2)
             {
+                // 視線チェック
                 float distanceToPlayer = Vector3.Distance(policeTransform.position, targetPlayer.position);
-                Vector3 eyePosition = policeTransform.position + Vector3.up * 1.6f;
-                if (!Physics.Raycast(eyePosition, directionToPlayer, distanceToPlayer, obstacleLayerMask))
+                Vector3 eyePosition = policeTransform.position + Vector3.up * 1.4f;
+                
+                // 相手の胸元あたりを狙う
+                Vector3 targetCenter = targetPlayer.position + Vector3.up * 1.0f;
+                Vector3 rayDirection = (targetCenter - eyePosition).normalized;
+
+                if (!Physics.Raycast(eyePosition, rayDirection, distanceToPlayer, obstacleLayerMask))
                 {
                     PlayerTransform = targetPlayer.transform;
-                    hasLastKnownPosition = true; // 最終目撃地点を更新
+                    hasLastKnownPosition = true;
                     lastKnownPosition = targetPlayer.position;
                 }
             }
         }
 
-        /// <summary>
-        /// Editor上で視野範囲を可視化する
-        /// </summary>
         private void OnDrawGizmosSelected()
         {
-            if (policeTransform == null) 
-                return;
+            if (policeTransform == null) return;
             
             Gizmos.color = Color.white;
             Gizmos.DrawWireSphere(policeTransform.position, farDistance);
@@ -136,8 +137,8 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
             Quaternion leftRayRotation = Quaternion.AngleAxis(-halfAngle, Vector3.up);
             Quaternion rightRayRotation = Quaternion.AngleAxis(halfAngle, Vector3.up);
             
-            Vector3 leftRayDirection = leftRayRotation * Vector3.forward;
-            Vector3 rightRayDirection = rightRayRotation * Vector3.forward;
+            Vector3 leftRayDirection = leftRayRotation * policeTransform.forward;
+            Vector3 rightRayDirection = rightRayRotation * policeTransform.forward;
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawRay(policeTransform.position, leftRayDirection * closeDistance);

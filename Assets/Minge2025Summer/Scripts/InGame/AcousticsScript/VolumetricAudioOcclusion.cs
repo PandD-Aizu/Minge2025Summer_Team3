@@ -1,4 +1,5 @@
-﻿using System;
+﻿// csharp
+using System;
 using System.Collections.Generic;
 using FMODUnity;
 using UnityEngine;
@@ -8,21 +9,24 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
 {
     public class VolumetricAudioOcclusion : MonoBehaviour
     {
-        [Header("FMOD Settings")] 
+        [Header("FMOD Settings")]
         [SerializeField] private StudioEventEmitter emitter;
         [SerializeField, Tooltip("FMOD Studioで設定したパラメータ名")] private string parameterName = "Occlusion";
 
-        [Header("Raycast Settings")] 
+        [Header("Raycast Settings")]
         [SerializeField, Tooltip("音を遮るレイヤー")] private LayerMask layerMask;
-        
+
         [SerializeField, Range(0.1f, 5.0f), Tooltip("音源の大きさ")] private float sourceSize = 1.0f;
-        
-        [SerializeField, Tooltip("毎フレーム飛ばすレイの本数")] private int rayCount = 10;
-        
+
+        [SerializeField, Tooltip("毎フレーム飛ばすレイの本数")] private int rayCount = 1;
+
+        [Header("Sampling Settings")]
+        [SerializeField, Tooltip("レイを飛ばす間隔（秒）")] private float sampleInterval = 0.5f;
+
         [Header("Smoothing Settings")]
         [SerializeField, Tooltip("パラメータ変化のスムージング係数")] private float smoothing = 10.0f;
 
-        [Header("Material Weighting Settings")] 
+        [Header("Material Weighting Settings")]
         [SerializeField, Tooltip("Tagごとの遮蔽重み付け設定")] private List<OcclusionMaterial> materials;
 
         private Dictionary<string, float> materialDictionary;
@@ -39,12 +43,14 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
         private float targetOcclusion = 0.0f;
 
         private Vector3[] randomOffsets;
+        private float sampleTimer = 0f;
 
         private void Start()
         {
-            randomOffsets = new Vector3[rayCount];
+            EnsureRandomOffsets();
+
             UpdateRandomOffsets();
-            
+
             materialDictionary = new Dictionary<string, float>();
             foreach (var material in materials)
             {
@@ -53,15 +59,14 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
                     materialDictionary.Add(material.tag, material.weight);
                 }
             }
+
+            sampleTimer = 0f;
         }
 
         private void Update()
         {
             if (emitter == null || !emitter.IsPlaying())
-            {
-                Debug.LogWarning("VolumetricAudioOcclusion: Emitter is null or not playing.", this);
                 return;
-            }
 
             if (listenerTransform == null)
             {
@@ -73,18 +78,33 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
                     return;
                 }
             }
-
-            // 遮蔽率を計算
-            targetOcclusion = CalculateOcclusionFactor();
             
+            EnsureRandomOffsets();
+            
+            sampleTimer -= Time.deltaTime;
+            if (sampleTimer <= 0f)
+            {
+                sampleTimer = Mathf.Max(0.01f, sampleInterval);
+                targetOcclusion = CalculateOcclusionFactor();
+                UpdateRandomOffsets();
+            }
+
             // 数値を滑らかに補間
             currentOcclusion = Mathf.Lerp(currentOcclusion, targetOcclusion, Time.deltaTime * smoothing);
-            
+
             // FMODパラメーターに反映
             emitter.SetParameter(parameterName, 1 - currentOcclusion);
-            
-            // ランダムオフセットを更新
-            UpdateRandomOffsets();
+        }
+
+        /// <summary>
+        /// ランダムなオフセット配列を確保
+        /// </summary>
+        private void EnsureRandomOffsets()
+        {
+            if (randomOffsets == null || randomOffsets.Length != Math.Max(1, rayCount))
+            {
+                randomOffsets = new Vector3[Math.Max(1, rayCount)];
+            }
         }
 
         /// <summary>
@@ -97,12 +117,14 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
             Vector3 listenerPos = listenerTransform.position;
             Vector3 sourceCenter = transform.position;
 
-            for (int i = 0; i < rayCount; i++)
+            int actualRays = Math.Max(1, randomOffsets.Length);
+
+            for (int i = 0; i < actualRays; i++)
             {
                 // 音源の中心 + ランダムなオフセット位置から体積を計算
                 Vector3 origin = sourceCenter + randomOffsets[i];
                 RaycastHit hit;
-                
+
                 if (Physics.Linecast(origin, listenerPos, out hit, layerMask))
                 {
                     string hitTag = hit.collider.tag;
@@ -115,24 +137,24 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
                     {
                         totalOcclusion += 1.0f;
                     }
-                    
-                    #if UNITY_EDITOR
+
+#if UNITY_EDITOR
                     // デバッグ表示
                     float w = materialDictionary.ContainsKey(hitTag) ? materialDictionary[hitTag] : 1.0f;
                     Color debugColor = Color.Lerp(Color.yellow, Color.red, w);
                     Debug.DrawLine(origin, hit.point, debugColor);
                     Debug.DrawLine(hit.point, listenerPos, Color.green);
-                    #endif
+#endif
                 }
                 else
                 {
-                    #if UNITY_EDITOR
+#if UNITY_EDITOR
                     Debug.DrawLine(origin, listenerPos, Color.green);
-                    #endif
+#endif
                 }
             }
 
-            return totalOcclusion / rayCount;
+            return totalOcclusion / actualRays;
         }
 
         /// <summary>
@@ -140,7 +162,8 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
         /// </summary>
         private void UpdateRandomOffsets()
         {
-            for (int i = 0; i < rayCount; i++)
+            EnsureRandomOffsets();
+            for (int i = 0; i < randomOffsets.Length; i++)
             {
                 randomOffsets[i] = Random.insideUnitSphere * sourceSize;
             }
