@@ -48,9 +48,10 @@ GameObject:
   - component: {fileID: 6912427067993326632}
   - component: {fileID: 8243954231529940829}
   - component: {fileID: 2958520541251426796}
+  - component: {fileID: 4959500657821694386}
   m_Layer: 7
   m_Name: Wall07
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -104,6 +105,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
+--- !u!208 &4959500657821694386
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2302415191194501883}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4.2925997, y: 12.836, z: 0.0592661}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -12.28307, y: 5.156548, z: 0.5467099}
+  m_TimeToStationary: 0.5
 --- !u!1 &2361528347037081187
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +134,7 @@ GameObject:
   - component: {fileID: 5866490720352405620}
   m_Layer: 7
   m_Name: Step01
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -245,9 +262,10 @@ GameObject:
   - component: {fileID: 8522420583351781677}
   - component: {fileID: 1769745347754190554}
   - component: {fileID: 2364237327431061692}
+  - component: {fileID: 1651217897824834088}
   m_Layer: 7
   m_Name: Wall05
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -301,6 +319,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
+--- !u!208 &1651217897824834088
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2790804232985538281}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5367335, y: 2.7537825, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -7.452821, y: -4.81942, z: -7.775857e-15}
+  m_TimeToStationary: 0.5
 --- !u!1 &2862060047807102667
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,9 +346,10 @@ GameObject:
   - component: {fileID: 8594871021840115131}
   - component: {fileID: 4929390067940413190}
   - component: {fileID: 758020405189846038}
+  - component: {fileID: 3067398600878765782}
   m_Layer: 7
   m_Name: Wall04
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -368,6 +403,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
+--- !u!208 &3067398600878765782
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2862060047807102667}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 5.113355, y: 12.80116, z: 0.05}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.770017, y: 5.175698, z: -3.268253e-15}
+  m_TimeToStationary: 0.5
 --- !u!1 &4819488807347894425
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,9 +430,10 @@ GameObject:
   - component: {fileID: 6836507057166056622}
   - component: {fileID: 2808988284156335680}
   - component: {fileID: 1163239486854809632}
+  - component: {fileID: 5772574152654462792}
   m_Layer: 7
   m_Name: Wall06
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -435,6 +487,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
+--- !u!208 &5772574152654462792
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4819488807347894425}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.530981, y: 8.787395, z: 0.05460595}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -7.451404, y: 9.179049, z: 0.557243}
+  m_TimeToStationary: 0.5
 --- !u!1 &4972094964187078859
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,7 +516,7 @@ GameObject:
   - component: {fileID: 3474725097631183562}
   m_Layer: 7
   m_Name: Step03
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -515,7 +583,7 @@ GameObject:
   - component: {fileID: 357091762962297319}
   m_Layer: 7
   m_Name: Step05
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -581,6 +649,7 @@ GameObject:
   - component: {fileID: 9014802001364833647}
   - component: {fileID: 5812199609999632735}
   - component: {fileID: 521280429053805178}
+  - component: {fileID: 2859319184207313198}
   m_Layer: 0
   m_Name: EventCollider
   m_TagString: Untagged
@@ -655,6 +724,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   captionText: "\u30AF\u30BD\u3063"
   model: {fileID: 0}
+--- !u!114 &2859319184207313198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476298447775243308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 6410372923234031100}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  smoothing: 10
+  materials: []
 --- !u!1 &6992342435116320753
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,7 +802,7 @@ GameObject:
   - component: {fileID: 3262230843079859999}
   m_Layer: 7
   m_Name: Step04
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -779,7 +869,7 @@ GameObject:
   - component: {fileID: 1776291553350672338}
   m_Layer: 7
   m_Name: Step02
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -844,9 +934,10 @@ GameObject:
   - component: {fileID: 6115698003600551800}
   - component: {fileID: 8460441544912407374}
   - component: {fileID: 35479774464186973}
+  - component: {fileID: 7413551216635775726}
   m_Layer: 7
   m_Name: Wall01
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -900,6 +991,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
+--- !u!208 &7413551216635775726
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8880154801024123594}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 6.170555, y: 6.157475, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -5.42088, y: -1.385762, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8908095077846545341
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,9 +1018,10 @@ GameObject:
   - component: {fileID: 332965019061797898}
   - component: {fileID: 3971716291589487785}
   - component: {fileID: 4937771599823368996}
+  - component: {fileID: 1712098408652835458}
   m_Layer: 7
   m_Name: Wall03
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -967,6 +1075,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
+--- !u!208 &1712098408652835458
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8908095077846545341}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 6.189075, y: 6.15972, z: 0.34149835}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -5.371626, y: -1.350245, z: 8.999681}
+  m_TimeToStationary: 0.5
 --- !u!1 &8961803767249245994
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,7 +1104,7 @@ GameObject:
   - component: {fileID: 6101313636598127504}
   m_Layer: 7
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1045,9 +1169,10 @@ GameObject:
   - component: {fileID: 2229808734703019408}
   - component: {fileID: 4455879097302886965}
   - component: {fileID: 1755273922681322608}
+  - component: {fileID: 2665655283331361697}
   m_Layer: 7
   m_Name: Wall02
-  m_TagString: Untagged
+  m_TagString: Acoustics_Hard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1101,6 +1226,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 2
+--- !u!208 &2665655283331361697
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9189016002053445446}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 6.17425, y: 6.160575, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -1.700957, y: -1.440007, z: -0.06}
+  m_TimeToStationary: 0.5
 --- !u!1001 &871134544520009609
 PrefabInstance:
   m_ObjectHideFlags: 0

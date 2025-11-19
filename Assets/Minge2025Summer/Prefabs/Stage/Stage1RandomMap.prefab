@@ -100,6 +100,10 @@ PrefabInstance:
       propertyPath: 'crossroadsPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 5380714960930156110, guid: bf1ab433ad56b8b458aba8381032df24, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: bossAddressReference.m_AssetGUID
+      value: e495104cdfa3a074da8293b4cef2b60f
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

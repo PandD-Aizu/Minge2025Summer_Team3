@@ -46,12 +46,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   policeTransform: {fileID: 6568026565561502795}
-  visionAngle: 180
+  visionAngle: 150
   closeDistance: 5
-  farDistance: 8
+  farDistance: 10
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 384
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!114 &5657314968317825676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,39 +120,6 @@ MonoBehaviour:
   attackTriggerName: AttackTrigger
   fadeDuration: 0.1
   layer: 0
---- !u!1 &475510842397578420
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3925793804665295022}
-  m_Layer: 0
-  m_Name: FMODEmitter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &3925793804665295022
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 475510842397578420}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1899915928246009085}
-  - {fileID: 2895686194535033633}
-  m_Father: {fileID: 6568026565561502795}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639711335077327068
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +224,6 @@ Transform:
   m_Children:
   - {fileID: 2284510910643270288}
   - {fileID: 3606022845152031569}
-  - {fileID: 3925793804665295022}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &3000077402215070843
@@ -276,7 +245,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.5
-  m_Radius: 0.32
+  m_Radius: 0.2
   m_SlopeLimit: 90
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -291,7 +260,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 854875069414108594}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.15
+  m_Radius: 0.2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -300,7 +269,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.2
+  m_Height: 1.5
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -380,9 +349,9 @@ MonoBehaviour:
   Preload: 0
   NonRigidbodyVelocity: 0
   Params: []
-  OverrideAttenuation: 0
+  OverrideAttenuation: 1
   OverrideMinDistance: 1
-  OverrideMaxDistance: 20
+  OverrideMaxDistance: 50
 --- !u!1 &1358405730195462845
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,69 +574,6 @@ MonoBehaviour:
   legShotSlowMultiplier: 0.5
   legShotSlowDuration: 2
   refreshIfEqual: 1
---- !u!1 &2918529697351209755
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1899915928246009085}
-  - component: {fileID: 6557878343860164395}
-  m_Layer: 0
-  m_Name: Moan
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &1899915928246009085
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2918529697351209755}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3925793804665295022}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6557878343860164395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2918529697351209755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -1077459326
-      Data2: 1286141293
-      Data3: -1690561103
-      Data4: -80796748
-    Path: event:/EnemySE/PoliceMoan
-  Event: 
-  EventPlayTrigger: 0
-  EventStopTrigger: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &3229764658798123242
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,69 +652,6 @@ MonoBehaviour:
   battleBGMController: {fileID: 0}
   attackModel: {fileID: 4068258161037177638}
   policeAnimationController: {fileID: 6887822325792473805}
---- !u!1 &4211309342675702383
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2895686194535033633}
-  - component: {fileID: 5195001894645449396}
-  m_Layer: 0
-  m_Name: FootStep
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &2895686194535033633
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4211309342675702383}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3925793804665295022}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5195001894645449396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4211309342675702383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -651168943
-      Data2: 1130550863
-      Data3: -1850035838
-      Data4: 1995739791
-    Path: event:/PlayerSE/FootStep
-  Event: 
-  EventPlayTrigger: 0
-  EventStopTrigger: 0
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &4493355955904561952
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMoanEmitter: {fileID: 5295632185098758438}
   footStepEmitter: {fileID: 4400406920577474989}
-  closeEnemyEmitter: {fileID: 6557878343860164395}
+  closeEnemyEmitter: {fileID: 5295632185098758438}
   minMoanInterval: 2
   maxMoanInterval: 5
   referenceSpeed: 0.9
@@ -1059,6 +902,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8995318694525388730}
+  - component: {fileID: 3750231174899823616}
+  - component: {fileID: 8156157037927104758}
   m_Layer: 0
   m_Name: FMODEmitters
   m_TagString: Untagged
@@ -1083,6 +928,62 @@ Transform:
   - {fileID: 3279441148387430422}
   m_Father: {fileID: 5908059238570268743}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3750231174899823616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5297448330901997671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 5295632185098758438}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  sampleInterval: 0.5
+  smoothing: 10
+  materials:
+  - tag: Acoustics_Soft
+    weight: 0.3
+  - tag: Acoustics_Medium
+    weight: 0.6
+  - tag: Acoustics_Hard
+    weight: 1
+--- !u!114 &8156157037927104758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5297448330901997671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa633524b44798bece2c5d8ddda05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitter: {fileID: 4400406920577474989}
+  parameterName: Occlusion
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  sourceSize: 1
+  rayCount: 10
+  sampleInterval: 0.5
+  smoothing: 10
+  materials:
+  - tag: Acoustics_Soft
+    weight: 0.3
+  - tag: Acoustics_Medium
+    weight: 0.6
+  - tag: Acoustics_Hard
+    weight: 1
 --- !u!1 &5653795967719168127
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,8 +30,6 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
         /// </summary>
         public void OnPartHit(EnemyBodyParts part, float finalDamage)
         {
-            Debug.Log("PolicePartHitResponder: OnPartHit " + part + " Damage: " + finalDamage, this);
-            
             if (part == EnemyBodyParts.LEFT_LEG || part == EnemyBodyParts.RIGHT_LEG)
             {
                 if (moveModel != null)
