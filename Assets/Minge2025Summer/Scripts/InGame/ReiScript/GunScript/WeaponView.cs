@@ -135,19 +135,6 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript
                 if (!originalActive)
                     muzzleFlashLight.gameObject.SetActive(true);
 
-                // ベイク専用ではないか確認（サイレント）
-                #if UNITY_2018_1_OR_NEWER
-                try
-                {
-                    var bakeType = muzzleFlashLight.lightmapBakeType;
-                    if (bakeType != LightmapBakeType.Realtime)
-                    {
-                        // silent: 動作に影響するがログは削除済み
-                    }
-                }
-                catch { }
-                #endif
-
                 if (muzzleFlashLight.intensity <= 0f)
                     muzzleFlashLight.intensity = Mathf.Max(1f, originalIntensity);
                 if (muzzleFlashLight.range <= 0f)

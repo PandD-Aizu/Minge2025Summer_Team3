@@ -5,6 +5,7 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
     public enum SoundType
     {
         Gunshot,
+        Glass,
         Footstep,
         Impact,
         Other,

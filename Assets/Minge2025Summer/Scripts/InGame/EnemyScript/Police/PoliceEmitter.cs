@@ -67,19 +67,24 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
         
         public void PlayFootStep(float speed)
         {
-            if (speed > minHorizontalSpeed)
+            // 小さなノイズで鳴らないようにマージンを付けて閾値判定
+            const float epsilon = 0.01f;
+            if (speed <= minHorizontalSpeed + epsilon)
             {
-                float interval = Mathf.Max(stepIntervalAtRefSpeed * (referenceSpeed / speed), minStepInterval);
-                stepTimer += Time.deltaTime;
-
-                if (stepTimer >= interval)
-                {
-                    footStepEmitter.Play();
-                    stepTimer = 0.0f;
-                }
+                stepTimer = 0.0f;
+                return;
             }
-            else
+
+            // ゼロ割り防止
+            float safeSpeed = Mathf.Max(speed, 0.0001f);
+
+            // 間隔が極端に大きくならないよう上限を設定（必要に応じて調整）
+            float interval = Mathf.Clamp(stepIntervalAtRefSpeed * (referenceSpeed / safeSpeed), minStepInterval, 5.0f);
+
+            stepTimer += Time.deltaTime;
+            if (stepTimer >= interval)
             {
+                footStepEmitter?.Play();
                 stepTimer = 0.0f;
             }
         }

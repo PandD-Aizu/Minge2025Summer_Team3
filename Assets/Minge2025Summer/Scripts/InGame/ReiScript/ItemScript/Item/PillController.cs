@@ -2,7 +2,6 @@
 using FMODUnity;
 using Minge2025Summer.Scripts.InGame.PlayerStatusScript;
 using UniRx;
-using UnityEditor.EventSystems;
 using UnityEngine;
 
 namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Item
