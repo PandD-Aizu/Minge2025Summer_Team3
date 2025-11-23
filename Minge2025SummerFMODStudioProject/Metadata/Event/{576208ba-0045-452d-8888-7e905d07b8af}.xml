@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{576208ba-0045-452d-8888-7e905d07b8af}">
 		<property name="name">
-			<value>Serenade</value>
+			<value>Serenade_noise</value>
 		</property>
 		<property name="outputFormat">
 			<value>2</value>

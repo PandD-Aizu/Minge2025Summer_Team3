@@ -485,6 +485,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -7624878424733492547, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -7624878424733492547, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5931372751300003811, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
       propertyPath: m_Name
       value: Ivy
@@ -497,9 +505,25 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4526732904447361589, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -3809945072200597350, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -3809945072200597350, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
       propertyPath: m_Name
@@ -512,6 +536,22 @@ PrefabInstance:
     - target: {fileID: 1378922297957006227, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5015415391883453526, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5015415391883453526, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511804410910832219, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511804410910832219, guid: d944c7a14eeb5f447ac275354a7cab37, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

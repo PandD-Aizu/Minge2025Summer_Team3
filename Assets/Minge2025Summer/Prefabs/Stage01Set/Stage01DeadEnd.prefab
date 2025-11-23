@@ -608,6 +608,18 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -7624878424733492547, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7624878424733492547, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -7624878424733492547, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5471128930442294794, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -616,9 +628,33 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4526732904447361589, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -3809945072200597350, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3809945072200597350, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -3809945072200597350, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
       propertyPath: m_Name
@@ -631,6 +667,30 @@ PrefabInstance:
     - target: {fileID: 1378922297957006227, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362683378785215908, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362683378785215908, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362683378785215908, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511804410910832219, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ReceiveGI
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511804410910832219, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511804410910832219, guid: 4e0cb816f661c744ca2f459ef281ca2f, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

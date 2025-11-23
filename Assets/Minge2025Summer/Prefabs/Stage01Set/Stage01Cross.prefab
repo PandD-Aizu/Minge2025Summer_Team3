@@ -1223,6 +1223,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -7624878424733492547, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: -5931372751300003811, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
       propertyPath: m_Name
       value: Ivy
@@ -1236,12 +1240,20 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -4683669308469848369, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: -1255982633427224767, guid: a2f9a15b7760e9c409daabe062b7259d, type: 3}
     - target: {fileID: -4526732904447361589, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -3809945072200597350, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -3809945072200597350, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -1260,6 +1272,10 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5015415391883453526, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5015415391883453526, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: -8761910824519130491, guid: 4de669b240157f142a66f062508874b6, type: 3}
@@ -1267,6 +1283,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 1367383701777426158, guid: 4de669b240157f142a66f062508874b6, type: 3}
+    - target: {fileID: 8511804410910832219, guid: 550c424fa6eb2a64aa8b7701abcb4e34, type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

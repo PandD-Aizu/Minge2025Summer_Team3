@@ -13,6 +13,10 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
         [SerializeField] private float rayDistance = 50.0f;
         [SerializeField] private float checkInterval = 1.0f;
 
+        [Header("球状サンプリング")]
+        [SerializeField, Range(4, 64)] private int horizontalRays = 12;
+        [SerializeField, Range(2, 32)] private int verticalRays = 6;
+
         [Header("Reverbの設定")]
         [SerializeField] private ReverbMaterialType currentReverbMaterialType;
         [SerializeField] private List<ReverbMaterialType> reverbMaterialTypes = new ();
@@ -38,7 +42,6 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
                 {
                     ChangeSnapShot();
                     previousReverbMaterialType = currentReverbMaterialType;
-                    Debug.Log($"Reverb changed to: {currentReverbMaterialType}");
                 }
                 
                 checkTimer = 0.0f;
@@ -50,12 +53,14 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
         /// </summary>
         public void DebugRayCast()
         {
-            Debug.DrawRay(playerTransform.position, playerTransform.forward * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, -playerTransform.forward * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, playerTransform.up * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, -playerTransform.up * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, playerTransform.right * rayDistance, Color.red);
-            Debug.DrawRay(playerTransform.position, -playerTransform.right * rayDistance, Color.red);
+            if (playerTransform == null)
+                return;
+
+            var dirs = GetRayDirections();
+            foreach (var dir in dirs)
+            {
+                Debug.DrawRay(playerTransform.position, dir * rayDistance, Color.red);
+            }
         }
         
         /* ---ヘルパー関数--- */
@@ -70,29 +75,51 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
         private void CheckEnvironment()
         {
             reverbMaterialTypes.Clear();
-            
-            // プレイヤーの前後左右上下にRayを飛ばして、当たったオブジェクトのReverbMaterialを取得する
-            Physics.Raycast(playerTransform.position, playerTransform.forward, out RaycastHit hitForward, rayDistance);
-            Physics.Raycast(playerTransform.position, -playerTransform.forward, out RaycastHit hitBack, rayDistance);
-            Physics.Raycast(playerTransform.position, playerTransform.up, out RaycastHit hitUp, rayDistance);
-            Physics.Raycast(playerTransform.position, -playerTransform.up, out RaycastHit hitDown, rayDistance);
-            Physics.Raycast(playerTransform.position, playerTransform.right, out RaycastHit hitRight, rayDistance);
-            Physics.Raycast(playerTransform.position, -playerTransform.right, out RaycastHit hitLeft, rayDistance);
 
-            // 当たったオブジェクトのReverbMaterialを取得し、リストに追加する
-            reverbMaterialTypes.Add(GetMaterialTypeFromHit(hitForward));
-            reverbMaterialTypes.Add(GetMaterialTypeFromHit(hitBack));
-            reverbMaterialTypes.Add(GetMaterialTypeFromHit(hitUp));
-            reverbMaterialTypes.Add(GetMaterialTypeFromHit(hitDown));
-            reverbMaterialTypes.Add(GetMaterialTypeFromHit(hitRight));
-            reverbMaterialTypes.Add(GetMaterialTypeFromHit(hitLeft));
+            if (playerTransform == null)
+                return;
 
-            // リストの中で最も多く出現したReverbMaterialを現在のReverbMaterialとして設定する
+            var dirs = GetRayDirections();
+            foreach (var dir in dirs)
+            {
+                Physics.Raycast(playerTransform.position, dir, out RaycastHit hit, rayDistance);
+                reverbMaterialTypes.Add(GetMaterialTypeFromHit(hit));
+            }
+
             currentReverbMaterialType = reverbMaterialTypes
                 .GroupBy(type => type)
                 .OrderByDescending(group => group.Count())
                 .Select(group => group.Key)
                 .FirstOrDefault();
+        }
+             
+        /// <summary>
+        /// 球状に均等分布したRayの方向リストを取得する
+        /// </summary>
+        /// <returns>レイの方向</returns>
+        private List<Vector3> GetRayDirections()
+        {
+            var dirs = new List<Vector3>();
+            if (playerTransform == null)
+                return dirs;
+
+            // 緯度ループ: -90（下）から +90（上）まで均等に
+            for (int v = 0; v < Mathf.Max(1, verticalRays); v++)
+            {
+                float t = verticalRays == 1 ? 0.5f : (float)v / (verticalRays - 1); // 0..1
+                float lat = Mathf.Lerp(-90f, 90f, t); // 緯度（ピッチ）
+
+                for (int h = 0; h < Mathf.Max(1, horizontalRays); h++)
+                {
+                    float lon = 360f * h / Mathf.Max(1, horizontalRays); // 経度（ヨー）
+                    // ローカル前方を基準にピッチ・ヨーを適用
+                    var localDir = Quaternion.Euler(lat, lon, 0f) * Vector3.forward;
+                    var worldDir = playerTransform.TransformDirection(localDir).normalized;
+                    dirs.Add(worldDir);
+                }
+            }
+
+            return dirs;
         }
 
         /// <summary>
