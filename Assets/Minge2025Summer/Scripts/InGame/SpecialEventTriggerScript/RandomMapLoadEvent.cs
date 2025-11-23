@@ -3,12 +3,13 @@ using Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
 {
     public class RandomMapLoadEvent : MonoBehaviour
     {
-        [SerializeField] private string randomMapAddress;
+        [SerializeField] private AssetReference randomMapAddress;
         [SerializeField] private int mapRow;
         [SerializeField] private int mapCol;
         [SerializeField] private int mapSize;
@@ -17,7 +18,7 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
         
         private bool isAlreadyLoaded = false;
         
-        private void OnTriggerEnter(Collider other)
+        private async void OnTriggerEnter(Collider other)
         {
             if (!other.transform.CompareTag("Player")) 
                 return;
@@ -27,14 +28,16 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
             
             isAlreadyLoaded = true;
             
-            var map = Addressables.InstantiateAsync(randomMapAddress).WaitForCompletion();
+            AsyncOperationHandle<GameObject> map = Addressables.InstantiateAsync(randomMapAddress);
+            await map.Task;
+            
             Vector3 mapPosition = new Vector3(
                 mapStartMarker.transform.position.x + mapCol * mapSize,
                 mapStartMarker.transform.position.y,
                 mapStartMarker.transform.position.z + mapRow * mapSize);
-            map.transform.position = mapPosition;
+            map.Result.transform.position = mapPosition;
             
-            var generator = map.GetComponent<MapGenerator>();
+            var generator = map.Result.GetComponent<MapGenerator>();
             generator.StartMarker = mapStartMarker.transform;
             generator.NavMeshSurfaces = mapSurfaces;
             generator.GenerateMap();
