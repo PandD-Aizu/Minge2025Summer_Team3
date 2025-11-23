@@ -7,11 +7,14 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
     {
         [SerializeField, Tooltip("破棄するステージのリスト")]
         private List<GameObject> unloadStageList = new　();
+        
+        [SerializeField, Tooltip("タグで破棄する場合は有効化する")]
+        private List<string> unloadStageTagList = new ();
 
         [SerializeField, Tooltip("破棄後にこのコンポーネントを無効化する")]
         private bool disableAfterUnload = true;
 
-        private bool hasTriggered; // 実行は一度だけ
+        private bool hasTriggered;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -20,12 +23,19 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
             
             if (!other.CompareTag("Player")) 
                 return;
+            
+            foreach (var tag in unloadStageTagList)
+            {
+                var stageObject = GameObject.FindGameObjectWithTag(tag);
+                if (stageObject != null)
+                    unloadStageList.Add(stageObject);
+            }
 
             hasTriggered = true;
             UnloadStages();
 
             if (disableAfterUnload)
-                enabled = false; // 以降の処理を停止
+                enabled = false;
         }
 
         private void UnloadStages()

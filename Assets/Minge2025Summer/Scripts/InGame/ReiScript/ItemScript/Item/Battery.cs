@@ -22,7 +22,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Item
         public IObservable<float> OnApplyItem => onApplyItem;
         
         public int GetItemAmount => amount;
-        public string GetItemName => "Battery";
+        public string GetItemName => "バッテリー";
         public string GetDisplayName => displayName;
         public string GetItemDescription => description;
         public float GetIlluminationAmount => illuminationAmount;

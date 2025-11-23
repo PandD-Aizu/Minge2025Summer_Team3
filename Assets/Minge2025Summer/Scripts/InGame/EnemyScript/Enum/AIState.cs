@@ -8,5 +8,6 @@
         Chasing,
         Searching,
         Attacking,
+        Down,
     }
 }

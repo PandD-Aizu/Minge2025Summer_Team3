@@ -127,8 +127,10 @@ Shader "Custom/PickupHintMarkerSprite"
                 float dist = dot(worldCenter - camPos, camForward);
                 dist = max(dist, 0.0001);
 
+                // 修正: 投影行列の要素はプラットフォームによって符号が異なるので絶対値を使う
                 float fovFactor = UNITY_MATRIX_P[1][1];
-                float targetWorld = (_TargetScreenSize / max(_ScreenParams.y, 1.0)) * (dist / fovFactor);
+                float fovFactorAbs = abs(fovFactor);
+                float targetWorld = (_TargetScreenSize / max(_ScreenParams.y, 1.0)) * (dist / max(fovFactorAbs, 0.0001));
                 float size = lerp(1.0, targetWorld, saturate(_KeepScreenSize)) * _Scale;
 
                 float3 worldPos = worldCenter
@@ -143,7 +145,7 @@ Shader "Custom/PickupHintMarkerSprite"
                 // サンプリングは ST の絶対値スケール＋オフセット
                 float2 stScaleAbs  = abs(stScale);
                 float2 stOffsetPos = stOffset + min(0, stScale);
-                
+
                 OUT.uv    = uvFlip * stScaleAbs + stOffsetPos;
                 OUT.color = IN.color * _Color * rc;
                 return OUT;

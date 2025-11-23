@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
+using FMODUnity;
 
 namespace Minge2025Summer.Scripts.Title
 {
@@ -10,6 +11,7 @@ namespace Minge2025Summer.Scripts.Title
     {
         [Header("References")]
         [SerializeField] private CreditScreenView view;
+        [SerializeField] private StudioEventEmitter eventEmitter;
         [SerializeField] private CreditData creditData;
         [SerializeField, Tooltip("親のクレジットパネル（終了時に非表示にする）")]
         private GameObject creditsPanel;
@@ -60,6 +62,11 @@ namespace Minge2025Summer.Scripts.Title
             }
         }
 
+        private void OnDisable()
+        {
+            eventEmitter.Stop();
+        }
+
         public void StartCreditsForButton()
         {
             StartCreditsInternal();
@@ -100,6 +107,8 @@ namespace Minge2025Summer.Scripts.Title
 
             model.ResetScroll();
             model.StartScrolling();
+            
+            eventEmitter.Play();
 
             initRoutine = null;
         }
@@ -143,6 +152,8 @@ namespace Minge2025Summer.Scripts.Title
         private IEnumerator EndDelayCoroutine()
         {
             yield return new WaitForSeconds(creditData.delayAfterEnd);
+            
+            eventEmitter.Stop();
 
             if (loopCredits)
             {
@@ -163,6 +174,8 @@ namespace Minge2025Summer.Scripts.Title
             model.ResetScroll();
             view.ResetScrollPosition();
             model.StartScrolling();
+            
+            eventEmitter.Play();
         }
 
         private void SkipCredits()
@@ -173,6 +186,8 @@ namespace Minge2025Summer.Scripts.Title
             }
 
             model.StopScrolling();
+            
+            eventEmitter.Stop();
 
             if (!string.IsNullOrEmpty(nextSceneName))
             {

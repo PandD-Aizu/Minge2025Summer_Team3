@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2582046742875739299}
   m_Layer: 0
   m_Name: WoodCrate
-  m_TagString: Untagged
+  m_TagString: Acoustics_Soft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

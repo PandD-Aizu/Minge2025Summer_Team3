@@ -1,5 +1,6 @@
 ﻿using System;
 using Minge2025Summer.Scripts.InGame.FlashLightScript;
+using Minge2025Summer.Scripts.InGame.PlayerInputControllerScript;
 using Minge2025Summer.Scripts.InGame.PlayerStatusScript;
 using UniRx;
 using UnityEngine;
@@ -42,6 +43,7 @@ namespace Minge2025Summer.Scripts.InGame.GameOverScript
                 .Subscribe(_ =>
                 {
                     view.ShowGameOverPanel();
+                    MouseLockModel.SetCursorState(true);
                 })
                 .AddTo(disposables);
             
@@ -51,6 +53,7 @@ namespace Minge2025Summer.Scripts.InGame.GameOverScript
                 .Subscribe(_ =>
                 {
                     view.ShowGameOverPanel();
+                    MouseLockModel.SetCursorState(true);
                 })
                 .AddTo(disposables);
         }
