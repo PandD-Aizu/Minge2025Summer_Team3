@@ -12,16 +12,19 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
         [SerializeField] private float maxSpeed = 3.5f;
         [SerializeField] private float rotationSpeed = 10.0f;
 
-        private Transform origin;
-        private Transform target;
-        private readonly float currentSpeedMultiplier = 1f;
-        private float speedBoostExpireTime;
+        private Vector3 originPos;
+        private Vector3 destination;
+
         private Vector3 planarVelocity;
         private float verticalVelocity;
 
         private void Start()
         {
-            origin = transform;
+            if (flyTransform != null)
+            {
+                originPos = flyTransform.position;
+                destination = originPos;
+            }
         }
 
         /// <summary>
@@ -30,21 +33,23 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
         public void UpdateVelocity()
         {
             // ターゲットへの方向を計算
-            Vector3 direction = flyTransform.position - target.position;
-            direction.Normalize();
+            Vector3 direction = destination - flyTransform.position;
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                direction.Normalize();
+            }
 
             // 速度を更新
-            planarVelocity = Vector3.Lerp(planarVelocity, direction * speed * currentSpeedMultiplier, Time.deltaTime * 10f);
+            planarVelocity = Vector3.Lerp(planarVelocity, direction * speed, Time.deltaTime * 10.0f);
 
             // ハエの位置を更新
-            Vector3 totalVelocity = planarVelocity + new Vector3(0, verticalVelocity, 0);
-            target.position += totalVelocity * Time.deltaTime;
-
-            // ハエの回転を更新
-            if (direction != Vector3.zero)
+            flyTransform.position += (planarVelocity + new Vector3(0, verticalVelocity, 0)) * Time.deltaTime;
+            
+            // ハエの向きを更新
+            if (planarVelocity.sqrMagnitude > 0.001f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(direction);
-                target.rotation = Quaternion.Slerp(target.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                Quaternion targetRotation = Quaternion.LookRotation(planarVelocity.normalized);
+                flyTransform.rotation = Quaternion.Slerp(flyTransform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
             }
         }
 
@@ -54,7 +59,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
         /// <param name="worldPosition"></param>
         public void SetDestination(Vector3 worldPosition)
         {
-            target.position = worldPosition;
+            destination = worldPosition;
         }
 
         /// <summary>
@@ -62,7 +67,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
         /// </summary>
         public void ResetPosition()
         {
-            target.position = origin.position;
+            destination = originPos;
         }
         
         /// <summary>
@@ -71,7 +76,9 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
         public void ForceStopImmediate()
         {
             planarVelocity = Vector3.zero;
-            verticalVelocity = 0f;
+            verticalVelocity = 0;
+            if (flyTransform != null)
+                destination = flyTransform.position;
         }
     }
 }

@@ -9,7 +9,16 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
     {
         private ReactiveProperty<AIState> currentState = new ReactiveProperty<AIState>();
         public IObservable<AIState> CurrentStateObservable => currentState.AsObservable();
-        public AIState CurrentState { get => currentState.Value; set => currentState.Value = value; }
+
+        public AIState CurrentState
+        {
+            get => currentState.Value;
+            set 
+            {
+                if (currentState.Value != value)
+                    currentState.Value = value;
+            }
+        }
 
         public void HandleIdleState(FlyMoveModel moveModel)
         {
@@ -19,19 +28,9 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
             }
         }
 
-        public void HandleWarningState()
-        {
-            
-        }
-
-        public void HandlePatrolState()
-        {
-            
-        }
-
         public void HandleChaseState(Transform target, FlyMoveModel moveModel)
         {
-            if (target != null)
+            if (target == null)
             {
                 CurrentState = AIState.Idle;
                 return;
@@ -48,7 +47,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
                 return;
             }
 
-            moveModel.ResetPosition();
+            moveModel.ForceStopImmediate();
 
             Vector3 toTarget = target.position - transform.position;
             toTarget.y = 0.0f;

@@ -9,8 +9,6 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
     {
         [Header("依存関係")]
         [SerializeField] private Transform flyTransform;
-        [SerializeField] private Animator flyAnimator;
-        [SerializeField, Tooltip("攻撃アニメーションのTrigger名")] private string attackTriggerName = "AttackTrigger";
 
         [Header("攻撃設定")] 
         [SerializeField, Tooltip("近接攻撃が届く距離")] private float attackRange = 0.1f;

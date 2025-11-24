@@ -10,10 +10,12 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
         
         public void PlayFlyFlySound()
         {
-            if (flyFlyEmitter == null) 
+            if (flyFlyEmitter == null)
+                return;
+
+            if (flyFlyEmitter.IsPlaying())
                 return;
             
-            flyFlyEmitter.Stop();
             flyFlyEmitter.Play();
         }
     }
