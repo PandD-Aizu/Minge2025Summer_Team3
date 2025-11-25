@@ -9,6 +9,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerStatusScript
     {
         [SerializeField] private PlayerHpModel model;
         [SerializeField] private PlayerHpView view;
+        [SerializeField] private PlayerHpEmitter emitter;
         [SerializeField] private BattleBGMController battleBGMController;
 
         private CompositeDisposable disposables = new ();
@@ -19,6 +20,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerStatusScript
             
             SubscribeEvents();
             model.CurrentHp = model.GetMaxHp;
+            model.PreviousHp = model.GetMaxHp;
         }
 
         private void Update()
@@ -33,6 +35,11 @@ namespace Minge2025Summer.Scripts.InGame.PlayerStatusScript
             model.CurrentHpObservable
                 .Subscribe(hp =>
                 {
+                    if (hp < model.PreviousHp)
+                        emitter.PlayDamageSound();
+                    
+                    model.PreviousHp = hp;
+                    
                     battleBGMController.ChangeBGM(hp, model.GetMaxHp);
                 })
                 .AddTo(disposables);

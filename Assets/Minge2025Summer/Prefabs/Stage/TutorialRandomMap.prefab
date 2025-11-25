@@ -62,44 +62,64 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: cornerPrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: deadEndPrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: straightPrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'cornerPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 4391139681639871541, guid: 3c82c17e5ddd8ad4e87eb2383b7337d0, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'cornerPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6807907040598117888, guid: f87b712547f6f2e448e91c1e18964d2b, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: tJunctionPrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: crossroadsPrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'deadEndPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 9084595836482640832, guid: af770ade543a84041ba71d3a53c7d133, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'deadEndPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5668175485488005428, guid: 33a31cc8099f97c45851bbb7d9a2a690, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'straightPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 188110727183967752, guid: 3f9c23731d0099d4883750974e304253, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'straightPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1713300811316059312, guid: b89b9a62bf39b0a41a58fe5d94bfba5f, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'tJunctionPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 7435173239157114688, guid: 285c4e403393ed4428a033133ec53467, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'tJunctionPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 832639343564076106, guid: f09f5c31d9108c34bb777d627e14b37f, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'crossroadsPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 8558557564298102975, guid: a2c4d371826a448408b4beacbbc5f5c7, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'crossroadsPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8152826206639702964, guid: 366aaeda21b669e41bf8e324fa263f14, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: bossAddressReference.m_AssetGUID
       value: 

@@ -83,7 +83,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
             int hitCount = Physics.OverlapSphereNonAlloc(
                 policeTransform.position, 
                 farDistance, 
-                overlapBuffer, 
+                overlapBuffer,
                 targetLayerMask
             );
             

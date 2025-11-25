@@ -21,10 +21,17 @@ namespace Minge2025Summer.Scripts.InGame.EscapeScreen
         private void OnDisable()
         {
             foreach (var cinemachineController in cinemachineControllers)
-                cinemachineController.enabled = true;
+            {
+                if (cinemachineController != null)
+                    cinemachineController.enabled = true;
+            }
             
             foreach (var playerPositionController in playerPositionControllers)
-                playerPositionController.SetActive(true);
+            {
+                if (playerPositionController != null)
+                    playerPositionController.SetActive(true);
+            }
+                
         }
     }
 }

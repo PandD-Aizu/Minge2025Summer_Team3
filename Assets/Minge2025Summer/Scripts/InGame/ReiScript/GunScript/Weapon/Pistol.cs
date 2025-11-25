@@ -56,7 +56,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.GunScript.Weapon
         private float nextFireTime;
         
         public Subject<Unit> OnFire => onFire;
-        public string GetWeaponName => "Pistol";
+        public string GetWeaponName => "拳銃";
         public AmmoType GetAmmoType => ammoType;
         public int GetMagCapacity => magCapacity;
         public int GetAmmoInMag => ammoInMag;

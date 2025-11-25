@@ -41,6 +41,7 @@ namespace Minge2025Summer.Scripts.InGame.ReiScript.ItemScript.Item
         
         public void HideItem()
         {
+            transform.SetParent(null);
             gameObject.SetActive(false);
         }
     }

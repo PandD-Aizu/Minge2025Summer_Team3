@@ -73,7 +73,7 @@
 	<object class="MarkerTrack" id="{ec662f0a-8d50-4850-bead-66f376234c13}" />
 	<object class="GroupTrack" id="{8bece058-4567-4519-b344-13a3bf75bfd6}">
 		<relationship name="modules">
-			<destination>{0df948e7-e343-431a-a749-d2089c5966ae}</destination>
+			<destination>{325228b3-1100-4a31-8fcf-d66178222da4}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{4b8be654-a7f0-4e0c-9cdb-c208da692601}</destination>
@@ -81,7 +81,7 @@
 	</object>
 	<object class="Timeline" id="{bcc5c827-474e-4c34-ad45-ed671b63574a}">
 		<relationship name="modules">
-			<destination>{0df948e7-e343-431a-a749-d2089c5966ae}</destination>
+			<destination>{325228b3-1100-4a31-8fcf-d66178222da4}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{a80ddf92-6bd4-4eca-8a63-6f18f1b81fff}</destination>
@@ -104,18 +104,21 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{42ff3d6a-974e-4654-b26d-3afec91ef1ea}" />
-	<object class="SingleSound" id="{0df948e7-e343-431a-a749-d2089c5966ae}">
+	<object class="SingleSound" id="{325228b3-1100-4a31-8fcf-d66178222da4}">
 		<property name="length">
-			<value>372.19755102040824</value>
+			<value>104.46955782584827</value>
 		</property>
 		<property name="timelockedOffset">
-			<value>10</value>
+			<value>2.9497845777799721</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{c80921d7-e5e4-4d42-b068-413db91d4211}</destination>
+			<destination>{aaddfc89-2b9e-4706-90b0-cda194710db5}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{4b8be654-a7f0-4e0c-9cdb-c208da692601}">
+		<property name="volume">
+			<value>-5</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -137,7 +140,7 @@
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>372.19755102040818</value>
+			<value>104.46955782584817</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{bcc5c827-474e-4c34-ad45-ed671b63574a}</destination>

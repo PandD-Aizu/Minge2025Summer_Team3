@@ -24,8 +24,9 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
             if (!other.CompareTag("Player") || hasTriggered)
                 return;
             
-            // イベントを変更
+            eventEmitter.Stop(); 
             eventEmitter.EventReference = FMODUnity.RuntimeManager.PathToEventReference(eventName);
+
             hasTriggered = true;
         }
     } 
