@@ -1,6 +1,7 @@
 ﻿using System;
 using Minge2025Summer.Scripts.InGame.PlayerStatusScript;
 using UniRx;
+using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
@@ -9,6 +10,9 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
     {
         [Header("依存関係")]
         [SerializeField] private Transform flyTransform;
+
+        [Header("与える反動")] 
+        [SerializeField] private CinemachineImpulseSource impulseSource;
 
         [Header("攻撃設定")] 
         [SerializeField, Tooltip("近接攻撃が届く距離")] private float attackRange = 0.1f;
@@ -64,6 +68,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript.Fly
             damageAppliedThisAttack = false;
             lastAttackTime = Time.time;
             onAttack.OnNext(Unit.Default);
+            impulseSource.GenerateImpulse();
             pendingTarget.GetComponentInChildren<PlayerHpModel>().CurrentHp -= attackDamage;
             return true;
         }

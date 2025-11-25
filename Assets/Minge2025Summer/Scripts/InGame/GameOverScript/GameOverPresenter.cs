@@ -14,6 +14,7 @@ namespace Minge2025Summer.Scripts.InGame.GameOverScript
 
         [SerializeField] private PlayerHpModel playerHpModel;
         [SerializeField] private BatteryLevelModel batteryLevelModel;
+        [SerializeField] private MouseLockModel mouseLockModel;
 
         private CompositeDisposable disposables = new ();
 
@@ -43,7 +44,7 @@ namespace Minge2025Summer.Scripts.InGame.GameOverScript
                 .Subscribe(_ =>
                 {
                     view.ShowGameOverPanel();
-                    MouseLockModel.SetCursorState(true);
+                    mouseLockModel.IsLocked = false;
                 })
                 .AddTo(disposables);
             
@@ -53,7 +54,7 @@ namespace Minge2025Summer.Scripts.InGame.GameOverScript
                 .Subscribe(_ =>
                 {
                     view.ShowGameOverPanel();
-                    MouseLockModel.SetCursorState(true);
+                    mouseLockModel.IsLocked = false;
                 })
                 .AddTo(disposables);
         }

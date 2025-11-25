@@ -8,9 +8,9 @@ namespace Minge2025Summer.Scripts.InGame.PlayerInputControllerScript
 
         public bool IsLocked { get => isLocked; set => isLocked = value; }
         
-        public static void SetCursorState(bool isLocked)
+        public void SetCursorState(bool locked)
         {
-            if (isLocked)
+            if (locked)
             {
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
