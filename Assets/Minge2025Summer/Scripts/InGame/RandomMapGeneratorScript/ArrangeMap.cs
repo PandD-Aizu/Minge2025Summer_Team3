@@ -6,6 +6,7 @@ using UniRx;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Android;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
@@ -87,11 +88,16 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
             public bool North, East, South, West;
         }
 
+        private class Specialroom
+        {
+            public Vector3? ReservedSpecialPosition;
+            public float ReservedSpecialRotation;
+        }
+
+        private Specialroom[] specialRooms;
         private Area[,] map;
         private GameObject mapContainer;
-        private Vector3? reservedSpecialPosition;
-        private float reservedSpecialRotation;
-
+        
         public Transform StartMarker
         {
             get => startMarker;
@@ -139,7 +145,7 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
         {
             mapWidth = (mapWidth % 2 == 0) ? mapWidth + 1 : mapWidth;
             mapHeight = (mapHeight % 2 == 0) ? mapHeight + 1 : mapHeight;
-
+            
             map = new Area[mapWidth, mapHeight];
             for (int x = 0; x < mapWidth; x++)
             {
@@ -147,6 +153,12 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
                 {
                     map[x, y] = new Area();
                 }
+            }
+            
+            specialRooms = new Specialroom[NumberOfSpecialRoom];
+            for (int i = 0; i < NumberOfSpecialRoom; i++)
+            {
+                specialRooms[i] = new Specialroom();
             }
         }
 
@@ -231,8 +243,11 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
 
         private void DetermineAndReserveSpecialPoint()
         {
-            reservedSpecialPosition = null;
-            reservedSpecialRotation = 0f;
+            foreach (Specialroom speroom in specialRooms)
+            {
+                speroom.ReservedSpecialPosition = null;
+                speroom.ReservedSpecialRotation = 0f;
+            }
             if (specialPointPrefab == null)
                 return;
 
@@ -258,59 +273,58 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
                 perimeterCells.Add(new Vector2Int(x, mapHeight - 1));
             }
 
-            for (int y = 0; y < mapHeight; y++)
+            for (int y = 1; y < mapHeight-1; y++)
             {
                 perimeterCells.Add(new Vector2Int(0, y));
             }
 
-            for (int y = 0; y < mapHeight; y++)
+            for (int y = 1; y < mapHeight-1; y++)
             {
                 perimeterCells.Add(new Vector2Int(mapWidth - 1, y));
             }
 
-            if (perimeterCells.Count == 0)
+            if (perimeterCells.Count == 0 || perimeterCells.Count < NumberOfSpecialRoom)
                 return;
-
+            
             for (int i = perimeterCells.Count - 1; i > 0; i--)
             {
                 int randomIndex = Random.Range(0, i + 1);
                 (perimeterCells[i], perimeterCells[randomIndex]) = (perimeterCells[randomIndex], perimeterCells[i]);
             }
-
-            foreach (var cell in perimeterCells)
+            
+            for(int i = 0; i < NumberOfSpecialRoom; i++)    
             {
                 Vector3 outsidePos;
                 float yRotation = 0f;
-                Area a = map[cell.x, cell.y];
+                Area a = map[perimeterCells[i].x, perimeterCells[i].y];
 
-                if (cell.y == 0 && cell.x != startPos.x)
+                if (perimeterCells[i].y == 0 && perimeterCells[i].x != startPos.x)
                 {
                     a.South = true;
-                    outsidePos = new Vector3(cell.x * areaSize, 0, -areaSize);
+                    outsidePos = new Vector3(perimeterCells[i].x * areaSize, 0, -areaSize);
                     yRotation = 0f;
                 }
-                else if (cell.y == mapHeight - 1 && cell.x != goalPos.x)
+                else if (perimeterCells[i].y == mapHeight - 1 && perimeterCells[i].x != goalPos.x)
                 {
                     a.North = true;
-                    outsidePos = new Vector3(cell.x * areaSize, 0, mapHeight * areaSize);
+                    outsidePos = new Vector3(perimeterCells[i].x * areaSize, 0, mapHeight * areaSize);
                     yRotation = 180f;
                 }
-                else if (cell.x == 0)
+                else if (perimeterCells[i].x == 0)
                 {
                     a.West = true;
-                    outsidePos = new Vector3(-areaSize, 0, cell.y * areaSize);
+                    outsidePos = new Vector3(-areaSize, 0, perimeterCells[i].y * areaSize);
                     yRotation = 90f;
                 }
                 else
                 {
                     a.East = true;
-                    outsidePos = new Vector3(mapWidth * areaSize, 0, cell.y * areaSize);
+                    outsidePos = new Vector3(mapWidth * areaSize, 0, perimeterCells[i].y * areaSize);
                     yRotation = 270f;
                 }
-
-                reservedSpecialPosition = outsidePos;
-                reservedSpecialRotation = yRotation;
-                break;
+                
+                specialRooms[i].ReservedSpecialPosition = outsidePos;
+                specialRooms[i].ReservedSpecialRotation = yRotation;
             }
         }
 
@@ -386,10 +400,14 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
 
         private void SpawnReservedSpecialPoint()
         {
-            if (specialPointPrefab == null || !reservedSpecialPosition.HasValue) return;
+            foreach (Specialroom speroom in specialRooms)
+            {
+                if (specialPointPrefab == null || !speroom.ReservedSpecialPosition.HasValue) return;
 
-            Quaternion rotation = Quaternion.Euler(0, reservedSpecialRotation, 0);
-            Instantiate(specialPointPrefab, reservedSpecialPosition.Value, rotation, mapContainer.transform);
+                Quaternion rotation = Quaternion.Euler(0, speroom.ReservedSpecialRotation, 0);
+                Instantiate(specialPointPrefab, speroom.ReservedSpecialPosition.Value, rotation, mapContainer.transform);
+            }
+            
         }
 
         private void PositionMapBasedOnMarker()

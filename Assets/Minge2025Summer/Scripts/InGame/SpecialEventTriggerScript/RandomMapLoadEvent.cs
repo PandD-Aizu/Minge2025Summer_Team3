@@ -36,8 +36,9 @@ namespace Minge2025Summer.Scripts.InGame.SpecialEventTriggerScript
             map.transform.position = mapPosition;
             
             var generator = map.GetComponent<MapGenerator>();
-            generator.StartMarker = mapStartMarker;
+            generator.StartMarker = mapStartMarker.transform;
             generator.NavMeshSurfaces = mapSurfaces;
+            generator.NumberOfSpecialRoom = numberOfSpecialRoom;
             generator.GenerateMap();
         }
     }
