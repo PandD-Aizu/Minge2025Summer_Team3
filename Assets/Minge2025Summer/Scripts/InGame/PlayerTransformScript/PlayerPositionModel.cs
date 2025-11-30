@@ -14,6 +14,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
         [SerializeField] private float moveSpeed = 5.0f;
         [SerializeField] private float runSpeedMultiplier = 2.0f;
         [SerializeField] private float crouchSpeedMultiplier = 0.5f;
+        [SerializeField] private float puddleSpeedMultiplier = 0.5f;
         [SerializeField] private Vector3 currentVelocity;
         [SerializeField] private float speedChangeRate = 10.0f;
 
@@ -39,6 +40,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
         
         private float horizontalSpeed;
         private bool isRunning;
+        private bool isPuddling;
         private float currentHeight;
         private float targetHeight;
         
@@ -50,6 +52,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
         public CharacterController GetCharacterController => characterController;
         public bool IsRunning { get => isRunning; set => isRunning = value; }
         public bool IsCrouching { get => isCrouching.Value; set => isCrouching.Value = value; }
+        public bool IsPuddling { get => isPuddling; set => isPuddling = value; } //Puddleから操作
 
         /// <summary>
         /// 水平方向の移動を行う
@@ -65,6 +68,8 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
                 targetSpeed *= crouchSpeedMultiplier;
             else if (isRunning && input != Vector2.zero)
                 targetSpeed *= runSpeedMultiplier;
+            if (IsPuddling)
+                targetSpeed *= puddleSpeedMultiplier;
 
             // 現在の水平速度を取得
             float currentHorizontalSpeed =
