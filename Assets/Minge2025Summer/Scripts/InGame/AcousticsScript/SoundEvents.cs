@@ -8,6 +8,7 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
         Glass,
         Footstep,
         Impact,
+        Puddle,
         Other,
     }
 

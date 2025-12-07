@@ -1,18 +1,41 @@
-using System;
 using UnityEngine;
+using FMODUnity;
 using Minge2025Summer.Scripts.InGame.PlayerTransformScript;
+using Minge2025Summer.Scripts.InGame.AcousticsScript;
+using UniRx;
 
-public class Puddle : MonoBehaviour
+namespace Minge2025Summer.Scripts.InGame.StageGimmick
 {
-    [SerializeField] private PlayerPositionModel model;
-    
-    void OnTriggerEnter(Collider other)
+    public class Puddle : MonoBehaviour
     {
-        if (other.CompareTag("Player")) model.IsPuddling = true;
-    }
+        [SerializeField] private PlayerPositionModel model;
+        [SerializeField] private StudioEventEmitter puddleEmitter;
+        [SerializeField, Tooltip("音が広がる距離")] private float soundRadius = 5.0f;
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player")) model.IsPuddling = false;
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other.CompareTag("Player"))
+                return;
+            
+            model.IsPuddling = true;
+            Debug.Log("Puddle: Player entered trigger, playing puddle sound.");
+            puddleEmitter.Play();
+            SoundEvent soundEvent = new SoundEvent(transform.position, soundRadius, SoundType.Puddle, gameObject);
+            MessageBroker.Default.Publish(soundEvent);
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!other.CompareTag("Player"))
+                return;
+            
+            model.IsPuddling = false;
+        }
+        
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, soundRadius);
+        }
     }
 }
