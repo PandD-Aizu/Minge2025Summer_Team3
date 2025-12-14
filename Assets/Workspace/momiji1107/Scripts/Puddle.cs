@@ -20,10 +20,18 @@ namespace Minge2025Summer.Scripts.InGame.StageGimmick
             if (model.IsWalking)
             {
                 model.IsPuddling = true;
-                Debug.Log("Puddle: Player walking on the puddle, playing puddle sound.");
-                puddleEmitter.Play();
+                
+                if (!puddleEmitter.IsPlaying())
+                {
+                    puddleEmitter.Play();
+                }
+                
                 SoundEvent soundEvent = new SoundEvent(transform.position, soundRadius, SoundType.Puddle, gameObject);
                 MessageBroker.Default.Publish(soundEvent);
+            }
+            else
+            {
+                puddleEmitter.Stop();
             }
         }
 
@@ -31,6 +39,8 @@ namespace Minge2025Summer.Scripts.InGame.StageGimmick
         {
             if (!other.CompareTag("Player"))
                 return;
+            
+            puddleEmitter.Stop();
             
             model.IsPuddling = false;
         }
