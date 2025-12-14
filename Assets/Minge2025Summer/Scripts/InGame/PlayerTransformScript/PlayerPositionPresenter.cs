@@ -38,6 +38,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
             if (Input.GetKey(KeyCode.A)) 
                 input.x -= 1.0f;
             
+            model.IsWalking = input.magnitude != 0.0f;
             model.IsRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             
             model.Move(input);

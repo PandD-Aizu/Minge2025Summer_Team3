@@ -12,16 +12,19 @@ namespace Minge2025Summer.Scripts.InGame.StageGimmick
         [SerializeField] private StudioEventEmitter puddleEmitter;
         [SerializeField, Tooltip("音が広がる距離")] private float soundRadius = 5.0f;
 
-        private void OnTriggerEnter(Collider other)
+        private void OnTriggerStay(Collider other)
         {
             if (!other.CompareTag("Player"))
                 return;
-            
-            model.IsPuddling = true;
-            Debug.Log("Puddle: Player entered trigger, playing puddle sound.");
-            puddleEmitter.Play();
-            SoundEvent soundEvent = new SoundEvent(transform.position, soundRadius, SoundType.Puddle, gameObject);
-            MessageBroker.Default.Publish(soundEvent);
+
+            if (model.IsWalking)
+            {
+                model.IsPuddling = true;
+                Debug.Log("Puddle: Player walking on the puddle, playing puddle sound.");
+                puddleEmitter.Play();
+                SoundEvent soundEvent = new SoundEvent(transform.position, soundRadius, SoundType.Puddle, gameObject);
+                MessageBroker.Default.Publish(soundEvent);
+            }
         }
 
         private void OnTriggerExit(Collider other)

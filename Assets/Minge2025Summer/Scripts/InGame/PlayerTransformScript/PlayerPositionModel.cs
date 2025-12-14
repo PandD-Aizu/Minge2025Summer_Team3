@@ -39,6 +39,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
         public bool ForceCrouch { get; set; }
         
         private float horizontalSpeed;
+        private bool isWalking;
         private bool isRunning;
         private bool isPuddling;
         private float currentHeight;
@@ -50,6 +51,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
         
         /* プロパティ */
         public CharacterController GetCharacterController => characterController;
+        public bool IsWalking { get => isWalking; set => isWalking = value; }
         public bool IsRunning { get => isRunning; set => isRunning = value; }
         public bool IsCrouching { get => isCrouching.Value; set => isCrouching.Value = value; }
         public bool IsPuddling { get => isPuddling; set => isPuddling = value; } //Puddleから操作
