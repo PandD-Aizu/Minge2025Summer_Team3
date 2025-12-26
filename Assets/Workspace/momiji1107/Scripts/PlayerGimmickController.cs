@@ -48,6 +48,7 @@ public class PlayerGimmickController : MonoBehaviour
     //ギミック中の画面から戻るボタンを押した時に呼び出される
     public void ExitGimmick()
     {
+        Debug.Log("ExitGimmick");
         camManager.ChangeCameraToMain();
     }
 }
