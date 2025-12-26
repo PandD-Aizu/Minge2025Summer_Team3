@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Cysharp.Threading.Tasks;
+using Minge2025Summer.Scripts.InGame.PlayerTransformScript;
 using UnityEngine;
 
 namespace Minge2025Summer.Scripts.InGame.StageGimmick
@@ -14,6 +15,9 @@ namespace Minge2025Summer.Scripts.InGame.StageGimmick
         [SerializeField, Tooltip("戻る時間")] private float recoilDuration = 0.25f;
         [SerializeField, Tooltip("反動カーブ")] private AnimationCurve recoilCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         
+        [Header("プレイヤー側に影響する速度低下量")]
+        [SerializeField] private float playerSpeedReduction = 0.5f;
+        
         private Mesh mesh;
         private Vector3[] originalVertices;
         private Vector3[] displacedVertices;
@@ -23,6 +27,8 @@ namespace Minge2025Summer.Scripts.InGame.StageGimmick
         private Vector3 worldAnchorPoint;
         private bool isStuck = false;
         private bool isRecoiling = false;
+        
+        private PlayerPositionModel playerPositionModel;
 
         private CancellationTokenSource recoilCts;
 
@@ -79,6 +85,9 @@ namespace Minge2025Summer.Scripts.InGame.StageGimmick
                 // Triggerには「衝突点(contacts)」情報がないため、計算で求める。
                 // 「クモの巣(自分)の表面上で、プレイヤーに一番近い点」を取得
                 Vector3 hitPoint = webCollider.ClosestPoint(other.transform.position);
+                playerPositionModel = other.GetComponentInChildren<PlayerPositionModel>();
+                if (playerPositionModel != null) 
+                    playerPositionModel.MoveSpeed *= playerSpeedReduction;
                 
                 StickToTarget(other.transform, hitPoint);
             }
@@ -136,6 +145,11 @@ namespace Minge2025Summer.Scripts.InGame.StageGimmick
 
         private void BreakWeb()
         {
+            if (playerPositionModel != null)
+            {
+                playerPositionModel.MoveSpeed /= playerSpeedReduction;
+            }
+            
             isStuck = false;
             stuckTarget = null;
 
