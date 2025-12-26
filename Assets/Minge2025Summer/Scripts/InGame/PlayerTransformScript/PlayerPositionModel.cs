@@ -48,6 +48,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
         
         /* プロパティ */
         public CharacterController GetCharacterController => characterController;
+        public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
         public bool IsRunning { get => isRunning; set => isRunning = value; }
         public bool IsCrouching { get => isCrouching.Value; set => isCrouching.Value = value; }
 
