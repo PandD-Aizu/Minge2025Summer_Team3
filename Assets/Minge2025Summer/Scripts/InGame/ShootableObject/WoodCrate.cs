@@ -64,7 +64,7 @@ namespace Minge2025Summer.Scripts.InGame.ShootableObject
             }
             
             // 親のオブジェクトを含めて破壊
-            Destroy(gameObject.transform.parent);
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 }

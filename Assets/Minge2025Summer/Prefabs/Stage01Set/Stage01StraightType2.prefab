@@ -1518,7 +1518,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 140.7
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6395295658347721070, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
     m_RemovedGameObjects:
     - {fileID: 4113805319680516255, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
     - {fileID: 7767579786691818265, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
@@ -1531,6 +1532,8 @@ PrefabInstance:
     - {fileID: 7159644856868072671, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
     - {fileID: 2492175979433955914, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
     - {fileID: 1468024624531693873, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
+    - {fileID: 758517260080134937, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
+    - {fileID: 8549681663908619869, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 733618685540978891, guid: 5137f41988b61ba4abab1c645fe1332c, type: 3}
       insertIndex: -1

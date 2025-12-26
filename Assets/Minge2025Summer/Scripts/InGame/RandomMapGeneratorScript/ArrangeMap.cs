@@ -6,7 +6,6 @@ using UniRx;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Android;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
@@ -17,7 +16,7 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
     {
         private static readonly Subject<Unit> navMeshRebuiltSubject = new Subject<Unit>();
         public static bool NavMeshReady { get; private set; }
-        public int NumberOfSpecialRoom { get; set; } //生成する特殊部屋の数
+        public int NumberOfSpecialRoom { get => numberOfSpecialRoom; set => numberOfSpecialRoom = value; } //生成する特殊部屋の数
         public static IObservable<Unit> NavMeshReadyAsObservable()
         {
             return NavMeshReady ? Observable.Return(Unit.Default) : navMeshRebuiltSubject.AsObservable();
@@ -33,6 +32,9 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
 
         [Tooltip("エリア（タイル）1つあたりのサイズ")]
         [SerializeField] private float areaSize = 5.0f;
+
+        [Tooltip("生成する特殊部屋の数")]
+        [SerializeField] private int numberOfSpecialRoom = 1;
 
         [Header("閉路設定")]
         [Tooltip("閉路を生成する割合")]
@@ -243,89 +245,107 @@ namespace Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript
 
         private void DetermineAndReserveSpecialPoint()
         {
-            foreach (Specialroom speroom in specialRooms)
-            {
-                speroom.ReservedSpecialPosition = null;
-                speroom.ReservedSpecialRotation = 0f;
-            }
-            if (specialPointPrefab == null)
-                return;
+            // 初期化
+    foreach (Specialroom speroom in specialRooms)
+    {
+        speroom.ReservedSpecialPosition = null;
+        speroom.ReservedSpecialRotation = 0f;
+    }
 
-            int centerX = mapWidth / 2;
-            Vector2Int startPos = new Vector2Int(centerX, 0);
-            Vector2Int goalPos = new Vector2Int(centerX, mapHeight - 1);
+    // 【チェック1】プレハブの割り当て確認
+    if (specialPointPrefab == null)
+    {
+        Debug.LogError("【MapGeneratorエラー】Special Point Prefab が Inspector で設定されていません！");
+        return;
+    }
 
-            List<Vector2Int> perimeterCells = new List<Vector2Int>();
+    // 【チェック2】部屋数の確認
+    if (NumberOfSpecialRoom <= 0)
+    {
+        Debug.LogWarning($"【MapGenerator警告】特殊部屋の数 (NumberOfSpecialRoom) が {NumberOfSpecialRoom} です。生成されません。");
+        return;
+    }
 
-            for (int x = 0; x < mapWidth; x++)
-            {
-                if (x == startPos.x)
-                    continue;
+    int centerX = mapWidth / 2;
+    Vector2Int startPos = new Vector2Int(centerX, 0);
+    Vector2Int goalPos = new Vector2Int(centerX, mapHeight - 1);
 
-                perimeterCells.Add(new Vector2Int(x, 0));
-            }
+    List<Vector2Int> perimeterCells = new List<Vector2Int>();
 
-            for (int x = 0; x < mapWidth; x++)
-            {
-                if (x == goalPos.x)
-                    continue;
+    // 外周の座標をリストアップ
+    for (int x = 0; x < mapWidth; x++)
+    {
+        if (x == startPos.x) continue;
+        perimeterCells.Add(new Vector2Int(x, 0));
+    }
+    for (int x = 0; x < mapWidth; x++)
+    {
+        if (x == goalPos.x) continue;
+        perimeterCells.Add(new Vector2Int(x, mapHeight - 1));
+    }
+    for (int y = 1; y < mapHeight - 1; y++)
+    {
+        perimeterCells.Add(new Vector2Int(0, y));
+    }
+    for (int y = 1; y < mapHeight - 1; y++)
+    {
+        perimeterCells.Add(new Vector2Int(mapWidth - 1, y));
+    }
 
-                perimeterCells.Add(new Vector2Int(x, mapHeight - 1));
-            }
+    // 【チェック3】配置可能場所の確認
+    Debug.Log($"【MapGenerator情報】特殊部屋を配置可能な候補地点数: {perimeterCells.Count}");
 
-            for (int y = 1; y < mapHeight-1; y++)
-            {
-                perimeterCells.Add(new Vector2Int(0, y));
-            }
+    if (perimeterCells.Count == 0 || perimeterCells.Count < NumberOfSpecialRoom)
+    {
+        Debug.LogError("【MapGeneratorエラー】特殊部屋を配置するスペースが足りません（候補数が部屋数未満です）。");
+        return;
+    }
 
-            for (int y = 1; y < mapHeight-1; y++)
-            {
-                perimeterCells.Add(new Vector2Int(mapWidth - 1, y));
-            }
+    // シャッフル
+    for (int i = perimeterCells.Count - 1; i > 0; i--)
+    {
+        int randomIndex = Random.Range(0, i + 1);
+        (perimeterCells[i], perimeterCells[randomIndex]) = (perimeterCells[randomIndex], perimeterCells[i]);
+    }
 
-            if (perimeterCells.Count == 0 || perimeterCells.Count < NumberOfSpecialRoom)
-                return;
-            
-            for (int i = perimeterCells.Count - 1; i > 0; i--)
-            {
-                int randomIndex = Random.Range(0, i + 1);
-                (perimeterCells[i], perimeterCells[randomIndex]) = (perimeterCells[randomIndex], perimeterCells[i]);
-            }
-            
-            for(int i = 0; i < NumberOfSpecialRoom; i++)    
-            {
-                Vector3 outsidePos;
-                float yRotation = 0f;
-                Area a = map[perimeterCells[i].x, perimeterCells[i].y];
+    // 配置決定
+    for (int i = 0; i < NumberOfSpecialRoom; i++)
+    {
+        Vector3 outsidePos;
+        float yRotation = 0f;
+        Area a = map[perimeterCells[i].x, perimeterCells[i].y];
 
-                if (perimeterCells[i].y == 0 && perimeterCells[i].x != startPos.x)
-                {
-                    a.South = true;
-                    outsidePos = new Vector3(perimeterCells[i].x * areaSize, 0, -areaSize);
-                    yRotation = 0f;
-                }
-                else if (perimeterCells[i].y == mapHeight - 1 && perimeterCells[i].x != goalPos.x)
-                {
-                    a.North = true;
-                    outsidePos = new Vector3(perimeterCells[i].x * areaSize, 0, mapHeight * areaSize);
-                    yRotation = 180f;
-                }
-                else if (perimeterCells[i].x == 0)
-                {
-                    a.West = true;
-                    outsidePos = new Vector3(-areaSize, 0, perimeterCells[i].y * areaSize);
-                    yRotation = 90f;
-                }
-                else
-                {
-                    a.East = true;
-                    outsidePos = new Vector3(mapWidth * areaSize, 0, perimeterCells[i].y * areaSize);
-                    yRotation = 270f;
-                }
-                
-                specialRooms[i].ReservedSpecialPosition = outsidePos;
-                specialRooms[i].ReservedSpecialRotation = yRotation;
-            }
+        // 位置と回転の計算
+        if (perimeterCells[i].y == 0 && perimeterCells[i].x != startPos.x)
+        {
+            a.South = true;
+            outsidePos = new Vector3(perimeterCells[i].x * areaSize, 0, -areaSize);
+            yRotation = 0f;
+        }
+        else if (perimeterCells[i].y == mapHeight - 1 && perimeterCells[i].x != goalPos.x)
+        {
+            a.North = true;
+            outsidePos = new Vector3(perimeterCells[i].x * areaSize, 0, mapHeight * areaSize);
+            yRotation = 180f;
+        }
+        else if (perimeterCells[i].x == 0)
+        {
+            a.West = true;
+            outsidePos = new Vector3(-areaSize, 0, perimeterCells[i].y * areaSize);
+            yRotation = 90f;
+        }
+        else
+        {
+            a.East = true;
+            outsidePos = new Vector3(mapWidth * areaSize, 0, perimeterCells[i].y * areaSize);
+            yRotation = 270f;
+        }
+
+        specialRooms[i].ReservedSpecialPosition = outsidePos;
+        specialRooms[i].ReservedSpecialRotation = yRotation;
+        
+        Debug.Log($"【MapGenerator成功】特殊部屋 {i} を座標 {outsidePos} に予約しました。");
+    }
         }
 
         private void InstantiatePrefabs()

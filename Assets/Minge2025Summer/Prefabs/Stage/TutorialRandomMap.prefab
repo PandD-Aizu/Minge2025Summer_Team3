@@ -57,9 +57,29 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: areaSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: mapWidth
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: mapHeight
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: designatedParent
+      value: 
+      objectReference: {fileID: 9152328864529281428}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: bossSpawnOffset.y
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: specialPointPrefab
+      value: 
+      objectReference: {fileID: 197383771077819488, guid: 5dad27649cbad444eb1dbcab2710ce8d, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: cornerPrefabs.Array.size
       value: 3
@@ -73,11 +93,27 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'cornerPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8486602172799233565, guid: a19464c20e7eb2f4ebc3428310853dee, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'cornerPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 4391139681639871541, guid: 3c82c17e5ddd8ad4e87eb2383b7337d0, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'cornerPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 6807907040598117888, guid: f87b712547f6f2e448e91c1e18964d2b, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'cornerPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 8486602172799233565, guid: a19464c20e7eb2f4ebc3428310853dee, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'cornerPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 4391139681639871541, guid: 3c82c17e5ddd8ad4e87eb2383b7337d0, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'cornerPrefabs.Array.data[5]'
       value: 
       objectReference: {fileID: 6807907040598117888, guid: f87b712547f6f2e448e91c1e18964d2b, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
@@ -89,6 +125,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'deadEndPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7448025035832332811, guid: 2dcdc0cf58bf31743beed4f262fa2044, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'deadEndPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 9084595836482640832, guid: af770ade543a84041ba71d3a53c7d133, type: 3}
@@ -96,6 +136,10 @@ PrefabInstance:
       propertyPath: 'deadEndPrefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 5668175485488005428, guid: 33a31cc8099f97c45851bbb7d9a2a690, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'straightPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 5315448401262760336, guid: 6246b2aa543865f44a2d791ba0e11e31, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'straightPrefabs.Array.data[1]'
       value: 
@@ -105,6 +149,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1713300811316059312, guid: b89b9a62bf39b0a41a58fe5d94bfba5f, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'tJunctionPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1532970698584905506, guid: 063ee1d822def024a96ad4c9e43575f3, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'tJunctionPrefabs.Array.data[1]'
       value: 
       objectReference: {fileID: 7435173239157114688, guid: 285c4e403393ed4428a033133ec53467, type: 3}
@@ -112,6 +160,10 @@ PrefabInstance:
       propertyPath: 'tJunctionPrefabs.Array.data[2]'
       value: 
       objectReference: {fileID: 832639343564076106, guid: f09f5c31d9108c34bb777d627e14b37f, type: 3}
+    - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+      propertyPath: 'crossroadsPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 5225182914018373572, guid: a76b98ea2a20b9042ae669b962f8e5ba, type: 3}
     - target: {fileID: 6986125166308354195, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
       propertyPath: 'crossroadsPrefabs.Array.data[1]'
       value: 
@@ -129,3 +181,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+--- !u!4 &9152328864529281428 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4254131848581592458, guid: d35b446dc72957e4280b2736f9b168d0, type: 3}
+  m_PrefabInstance: {fileID: 4902780605385917470}
+  m_PrefabAsset: {fileID: 0}
