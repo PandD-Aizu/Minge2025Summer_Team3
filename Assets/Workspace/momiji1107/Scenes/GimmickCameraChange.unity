@@ -11741,7 +11741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraDistance: 1
+  CameraDistance: 3
   DeadZoneDepth: 0
   Composition:
     ScreenPosition: {x: 0, y: 0}
@@ -16618,6 +16618,7 @@ MonoBehaviour:
   fpsCamera: {fileID: 1500675494}
   thisGimmickCamera: {fileID: 723653079}
   gimmickController: {fileID: 1221995779}
+  cameraDistance: 4
 --- !u!1 &1030575139
 GameObject:
   m_ObjectHideFlags: 0
@@ -18610,7 +18611,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 50
-  camManager: {fileID: 1025972336}
 --- !u!1 &1222096482
 GameObject:
   m_ObjectHideFlags: 0
