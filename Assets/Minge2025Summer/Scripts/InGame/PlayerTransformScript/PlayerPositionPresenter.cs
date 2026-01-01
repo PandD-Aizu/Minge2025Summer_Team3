@@ -45,7 +45,7 @@ namespace Minge2025Summer.Scripts.InGame.PlayerTransformScript
             model.ChangeColliderHeight();
             
             float speed = model.GetCharacterController.velocity.magnitude;
-            emitter.PlayFootStep(speed);
+            emitter.PlayFootStep(speed, model.IsRunning);
         }
 
         private void SubscribeEvents()

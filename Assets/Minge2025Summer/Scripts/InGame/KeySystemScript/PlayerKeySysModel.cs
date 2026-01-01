@@ -49,6 +49,11 @@ namespace Minge2025Summer.Scripts.InGame.KeySystemScript
                 return;
             }
 
+            InteractWithDoor(door, inventoryModel);
+        }
+
+        public void InteractWithDoor(IDoor door, ReiItemInventoryModel inventoryModel)
+        {
             // 鍵がかかっている場合
             if (!door.IsUnLocked)
             {
