@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7165880355184816992}
   - component: {fileID: 615473314574240871}
   - component: {fileID: 755508279874330203}
+  - component: {fileID: 1257829592749578350}
   m_Layer: 7
   m_Name: Door
   m_TagString: Untagged
@@ -109,6 +110,18 @@ MonoBehaviour:
   swingLocalAxis: {x: 0, y: 1, z: 0}
   invertSwing: 0
   hingeLocalPivot: {x: 0, y: -1, z: 0.5}
+--- !u!114 &1257829592749578350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2804321016080729319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c92c43dd1bf2489498f318803e14942d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5394742900013353501
 GameObject:
   m_ObjectHideFlags: 0
