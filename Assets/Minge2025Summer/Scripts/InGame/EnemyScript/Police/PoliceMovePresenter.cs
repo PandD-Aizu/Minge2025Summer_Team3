@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using Minge2025Summer.Scripts.InGame.AcousticsScript;
 using Minge2025Summer.Scripts.InGame.EnemyScript.Enum;
 using Minge2025Summer.Scripts.InGame.RandomMapGeneratorScript;
@@ -132,7 +132,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
                 model.UpdateRotation();
                 model.ApplyGravity();
                 model.ApplyMovement();
-                emitter.PlayFootStep(model.GetSpeed);
+                emitter.PlayFootStep(model.GetCurrentSpeed);
             }
 
             emitter.UpdateMoanTimer();

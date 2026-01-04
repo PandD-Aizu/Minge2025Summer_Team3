@@ -1,4 +1,5 @@
 ﻿using System;
+using Minge2025Summer.Scripts.GameSetting;
 using Minge2025Summer.Scripts.InGame.PlayerTransformScript;
 using UniRx;
 using UnityEngine;
@@ -15,6 +16,25 @@ namespace Minge2025Summer.Scripts.InGame.PlayerCameraControllerScript
 
         private void Start()
         {
+            // マウス感度を設定
+            if (GameController.Instance != null)
+            {
+                model.CameraSensitivity = GameController.Instance.gameSettingsController.gameSettings.cameraSensitivity;
+                foreach (var controller in model.InputAxisController.Controllers)
+                {
+                    Debug.Log("Controller Name: " + controller.Name);
+                    if (controller.Name == "Look X (Pan)")
+                    {
+                        controller.Input.Gain = model.CameraSensitivity;
+                    }
+
+                    if (controller.Name == "Look Y (Tilt)")
+                    {
+                        controller.Input.Gain = -model.CameraSensitivity;
+                    }
+                }
+            }
+            
             SubscribeEvents();
         }
 

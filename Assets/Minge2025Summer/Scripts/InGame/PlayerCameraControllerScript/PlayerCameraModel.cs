@@ -6,11 +6,16 @@ namespace Minge2025Summer.Scripts.InGame.PlayerCameraControllerScript
     public class PlayerCameraModel : MonoBehaviour
     {
         [SerializeField] private CinemachineFollow followComponent;
+        [SerializeField] private CinemachineInputAxisController inputAxisController;
         [SerializeField] private float normalHeight;
         [SerializeField] private float crouchHeight;
         [SerializeField] private float heightChangeSpeed;
+        [SerializeField] private float cameraSensitivity;
 
         private float targetHeight = 0.0f;
+        
+        public CinemachineInputAxisController InputAxisController => inputAxisController;
+        public float CameraSensitivity { get => cameraSensitivity; set => cameraSensitivity = value; }
 
         public void UpdateCameraHeight()
         {
