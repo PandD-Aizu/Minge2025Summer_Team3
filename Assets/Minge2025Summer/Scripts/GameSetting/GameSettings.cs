@@ -30,11 +30,11 @@ namespace Minge2025Summer.Scripts.GameSetting
         public KeyCode keyImportant;    // 重要アイテムキー
         
         // CAMERA
-        public bool cameraInvert;           // カメラ操作反転
-        public bool cameraAimingInvert;     // エイム時カメラ操作反転
-        public int cameraSensitivity;       // カメラ感度
-        public int cameraAimingSensitivity; // エイム時カメラ感度
-        public int mouseSensitivity;        // マウス操作速度
+        public bool cameraInvert;             // カメラ操作反転
+        public bool cameraAimingInvert;       // エイム時カメラ操作反転
+        public float cameraSensitivity;       // カメラ感度
+        public float cameraAimingSensitivity; // エイム時カメラ感度
+        public float mouseSensitivity;        // マウス操作速度
         
         // GAME SETTINGS
         public bool aimAssist;        // エイムアシスト
@@ -91,9 +91,9 @@ namespace Minge2025Summer.Scripts.GameSetting
             
             cameraInvert = false;
             cameraAimingInvert = false;
-            cameraSensitivity = 5;
-            cameraAimingSensitivity = 5;
-            mouseSensitivity = 5;
+            cameraSensitivity = 1.0f;
+            cameraAimingSensitivity = 1.0f;
+            mouseSensitivity = 1.0f;
             
             aimAssist = false;
             tutorialEnabled = true;

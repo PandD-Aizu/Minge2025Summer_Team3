@@ -23819,9 +23819,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followComponent: {fileID: 1500675499}
+  inputAxisController: {fileID: 1500675496}
   normalHeight: 0
   crouchHeight: -0.8
   heightChangeSpeed: 2
+  cameraSensitivity: 0
 --- !u!1 &828341468
 GameObject:
   m_ObjectHideFlags: 0
@@ -23896,9 +23898,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followComponent: {fileID: 724718087}
+  inputAxisController: {fileID: 0}
   normalHeight: 0.7
   crouchHeight: 0
   heightChangeSpeed: 1
+  cameraSensitivity: 0
 --- !u!1 &828790229
 GameObject:
   m_ObjectHideFlags: 0
@@ -33701,6 +33705,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1761919692}
   - {fileID: 1596388357}
   - {fileID: 1590589402}
   - {fileID: 1758231427}
@@ -61976,6 +61981,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reverbMaterialType: 3
+--- !u!1 &1761919691
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1761919692}
+  - component: {fileID: 1761919693}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1761919692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761919691}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1063676301}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1761919693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761919691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db963901516b4f36b41b0eee15feab5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1765220135
 GameObject:
   m_ObjectHideFlags: 0

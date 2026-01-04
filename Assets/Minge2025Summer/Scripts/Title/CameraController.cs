@@ -50,17 +50,17 @@ namespace Minge2025Summer.Scripts.Title
             
             cameraSensitivitySlider.onValueChanged.AddListener(value =>
             {
-                GameController.Instance.gameSettingsController.gameSettings.cameraSensitivity = (int)value;
+                GameController.Instance.gameSettingsController.gameSettings.cameraSensitivity = value;
             });
             
             cameraAimingSensitivitySlider.onValueChanged.AddListener(value =>
             {
-                GameController.Instance.gameSettingsController.gameSettings.cameraAimingSensitivity = (int)value;
+                GameController.Instance.gameSettingsController.gameSettings.cameraAimingSensitivity = value;
             });
             
             mouseSensitivitySlider.onValueChanged.AddListener(value =>
             {
-                GameController.Instance.gameSettingsController.gameSettings.mouseSensitivity = (int)value;
+                GameController.Instance.gameSettingsController.gameSettings.mouseSensitivity = value;
             });
         }
 
