@@ -37,7 +37,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
         private float baseAnimatorSpeed = 1f;
 
         public NavMeshAgent GetAgent => agent;
-        public float GetSpeed => speed;
+        public float GetSpeed => planarVelocity.magnitude;
 
         private void Start()
         {
