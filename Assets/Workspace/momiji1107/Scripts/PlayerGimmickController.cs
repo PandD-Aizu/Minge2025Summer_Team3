@@ -1,9 +1,13 @@
 using UnityEngine;
+using Minge2025Summer.Scripts.InGame.PlayerInputControllerScript;
 
 public class PlayerGimmickController : MonoBehaviour
 {
     [Header("インタラクト可能な最大距離")]
     [SerializeField] private float maxDistance;
+    
+    [SerializeField] private GameObject playerPositionControlloer;
+    [SerializeField] private MouseLockPresenter mouseLockPresenter;
     
     private GimmickCameraManager camManager; //接触したギミックについているGimmickCameraManagerコンポーネント
     private bool onGimmick;　//ギミック中かどうか
@@ -22,12 +26,7 @@ public class PlayerGimmickController : MonoBehaviour
         {
             ContactGimmick();
         }
-
-        //（テスト用、後で消す）Tキーでギミック終了
-        if (Input.GetKeyDown(KeyCode.T) && OnGimmick)
-        {
-            camManager.ChangeCameraToMain();
-        }
+        
     }
 
     private void ContactGimmick()
@@ -42,13 +41,19 @@ public class PlayerGimmickController : MonoBehaviour
             camManager = hit.collider.gameObject.GetComponentInChildren<GimmickCameraManager>();
             if(camManager == null) Debug.Log("can't find gimmick camera manager");
             camManager.ChangeCameraToGimmick();
+            
+            playerPositionControlloer.SetActive(false); //ギミック中プレイヤーを操作できないようにする
+            mouseLockPresenter.MouseLock = false; //ギミック中カーソルを表示させる
         }
     }
 
     //ギミック中の画面から戻るボタンを押した時に呼び出される
     public void ExitGimmick()
     {
-        Debug.Log("ExitGimmick");
+        //Debug.Log("ExitGimmick");
         camManager.ChangeCameraToMain();
+        
+        playerPositionControlloer.SetActive(true);
+        mouseLockPresenter.MouseLock = true;
     }
 }

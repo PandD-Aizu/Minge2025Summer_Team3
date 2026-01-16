@@ -18983,6 +18983,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 50
+  playerPositionControlloer: {fileID: 202520537}
+  mouseLockPresenter: {fileID: 1596388355}
 --- !u!1 &1222096482
 GameObject:
   m_ObjectHideFlags: 0
