@@ -7,6 +7,8 @@ namespace Minge2025Summer.Scripts.InGame.PlayerInputControllerScript
         [SerializeField] private MouseLockModel model;
         [SerializeField] private MouseLockView view;
 
+        public bool MouseLock { set { model.IsLocked = value; } }
+        
         private void Start()
         {
             model.IsLocked = true;
@@ -36,5 +38,6 @@ namespace Minge2025Summer.Scripts.InGame.PlayerInputControllerScript
                 model.IsLocked = !model.IsLocked;
             }
         }
+        
     }
 }
