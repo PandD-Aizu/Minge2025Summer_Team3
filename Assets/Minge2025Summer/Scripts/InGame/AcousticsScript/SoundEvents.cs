@@ -6,6 +6,7 @@ namespace Minge2025Summer.Scripts.InGame.AcousticsScript
     {
         Gunshot,
         Glass,
+        FireAlarm,
         Footstep,
         Impact,
         Other,

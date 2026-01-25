@@ -132,7 +132,7 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
                 model.UpdateRotation();
                 model.ApplyGravity();
                 model.ApplyMovement();
-                emitter.PlayFootStep(model.GetCurrentSpeed);
+                emitter.PlayFootStep(model.GetSpeed);
             }
 
             emitter.UpdateMoanTimer();
