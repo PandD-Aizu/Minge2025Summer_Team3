@@ -33,9 +33,11 @@ public class PlayerGimmickController : MonoBehaviour
     {
         var cam = Camera.main;
         if (cam == null) return; 
+        
+        //光線を飛ばす
         Physics.Raycast(cam.transform.position, cam.transform.forward, out var hit, maxDistance);
 
-        //光線を飛ばしてギミックに当たっていたら、カメラを切り替える
+        //ギミックに当たっていたら、カメラを切り替える
         if (hit.collider != null && hit.collider.name == "Gimmick")
         {
             camManager = hit.collider.gameObject.GetComponentInChildren<GimmickCameraManager>();
@@ -44,6 +46,13 @@ public class PlayerGimmickController : MonoBehaviour
             
             playerPositionControlloer.SetActive(false); //ギミック中プレイヤーを操作できないようにする
             mouseLockPresenter.MouseLock = false; //ギミック中カーソルを表示させる
+        }
+        
+        //火災報知器に当たっていたら対象の火災報知器の音を止める
+        if (hit.collider != null && hit.collider.name == "FireAlarm")
+        {
+            FireAlarm fireAlarm = hit.collider.gameObject.GetComponent<FireAlarm>();
+            fireAlarm.StopFireAlarm();
         }
     }
 

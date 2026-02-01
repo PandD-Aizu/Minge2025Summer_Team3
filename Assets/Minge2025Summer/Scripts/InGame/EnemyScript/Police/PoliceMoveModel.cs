@@ -270,5 +270,6 @@ namespace Minge2025Summer.Scripts.InGame.EnemyScript
                 agent.velocity = Vector3.zero;
             }
         }
+        
     }
 }
